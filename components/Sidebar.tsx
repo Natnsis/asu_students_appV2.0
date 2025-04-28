@@ -14,7 +14,7 @@ export function Sidebar() {
           return (
             <>
               <Button
-                size="xl" 
+                size="xl"
                 className="rounded-full p-3.5"
                 variant="link"
                 onPress={() => {
@@ -62,38 +62,78 @@ export function Sidebar() {
                       </View>
                     </Card>
 
-                    <Divider className="my-5"/>
+                    <Divider className="my-5" />
 
-                    <View className="grid cols-2 rows-2 gap-4">
-                      <Card variant="filled" className="col-span-1 row-span-1">
-                        <Center>
-                          <Text>📚</Text>
-                          <Text>Library</Text>
-                        </Center>
-                      </Card>
-                      <Card variant="filled" className="col-span-1 row-span-2">
-                        <Center>
-                          <Text>📚</Text>
-                          <Text>Library</Text>
-                        </Center>
-                      </Card>
-                      <Card variant="filled" className="col-span-2 row-span-1">
-                        <Center>
-                          <Text>📚</Text>
-                          <Text>Library</Text>
-                        </Center>
-                      </Card>
-                      <Card variant="filled" className="col-span-2 row-span-2">
-                        <Center>
-                          <Text>📚</Text>
-                          <Text>Library</Text>
-                        </Center>
-                      </Card>
+                    <View className="flex flex-col gap-4">
+                      {/* First Row */}
+                      <View className="flex flex-row justify-between gap-4">
+                        <Card
+                          variant="filled"
+                          className="w-[48%] h-[100px] flex justify-center items-center"
+                        >
+                          <Center>
+                            <Text>📚</Text>
+                            <Text>Library</Text>
+                          </Center>
+                        </Card>
+                        <Card
+                          variant="filled"
+                          className="w-[48%] h-[100px] flex justify-center items-center"
+                        >
+                          <Center>
+                            <Text>📖</Text>
+                            <Text>Books</Text>
+                          </Center>
+                        </Card>
+                      </View>
+
+                      {/* Second Row */}
+                      <View className="flex flex-row justify-between gap-4">
+                        <Card
+                          variant="filled"
+                          className="w-[48%] h-[100px] flex justify-center items-center"
+                        >
+                          <Center>
+                            <Text>🎓</Text>
+                            <Text>Graduation</Text>
+                          </Center>
+                        </Card>
+                        <Card
+                          variant="filled"
+                          className="w-[48%] h-[100px] flex justify-center items-center"
+                        >
+                          <Center>
+                            <Text>🖥️</Text>
+                            <Text>Labs</Text>
+                          </Center>
+                        </Card>
+                      </View>
                     </View>
+                    
+                    <Divider className="my-5" />
 
+                    <View className="gap-y-5">
+                      <Button variant="outline">
+                        <ButtonText>Materials</ButtonText>
+                      </Button>
+                      <Button variant="outline">
+                        <ButtonText>Settings</ButtonText>
+                      </Button>
+                      <Button variant="outline">
+                        <ButtonText>Logout</ButtonText>
+                      </Button>
+                      <Button variant="outline">
+                        <ButtonText>Feedback</ButtonText>
+                      </Button>
+                      <Button variant="outline">
+                        <ButtonText>Contact Us</ButtonText>
+                      </Button>
+                    </View>
                   </DrawerBody>
                   <DrawerFooter>
-                    {/* footers */}
+                    <Text size="sm" className="w-full text-center absolute bottom-0">
+                    Developed by Natnael Sisay
+                    </Text>
                   </DrawerFooter>
                 </DrawerContent>
               </Drawer>
