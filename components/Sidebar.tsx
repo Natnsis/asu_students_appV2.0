@@ -1,0 +1,102 @@
+import { Button, ButtonIcon, ButtonText } from "@/components/ui/button";
+import { Drawer, DrawerBackdrop, DrawerContent, DrawerHeader, DrawerBody, DrawerFooter } from "@/components/ui/drawer";
+import { Heading } from "@/components/ui/heading";
+import { Text } from "@/components/ui/text";
+import { CloseIcon, MenuIcon, StarIcon } from "@/components/ui/icon";
+import React from "react";
+import { Card } from "./ui/card";
+import { View } from "react-native";
+import { Divider } from "./ui/divider";
+import { Center } from "./ui/center";
+	
+export function Sidebar() {
+          const [showDrawer, setShowDrawer] = React.useState(false);
+          return (
+            <>
+              <Button
+                size="xl" 
+                className="rounded-full p-3.5"
+                variant="link"
+                onPress={() => {
+                  setShowDrawer(true);
+                }}
+              >
+                <ButtonIcon as={MenuIcon} />
+              </Button>
+              <Drawer
+                isOpen={showDrawer}
+                onClose={() => {
+                  setShowDrawer(false);
+                }}
+                size="lg"
+                anchor="left"
+              >
+                <DrawerBackdrop />
+                <DrawerContent>
+                  <DrawerHeader className="flex-row justify-between items-center gap-2">
+                    <Heading size="2xl">Asu Students</Heading>
+                    <Button
+                      onPress={() => {
+                        setShowDrawer(false);
+                      }}
+                      variant="link"
+                      action="secondary"
+                      size="xl"
+                      className="rounded-full p-3.5"
+                    >
+                      <ButtonIcon as={CloseIcon} />
+                    </Button>
+                  </DrawerHeader>
+                  <DrawerBody>
+                    <Card className="w-full" variant="filled">
+                      <View className="flex-row items-center gap-2">
+                        <View>
+                          <Button size="lg" className="rounded-full p-3.5">
+                            <ButtonIcon as={StarIcon} />
+                          </Button>
+                        </View>
+                        <View>
+                          <Heading size="lg">Alex Thompson</Heading>
+                          <Text size="sm">Computer Science Year-3</Text>
+                        </View>
+                      </View>
+                    </Card>
+
+                    <Divider className="my-5"/>
+
+                    <View className="grid cols-2 rows-2 gap-4">
+                      <Card variant="filled" className="col-span-1 row-span-1">
+                        <Center>
+                          <Text>📚</Text>
+                          <Text>Library</Text>
+                        </Center>
+                      </Card>
+                      <Card variant="filled" className="col-span-1 row-span-2">
+                        <Center>
+                          <Text>📚</Text>
+                          <Text>Library</Text>
+                        </Center>
+                      </Card>
+                      <Card variant="filled" className="col-span-2 row-span-1">
+                        <Center>
+                          <Text>📚</Text>
+                          <Text>Library</Text>
+                        </Center>
+                      </Card>
+                      <Card variant="filled" className="col-span-2 row-span-2">
+                        <Center>
+                          <Text>📚</Text>
+                          <Text>Library</Text>
+                        </Center>
+                      </Card>
+                    </View>
+
+                  </DrawerBody>
+                  <DrawerFooter>
+                    {/* footers */}
+                  </DrawerFooter>
+                </DrawerContent>
+              </Drawer>
+            </>
+          );
+        };
