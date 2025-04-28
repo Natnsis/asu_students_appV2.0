@@ -44,16 +44,22 @@ export default function Index() {
         create an account to get started <Link href="/" className="text-blue-700">Register here</Link>
       </Text>
 
-      <View className="absolute bottom-5 w-screen flex-row justify-center">
-        <Text size="sm">
-          🔐 Secure login
-        </Text>
-        <Text size="sm">
-          📱 Mobile friendly
-        </Text>
-        <Text size="sm" className="min-w-fit">
-          💭 24/7 Support 
-        </Text>
+      <View className="absolute bottom-5 flex-row px-2">
+        <View className="">
+          <Text size="sm" className="w-[30vw] text-center">
+            🔐 Secure login
+          </Text>
+        </View>
+        <View>
+          <Text size="sm" className="w-[40vw] text-center">
+            📱 Mobile friendly
+          </Text>
+        </View>
+        <View>
+          <Text size="sm" className="w-[40vw] text-center">
+            💭 24/7 Support 
+          </Text>
+        </View>
       </View>
     </View>
   );

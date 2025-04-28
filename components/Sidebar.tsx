@@ -2,7 +2,7 @@ import { Button, ButtonIcon, ButtonText } from "@/components/ui/button";
 import { Drawer, DrawerBackdrop, DrawerContent, DrawerHeader, DrawerBody, DrawerFooter } from "@/components/ui/drawer";
 import { Heading } from "@/components/ui/heading";
 import { Text } from "@/components/ui/text";
-import { CloseIcon, MenuIcon, StarIcon } from "@/components/ui/icon";
+import { CloseIcon, Icon, MenuIcon, StarIcon } from "@/components/ui/icon";
 import React from "react";
 import { Card } from "./ui/card";
 import { View } from "react-native";
@@ -21,7 +21,9 @@ export function Sidebar() {
                   setShowDrawer(true);
                 }}
               >
-                <ButtonIcon as={MenuIcon} />
+                <ButtonText>
+                  <Icon as={MenuIcon} size="lg" />
+                </ButtonText>
               </Button>
               <Drawer
                 isOpen={showDrawer}
