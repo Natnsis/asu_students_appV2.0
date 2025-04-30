@@ -1,12 +1,12 @@
 import { View, Text } from 'react-native'
 import React from 'react'
 
-const CampusMap = () => {
+const map = () => {
   return (
     <View>
-      <Text>CampusMap</Text>
+      <Text>map</Text>
     </View>
   )
 }
 
-export default CampusMap
+export default map

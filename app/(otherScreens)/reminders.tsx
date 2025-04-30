@@ -1,12 +1,12 @@
 import { View, Text } from 'react-native'
 import React from 'react'
 
-const GpaCalculator = () => {
+const Reminders = () => {
   return (
     <View>
-      <Text>GpaCalculator</Text>
+      <Text>Reminders bahahah</Text>
     </View>
   )
 }
 
-export default GpaCalculator
+export default Reminders

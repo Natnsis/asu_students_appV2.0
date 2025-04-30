@@ -16,7 +16,7 @@ const Index = () => {
       emoji: '📚',
       title: 'Curriculum',
       description: 'Track your courses and credits',
-      href: '/components/Curriculum', // Path to the Curriculum screen
+      href: '/(otherScreens)/curriculum', // Updated path
       infos: [
         { label: '4.0 GPA', width: 'w-20' },
         { label: '96 credits', width: 'w-32' },
@@ -26,7 +26,7 @@ const Index = () => {
       emoji: '🗺',
       title: 'Campus Map',
       description: 'Navigate your campus with ease',
-      href: '/components/CampusMap', // Path to the Campus Map screen
+      href: '/(otherScreens)/campus-map', // Updated path
       infos: [
         { label: 'Building A', width: 'w-24' },
         { label: 'Library', width: 'w-24' },
@@ -36,7 +36,7 @@ const Index = () => {
       emoji: '🪑',
       title: 'Lounges',
       description: 'Find study and relaxation spaces',
-      href: '/components/Lounges', // Path to the Lounges screen
+      href: '/(otherScreens)/lounges', // Updated path
       infos: [
         { label: '120 credits', width: 'w-28' },
         { label: '3 semesters left', width: 'w-36' },
@@ -46,7 +46,7 @@ const Index = () => {
       emoji: '🧮',
       title: 'GPA Calculator',
       description: 'Calculate your grades',
-      href: '/components/GpaCalculator', // Path to the GPA Calculator screen
+      href: '/(otherScreens)/gpa-calculator', // Updated path
       infos: [
         { label: '120 credits', width: 'w-28' },
         { label: '3 semesters left', width: 'w-36' },
@@ -56,7 +56,7 @@ const Index = () => {
       emoji: '📸',
       title: 'Gallery',
       description: 'University photo galleries',
-      href: '/components/Gallery', // Path to the Gallery screen
+      href: '/(otherScreens)/gallery', 
       infos: [
         { label: '120 credits', width: 'w-28' },
         { label: '3 semesters left', width: 'w-36' },
@@ -66,7 +66,7 @@ const Index = () => {
       emoji: '⏰',
       title: 'Reminders',
       description: 'Stay on top of your tasks',
-      href: '/components/Reminders', // Path to the Reminders screen
+      href: '/(otherScreens)/reminders', 
       infos: [
         { label: '120 credits', width: 'w-28' },
         { label: '3 semesters left', width: 'w-36' },
@@ -84,7 +84,7 @@ const Index = () => {
       className="w-full flex-col"
     >
       {/* Header Section */}
-      <View className="flex-row justify-between items-center p-4 bg-white">
+      <View className="flex-row justify-between items-center p-4 bg-white w-full">
         <View className="gap-2 flex-row items-center w-full">
           <Sidebar />
           <Heading size="lg">Asu Students App</Heading>
@@ -96,7 +96,7 @@ const Index = () => {
 
       {/* Welcome Section */}
       <View className="bg-white w-[90vw] mt-6 rounded-lg shadow-md p-3">
-        <View className="p-5 flex-col gap-3 shadow-md">
+        <View className="p-5 flex-col gap-3">
           <Heading size="lg">Welcome back, Alex</Heading>
           <Text>Track your academic progress and campus life all in one place.</Text>
           <View className="flex-row justify-between items-center gap-3">
