@@ -15,6 +15,7 @@ import { Card } from "./ui/card";
 import { View } from "react-native";
 import { Divider } from "./ui/divider";
 import { Center } from "./ui/center";
+import { Link } from "expo-router";
 
 export function Sidebar() {
   const [showDrawer, setShowDrawer] = React.useState(false);
@@ -122,19 +123,49 @@ export function Sidebar() {
             <Divider className="my-5" />
 
             <View className="gap-y-5">
-              <Button variant="outline">
+              <Button
+                variant="outline"
+                onPress={() => {
+                  setShowDrawer(false);
+                }}
+              >
                 <ButtonText>Materials</ButtonText>
               </Button>
-              <Button variant="outline">
+              <Button
+                variant="outline"
+                onPress={() => {
+                  setShowDrawer(false);
+                }}
+              >
                 <ButtonText>Settings</ButtonText>
               </Button>
-              <Button variant="outline">
+              <Button
+                variant="outline"
+                onPress={() => {
+                  setShowDrawer(false);
+                }}
+              >
                 <ButtonText>Logout</ButtonText>
               </Button>
-              <Button variant="outline">
-                <ButtonText>Feedback</ButtonText>
+              <Button
+                variant="outline"
+                onPress={() => {
+                  setShowDrawer(false);
+                }}
+              >
+                <Link
+                  href="/(otherScreens)/about"
+                  className="w-full text-center"
+                >
+                  <ButtonText>About ASU</ButtonText>
+                </Link>
               </Button>
-              <Button variant="outline">
+              <Button
+                variant="outline"
+                onPress={() => {
+                  setShowDrawer(false);
+                }}
+              >
                 <ButtonText>Contact Us</ButtonText>
               </Button>
             </View>

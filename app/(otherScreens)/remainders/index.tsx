@@ -12,7 +12,6 @@ import {
 } from "@/components/ui/checkbox";
 
 const Reminders = () => {
-  // Array of reminders
   const reminders = [
     {
       id: 1,
