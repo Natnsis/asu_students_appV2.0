@@ -78,7 +78,6 @@ const Curriculum = () => {
       {/* Header Section */}
       <View className="flex-row justify-between items-center p-4 bg-white w-full">
         <View className="gap-2 flex-row items-center">
-          <Sidebar />
           <Heading size="lg">Curriculum</Heading>
         </View>
         <View>
