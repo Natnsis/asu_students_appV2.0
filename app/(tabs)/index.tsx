@@ -1,14 +1,14 @@
-import { ScrollView, View } from 'react-native';
-import React from 'react';
-import { Link } from 'expo-router'; // Import Link from expo-router
-import { Sidebar } from '@/components/Sidebar';
-import { Heading } from '@/components/ui/heading';
-import { Text } from '@/components/ui/text';
-import { Button, ButtonIcon } from '@/components/ui/button';
-import { GripVerticalIcon } from '@/components/ui/icon';
-import { Alert, AlertText } from '@/components/ui/alert';
-import { Progress, ProgressFilledTrack } from '@/components/ui/progress';
-import { Center } from '@/components/ui/center';
+import { ScrollView, View } from "react-native";
+import React from "react";
+import { Link } from "expo-router"; // Import Link from expo-router
+import { Sidebar } from "@/components/Sidebar";
+import { Heading } from "@/components/ui/heading";
+import { Text } from "@/components/ui/text";
+import { Button, ButtonIcon } from "@/components/ui/button";
+import { GripVerticalIcon } from "@/components/ui/icon";
+import { Alert, AlertText } from "@/components/ui/alert";
+import { Progress, ProgressFilledTrack } from "@/components/ui/progress";
+import { Center } from "@/components/ui/center";
 
 const Index = () => {
   return (
@@ -201,7 +201,9 @@ const Index = () => {
               ⏰
             </Text>
             <Heading>Reminders</Heading>
-            <Text className="w-full text-center">Stay on top of your tasks</Text>
+            <Text className="w-full text-center">
+              Stay on top of your tasks
+            </Text>
             <View className="flex-row justify-between items-center gap-3">
               <Text className="bg-gray-200 rounded-lg text-center w-28">
                 120 credits

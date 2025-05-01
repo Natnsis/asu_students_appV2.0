@@ -1,78 +1,77 @@
-import { View, ScrollView } from 'react-native';
-import React from 'react';
-import { Sidebar } from '@/components/Sidebar';
-import { Heading } from '@/components/ui/heading';
-import { Avatar, AvatarFallbackText } from '@/components/ui/avatar';
-import { Card } from '@/components/ui/card';
-import { Text } from '@/components/ui/text';
-import { Input, InputField } from '@/components/ui/input';
-import { Button, ButtonText } from '@/components/ui/button';
-import { Progress, ProgressFilledTrack } from '@/components/ui/progress';
-import { Divider } from '@/components/ui/divider';
+import { View, ScrollView } from "react-native";
+import React from "react";
+import { Sidebar } from "@/components/Sidebar";
+import { Heading } from "@/components/ui/heading";
+import { Avatar, AvatarFallbackText } from "@/components/ui/avatar";
+import { Card } from "@/components/ui/card";
+import { Text } from "@/components/ui/text";
+import { Input, InputField } from "@/components/ui/input";
+import { Button, ButtonText } from "@/components/ui/button";
+import { Progress, ProgressFilledTrack } from "@/components/ui/progress";
+import { Divider } from "@/components/ui/divider";
 
 const Curriculum = () => {
   // Array for course data
   const courses = [
     {
-      code: 'CS301',
-      title: 'Data Structure & Algorithm',
-      description: 'Advanced data structures and algorithms design techniques.',
+      code: "CS301",
+      title: "Data Structure & Algorithm",
+      description: "Advanced data structures and algorithms design techniques.",
       credit: 4,
-      instructor: 'Dr. Sarah Chen',
+      instructor: "Dr. Sarah Chen",
       progress: 75,
       materials: 12,
       assignments: 8,
-      due: 'Binary Trees Quiz',
-      schedule: 'Mon, Wed 10:00-11:30',
-      room: 'CS Lab-2',
+      due: "Binary Trees Quiz",
+      schedule: "Mon, Wed 10:00-11:30",
+      room: "CS Lab-2",
     },
     {
-      code: 'CS302',
-      title: 'Operating Systems',
-      description: 'Introduction to operating systems and process management.',
+      code: "CS302",
+      title: "Operating Systems",
+      description: "Introduction to operating systems and process management.",
       credit: 3,
-      instructor: 'Dr. John Doe',
+      instructor: "Dr. John Doe",
       progress: 60,
       materials: 10,
       assignments: 6,
-      due: 'Memory Management Assignment',
-      schedule: 'Tue, Thu 12:00-1:30',
-      room: 'CS Lab-1',
+      due: "Memory Management Assignment",
+      schedule: "Tue, Thu 12:00-1:30",
+      room: "CS Lab-1",
     },
     {
-      code: 'CS302',
-      title: 'Operating Systems',
-      description: 'Introduction to operating systems and process management.',
+      code: "CS302",
+      title: "Operating Systems",
+      description: "Introduction to operating systems and process management.",
       credit: 3,
-      instructor: 'Dr. John Doe',
+      instructor: "Dr. John Doe",
       progress: 60,
       materials: 10,
       assignments: 6,
-      due: 'Memory Management Assignment',
-      schedule: 'Tue, Thu 12:00-1:30',
-      room: 'CS Lab-1',
+      due: "Memory Management Assignment",
+      schedule: "Tue, Thu 12:00-1:30",
+      room: "CS Lab-1",
     },
     {
-      code: 'CS302',
-      title: 'Operating Systems',
-      description: 'Introduction to operating systems and process management.',
+      code: "CS302",
+      title: "Operating Systems",
+      description: "Introduction to operating systems and process management.",
       credit: 3,
-      instructor: 'Dr. John Doe',
+      instructor: "Dr. John Doe",
       progress: 60,
       materials: 10,
       assignments: 6,
-      due: 'Memory Management Assignment',
-      schedule: 'Tue, Thu 12:00-1:30',
-      room: 'CS Lab-1',
+      due: "Memory Management Assignment",
+      schedule: "Tue, Thu 12:00-1:30",
+      room: "CS Lab-1",
     },
-    
   ];
 
   return (
     <ScrollView
       contentContainerStyle={{
         flexGrow: 1,
-        alignItems: 'center',
+        alignItems: "center",
         paddingBottom: 10,
       }}
       className="w-full flex-col"
@@ -93,21 +92,21 @@ const Curriculum = () => {
       </View>
 
       {/* Body Section */}
-      <View className="w-full px-5">
-        <View className="flex-row justify-between items-center w-full mt-5">
-          <Card className="w-fit mx-2 bg-white">
+      <View className="w-full mt-5">
+        <View className="flex-row justify-between items-center w-full px-5">
+          <Card className="w-fit bg-white">
             <Text size="xs">Credits</Text>
             <Heading size="xl" className="w-full text-center">
               25
             </Heading>
           </Card>
-          <Card className="w-fit mx-2 bg-white">
+          <Card className="w-fit bg-white">
             <Text size="xs">Completed</Text>
             <Heading size="xl" className="w-full text-center">
               25
             </Heading>
           </Card>
-          <Card className="w-fit mx-2 bg-white">
+          <Card className="w-fit bg-white">
             <Text size="xs" className="w-full text-center">
               GPA
             </Text>
@@ -115,7 +114,7 @@ const Curriculum = () => {
               3.85
             </Heading>
           </Card>
-          <Card className="w-fit mx-2 bg-white">
+          <Card className="w-fit bg-white">
             <Text size="xs">Courses</Text>
             <Heading size="xl" className="w-full text-center">
               8
@@ -150,7 +149,9 @@ const Curriculum = () => {
                 className="rounded-full"
                 isDisabled={true}
               >
-                <ButtonText className="text-primary-950">Hello World!</ButtonText>
+                <ButtonText className="text-primary-950">
+                  Hello World!
+                </ButtonText>
               </Button>
             </View>
 
@@ -164,19 +165,23 @@ const Curriculum = () => {
                 Credit: <Text className="font-extrabold">{course.credit}</Text>
               </Text>
               <Text>
-                Instructor: <Text className="font-extrabold">{course.instructor}</Text>
+                Instructor:{" "}
+                <Text className="font-extrabold">{course.instructor}</Text>
               </Text>
             </View>
 
             <View className="flex-row items-center mb-4">
               <Text className="mr-3">
-                Progress: <Text className="font-extrabold">{course.progress}%</Text>
+                Progress:{" "}
+                <Text className="font-extrabold">{course.progress}%</Text>
               </Text>
               <Text className="mr-3">
-                Materials: <Text className="font-extrabold">{course.materials}</Text>
+                Materials:{" "}
+                <Text className="font-extrabold">{course.materials}</Text>
               </Text>
               <Text className="mr-3">
-                Assignments: <Text className="font-extrabold">{course.assignments}</Text>
+                Assignments:{" "}
+                <Text className="font-extrabold">{course.assignments}</Text>
               </Text>
             </View>
 
@@ -184,16 +189,21 @@ const Curriculum = () => {
               <Text className="text-red-500 text-right w-full mb-1">
                 Due: {course.due}
               </Text>
-              <Progress value={course.progress} size="sm" orientation="horizontal">
+              <Progress
+                value={course.progress}
+                size="sm"
+                orientation="horizontal"
+              >
                 <ProgressFilledTrack />
               </Progress>
             </View>
 
             <Divider className="my-5" />
 
-            <View className="flex-row items-center mb-5">
-              <Text className="mr-5">
-                Schedule: <Text className="font-extrabold">{course.schedule}</Text>
+            <View className="flex-row items-center mb-5 ">
+              <Text>
+                Schedule:{" "}
+                <Text className="font-extrabold">{course.schedule}</Text>
               </Text>
               <Text>
                 Rooms: <Text className="font-extrabold">{course.room}</Text>

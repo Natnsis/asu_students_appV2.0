@@ -1,10 +1,10 @@
-import { View, ScrollView } from 'react-native'
-import React from 'react'
-import { Heading } from '@/components/ui/heading'
-import { Text } from '@/components/ui/text'
-import { Center } from '@/components/ui/center'
-import { Button, ButtonText } from '@/components/ui/button'
-import { Card } from '@/components/ui/card'
+import { View, ScrollView } from "react-native";
+import React from "react";
+import { Heading } from "@/components/ui/heading";
+import { Text } from "@/components/ui/text";
+import { Center } from "@/components/ui/center";
+import { Button, ButtonText } from "@/components/ui/button";
+import { Card } from "@/components/ui/card";
 
 const chat = () => {
   return (
@@ -38,28 +38,36 @@ const chat = () => {
 
       <View className="mt-10 w-full">
         <Center className="gap-1">
-          <Text size="sm" className='w-full text-center'>Group Discussions</Text>
+          <Text size="sm" className="w-full text-center">
+            Group Discussions
+          </Text>
           <Text size="sm" className="w-full px-5 text-center">
             We're building a better way for students to connect, collaborate,
             and communicate.
           </Text>
-          <Text className="text-blue-700 w-full text-center">Direct Message</Text>
+          <Text className="text-blue-700 w-full text-center">
+            Direct Message
+          </Text>
         </Center>
       </View>
 
       <View className="mt-10 w-full">
         <Center>
-          <Heading size="2xl" className='w-full text-center'>15</Heading>
-          <Text size="sm" className='w-full text-center'>Hours</Text>
+          <Heading size="2xl" className="w-full text-center">
+            15
+          </Heading>
+          <Text size="sm" className="w-full text-center">
+            Hours
+          </Text>
         </Center>
       </View>
 
       <View className="mt-10 w-full">
         <Center className="gap-3">
-          <Text className='w-full text-center'>File Sharing</Text>
-          <Text className='w-full text-center'>Voice Channels</Text>
-          <Text className='w-full text-center'>Study Groups</Text>
-          <Text className='w-full text-center'>Event Planning</Text>
+          <Text className="w-full text-center">File Sharing</Text>
+          <Text className="w-full text-center">Voice Channels</Text>
+          <Text className="w-full text-center">Study Groups</Text>
+          <Text className="w-full text-center">Event Planning</Text>
         </Center>
       </View>
 
@@ -69,7 +77,9 @@ const chat = () => {
             <ButtonText>Get Notified</ButtonText>
           </Button>
 
-          <Text className='w-full text-center'>We'll let you know when we launch!</Text>
+          <Text className="w-full text-center">
+            We'll let you know when we launch!
+          </Text>
           <Heading>Coming Soon</Heading>
         </Center>
       </View>
@@ -98,6 +108,6 @@ const chat = () => {
       </View>
     </ScrollView>
   );
-}
+};
 
-export default chat
+export default chat;

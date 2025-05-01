@@ -1,75 +1,75 @@
-import { View, ScrollView } from 'react-native'
-import React from 'react'
-import { Heading } from '@/components/ui/heading'
-import { Text } from '@/components/ui/text'
-import { Input, InputField } from '@/components/ui/input';
-import { Button, ButtonText } from '@/components/ui/button';
-import { Center } from '@/components/ui/center';
+import { View, ScrollView } from "react-native";
+import React from "react";
+import { Heading } from "@/components/ui/heading";
+import { Text } from "@/components/ui/text";
+import { Input, InputField } from "@/components/ui/input";
+import { Button, ButtonText } from "@/components/ui/button";
+import { Center } from "@/components/ui/center";
 
 const social = () => {
   const sections = [
     {
-      emoji: '📚',
-      title: 'Curriculum',
-      media: 'telegram',
-      description: 'Track your courses and credits',
+      emoji: "📚",
+      title: "Curriculum",
+      media: "telegram",
+      description: "Track your courses and credits",
       infos: [
-        { label: '4.0 GPA', width: 'w-20' },
-        { label: 't.me/css.study', width: 'w-32' },
+        { label: "4.0 GPA", width: "w-20" },
+        { label: "t.me/css.study", width: "w-32" },
       ],
     },
     {
-      emoji: '🗺',
-      title: 'Campus Map',
-      media: 'telegram',
-      description: 'Navigate your campus with ease',
+      emoji: "🗺",
+      title: "Campus Map",
+      media: "telegram",
+      description: "Navigate your campus with ease",
       infos: [
-        { label: 'Building A', width: 'w-24' },
-        { label: 'Library', width: 'w-24' },
+        { label: "Building A", width: "w-24" },
+        { label: "Library", width: "w-24" },
       ],
     },
     {
-      emoji: '🪑',
-      title: 'Lounges',
-      media: 'telegram',
-      description: 'find study and relaxation spaces',
+      emoji: "🪑",
+      title: "Lounges",
+      media: "telegram",
+      description: "find study and relaxation spaces",
       infos: [
-        { label: '120 credits', width: 'w-28' },
-        { label: '3 semesters left', width: 'w-36' },
+        { label: "120 credits", width: "w-28" },
+        { label: "3 semesters left", width: "w-36" },
       ],
     },
     {
-      emoji: '🧮',
-      title: 'Gpa Calculator',
-      media: 'telegram',
-      description: 'Calculate your grades',
+      emoji: "🧮",
+      title: "Gpa Calculator",
+      media: "telegram",
+      description: "Calculate your grades",
       infos: [
-        { label: '120 credits', width: 'w-28' },
-        { label: '3 semesters left', width: 'w-36' },
+        { label: "120 credits", width: "w-28" },
+        { label: "3 semesters left", width: "w-36" },
       ],
     },
     {
-      emoji: '📸',
-      title: 'Gallery',
-      media: 'telegram',
-      description: 'University photo galleries',
+      emoji: "📸",
+      title: "Gallery",
+      media: "telegram",
+      description: "University photo galleries",
       infos: [
-        { label: '120 credits', width: 'w-28' },
-        { label: '3 semesters left', width: 'w-36' },
+        { label: "120 credits", width: "w-28" },
+        { label: "3 semesters left", width: "w-36" },
       ],
     },
     {
-      emoji: '⏰',
-      title: 'Remainders',
-      media: 'telegram',
-      description: 'Stay on top of your tasks',
+      emoji: "⏰",
+      title: "Remainders",
+      media: "telegram",
+      description: "Stay on top of your tasks",
       infos: [
-        { label: '120 credits', width: 'w-28' },
-        { label: '3 semesters left', width: 'w-36' },
+        { label: "120 credits", width: "w-28" },
+        { label: "3 semesters left", width: "w-36" },
       ],
     },
   ];
-  
+
   return (
     <ScrollView
       contentContainerStyle={{
@@ -109,24 +109,24 @@ const social = () => {
         <Button variant="link">
           <ButtonText>⚽ Sports</ButtonText>
         </Button>
-        <Button variant='link'>
+        <Button variant="link">
           <ButtonText>🎨 Arts</ButtonText>
         </Button>
       </View>
 
-      <View className='mb-20'>
+      <View className="mb-20">
         {sections.map((section, index) => (
           <View
             key={index}
             className="bg-white w-[90vw] mt-6 rounded-lg shadow-md p-5"
           >
             <Center className="gap-3">
-              <View className='flex-row justify-between items-center w-full'>
+              <View className="flex-row justify-between items-center w-full">
                 <Text className="bg-blue-600 rounded-full px-3 py-1" size="xl">
                   {section.emoji}
                 </Text>
                 <Heading>{section.title}</Heading>
-                <Button variant='solid' action='primary'>
+                <Button variant="solid" action="primary">
                   <ButtonText>Join</ButtonText>
                 </Button>
               </View>
@@ -145,9 +145,8 @@ const social = () => {
           </View>
         ))}
       </View>
-
     </ScrollView>
   );
-}
+};
 
-export default social
+export default social;

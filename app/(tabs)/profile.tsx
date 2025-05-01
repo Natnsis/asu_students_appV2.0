@@ -1,13 +1,12 @@
-import { ScrollView, View } from 'react-native';
-import React from 'react';
-import { Image } from '@/components/ui/image';
-import { Avatar, AvatarFallbackText } from '@/components/ui/avatar';
-import { Heading } from '@/components/ui/heading';
-import { Text } from '@/components/ui/text';
-import { Button, ButtonText } from '@/components/ui/button';
-import { Divider } from '@/components/ui/divider';
-import { Card } from '@/components/ui/card';
-import { EditIcon, Icon } from '@/components/ui/icon';
+import { ScrollView, View } from "react-native";
+import React from "react";
+import { Image } from "@/components/ui/image";
+import { Avatar, AvatarFallbackText } from "@/components/ui/avatar";
+import { Heading } from "@/components/ui/heading";
+import { Text } from "@/components/ui/text";
+import { Button, ButtonText } from "@/components/ui/button";
+import { Card } from "@/components/ui/card";
+import { EditIcon, Icon } from "@/components/ui/icon";
 
 const Profile = () => {
   return (
@@ -65,13 +64,19 @@ const Profile = () => {
       {/* Program and Student Info */}
       <View className="mt-5">
         <View className="flex-row justify-between items-center px-5 mb-5">
-          <Card variant="filled" className="bg-white shadow-md px-3 py-3 w-[43vw]">
+          <Card
+            variant="filled"
+            className="bg-white shadow-md px-3 py-3 w-[43vw]"
+          >
             <Text size="xs">Program</Text>
             <Heading size="sm" className="w-full">
               Computer Science
             </Heading>
           </Card>
-          <Card variant="filled" className="bg-white shadow-md px-3 py-3 w-[43vw]">
+          <Card
+            variant="filled"
+            className="bg-white shadow-md px-3 py-3 w-[43vw]"
+          >
             <Text size="xs">Student ID</Text>
             <Heading size="sm" className="w-full">
               2362/14
@@ -80,13 +85,19 @@ const Profile = () => {
         </View>
 
         <View className="flex-row justify-between items-center px-5 mb-5">
-          <Card variant="filled" className="bg-white shadow-md px-3 py-3 w-[43vw]">
+          <Card
+            variant="filled"
+            className="bg-white shadow-md px-3 py-3 w-[43vw]"
+          >
             <Text size="xs">GPA</Text>
             <Heading size="sm" className="w-full">
               3.85
             </Heading>
           </Card>
-          <Card variant="filled" className="bg-white shadow-md px-3 py-3 w-[43vw]">
+          <Card
+            variant="filled"
+            className="bg-white shadow-md px-3 py-3 w-[43vw]"
+          >
             <Text size="xs">Credits</Text>
             <Heading size="sm" className="w-full">
               120
