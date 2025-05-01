@@ -11,7 +11,6 @@ import { Progress, ProgressFilledTrack } from "@/components/ui/progress";
 import { Divider } from "@/components/ui/divider";
 
 const Curriculum = () => {
-  // Array for course data
   const courses = [
     {
       code: "CS301",
