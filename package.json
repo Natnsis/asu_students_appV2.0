@@ -21,6 +21,7 @@
     "@gluestack-ui/alert": "^0.1.16",
     "@gluestack-ui/avatar": "^0.1.18",
     "@gluestack-ui/button": "^1.0.14",
+    "@gluestack-ui/checkbox": "^0.1.39",
     "@gluestack-ui/divider": "^0.1.10",
     "@gluestack-ui/icon": "^0.1.27",
     "@gluestack-ui/image": "^0.1.17",
