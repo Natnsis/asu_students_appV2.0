@@ -73,11 +73,13 @@ const StudentInfo = () => {
                 <SelectDragIndicatorWrapper>
                   <SelectDragIndicator />
                 </SelectDragIndicatorWrapper>
-                <SelectItem label="Red" value="red" />
-                <SelectItem label="Blue" value="blue" />
-                <SelectItem label="Black" value="black" />
-                <SelectItem label="Pink" value="pink" isDisabled={true} />
-                <SelectItem label="Green" value="green" />
+                <SelectItem
+                  label="Select your Gender"
+                  value="pink"
+                  isDisabled={true}
+                />
+                <SelectItem label="Male" value="male" />
+                <SelectItem label="Female" value="female" />
               </SelectContent>
             </SelectPortal>
           </Select>
@@ -101,11 +103,16 @@ const StudentInfo = () => {
                 <SelectDragIndicatorWrapper>
                   <SelectDragIndicator />
                 </SelectDragIndicatorWrapper>
-                <SelectItem label="Red" value="red" />
-                <SelectItem label="Blue" value="blue" />
-                <SelectItem label="Black" value="black" />
-                <SelectItem label="Pink" value="pink" isDisabled={true} />
-                <SelectItem label="Green" value="green" />
+                <SelectItem label="Remedial" value="remedial" />
+                <SelectItem label="Fresh" value="fresh" />
+                <SelectItem label="Computer Science" value="CS" />
+                <SelectItem label="Information Technology" value="IT" />
+                <SelectItem label="Law" value="law" />
+                <SelectItem label="Information systems" value="IS" />
+                <SelectItem label="Electrical Engineering" value="EE" />
+                <SelectItem label="Economics" value="economics" />
+                <SelectItem label="Journalism" value="journal" />
+                <SelectItem label="Others" value="other" />
               </SelectContent>
             </SelectPortal>
           </Select>
@@ -129,11 +136,17 @@ const StudentInfo = () => {
                 <SelectDragIndicatorWrapper>
                   <SelectDragIndicator />
                 </SelectDragIndicatorWrapper>
-                <SelectItem label="Red" value="red" />
-                <SelectItem label="Blue" value="blue" />
-                <SelectItem label="Black" value="black" />
-                <SelectItem label="Pink" value="pink" isDisabled={true} />
-                <SelectItem label="Green" value="green" />
+                <SelectItem
+                  label="Select your year"
+                  isDisabled={true}
+                  value=""
+                />
+                <SelectItem label="Remedial" value="remedial" />
+                <SelectItem label="1" value="1" />
+                <SelectItem label="2" value="2" />
+                <SelectItem label="3" value="3" />
+                <SelectItem label="4" value="4" />
+                <SelectItem label="5" value="5" />
               </SelectContent>
             </SelectPortal>
           </Select>
