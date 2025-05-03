@@ -18,13 +18,14 @@ import {
   SelectTrigger,
 } from "@/components/ui/select";
 import { ChevronDownIcon } from "@/components/ui/icon";
+import { useRouter } from "expo-router";
 
 const StudentInfo = () => {
+  const router = useRouter();
   const [fullName, setFullName] = useState("");
   const [gender, setGender] = useState("");
   const [department, setDepartment] = useState("");
   const [year, setYear] = useState("");
-  const [isInformed, setIsInformed] = useState(false);
 
   const handleSubmit = async () => {
     try {
@@ -33,12 +34,11 @@ const StudentInfo = () => {
         gender,
         department,
         year,
+        isInformed: true,
       };
       await AsyncStorage.setItem("userData", JSON.stringify(studentInfo));
       Alert.alert("Success", "Student information saved successfully!");
-      if (studentInfo !== null && studentInfo !== undefined) {
-        setIsInformed(true);
-      }
+      router.push("/(tabs)");
     } catch (error) {
       Alert.alert("Error", "Failed to save student information.");
     }
