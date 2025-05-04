@@ -28,7 +28,6 @@ const Index = () => {
         const parsedData = JSON.parse(userdata);
         setUserInfo(parsedData);
 
-        // Extract the first name from fullName
         const fullName = parsedData.fullName || "";
         const firstName = fullName.split(" ")[0];
 
@@ -89,7 +88,7 @@ const Index = () => {
       <View className="mb-20">
         {/* Curriculum */}
         <Link
-          href="/(otherScreens)/curriculum"
+          href="/(otherScreens)/studentStatus"
           className="w-[90vw] bg-white mt-6 rounded-lg shadow-md p-5"
         >
           <Center className="gap-3 w-full">
@@ -161,7 +160,7 @@ const Index = () => {
 
         {/* GPA Calculator */}
         <Link
-          href="/(otherScreens)/gpa-calculator"
+          href="/(otherScreens)/studentStatus"
           className="w-[90vw] bg-white mt-6 rounded-lg shadow-md p-5"
         >
           <Center className="gap-3 w-full">
