@@ -17,9 +17,22 @@ const Index = () => {
     gender?: string;
     year?: string;
   }
-
+  const [isStudentStatusFilled, setIsStudentStatusFilled] = useState(false);
   const [userInfo, setUserInfo] = useState<UserInfo>({});
   const [firstName, setFirstName] = useState("");
+
+  // Check AsyncStorage for student status and user data
+  useEffect(() => {
+    const checkStudentStatus = async () => {
+      const studentStatus = await AsyncStorage.getItem("studentStatus");
+
+      if (studentStatus) {
+        setIsStudentStatusFilled(true);
+      }
+    };
+
+    checkStudentStatus();
+  }, []);
 
   useEffect(() => {
     const checkInformedStats = async () => {
@@ -88,7 +101,11 @@ const Index = () => {
       <View className="mb-20">
         {/* Curriculum */}
         <Link
-          href="/(otherScreens)/studentStatus"
+          href={
+            isStudentStatusFilled
+              ? "/(otherScreens)/curriculum"
+              : "/(otherScreens)/studentStatus"
+          }
           className="w-[90vw] bg-white mt-6 rounded-lg shadow-md p-5"
         >
           <Center className="gap-3 w-full">
@@ -160,7 +177,11 @@ const Index = () => {
 
         {/* GPA Calculator */}
         <Link
-          href="/(otherScreens)/studentStatus"
+          href={
+            isStudentStatusFilled
+              ? "/(otherScreens)/gpa-calculator"
+              : "/(otherScreens)/studentStatus"
+          }
           className="w-[90vw] bg-white mt-6 rounded-lg shadow-md p-5"
         >
           <Center className="gap-3 w-full">

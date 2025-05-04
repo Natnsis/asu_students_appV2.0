@@ -25,6 +25,7 @@ export function Sidebar() {
   }
   const [userData, setUserData] = useState<UserData | null>(null);
   const [showDrawer, setShowDrawer] = useState(false);
+
   useEffect(() => {
     const fetchData = async () => {
       const userInformation = await AsyncStorage.getItem("userData");
@@ -36,6 +37,19 @@ export function Sidebar() {
     };
     fetchData();
   }, []);
+
+  const handleNavigation = async (
+    pathIfFilled: string,
+    fallbackPath: string
+  ) => {
+    const studentStatus = await AsyncStorage.getItem("studentStatus");
+    if (studentStatus) {
+      router.push(pathIfFilled as any);
+    } else {
+      router.push(fallbackPath as any);
+    }
+    setShowDrawer(false);
+  };
 
   return (
     <>
@@ -94,40 +108,31 @@ export function Sidebar() {
 
             <Divider className="my-5" />
 
-            {/* First Row */}
-            <View className="flex flex-row justify-between gap-4">
-              <Card
-                variant="filled"
-                className="w-[48%] h-[100px] flex justify-center items-center"
-              >
-                <Center>
-                  <Text>📚</Text>
-                  <Text>Library</Text>
-                </Center>
-              </Card>
-              <Card
-                variant="filled"
-                className="w-[48%] h-[100px] flex justify-center items-center"
-              >
-                <Center>
-                  <Text>📖</Text>
-                  <Text>Books</Text>
-                </Center>
-              </Card>
-            </View>
-
-            <Divider className="my-5" />
-
             <View className="gap-y-3">
               <Button
                 variant="link"
-                onPress={() => {
-                  router.push("/curriculum");
-                  setShowDrawer(false);
-                }}
+                onPress={() =>
+                  handleNavigation(
+                    "/(otherScreens)/curriculum",
+                    "/(otherScreens)/studentStatus"
+                  )
+                }
               >
                 <ButtonText>
                   <Heading>Curriculum</Heading>
+                </ButtonText>
+              </Button>
+              <Button
+                variant="link"
+                onPress={() =>
+                  handleNavigation(
+                    "/(otherScreens)/gpa-calculator",
+                    "/(otherScreens)/studentStatus"
+                  )
+                }
+              >
+                <ButtonText>
+                  <Heading>GPA Calculator</Heading>
                 </ButtonText>
               </Button>
               <Button
@@ -150,17 +155,6 @@ export function Sidebar() {
               >
                 <ButtonText>
                   <Heading>Lounges</Heading>
-                </ButtonText>
-              </Button>
-              <Button
-                variant="link"
-                onPress={() => {
-                  router.push("/(otherScreens)/gpa-calculator");
-                  setShowDrawer(false);
-                }}
-              >
-                <ButtonText>
-                  <Heading>GPA Calculator</Heading>
                 </ButtonText>
               </Button>
               <Button
