@@ -8,6 +8,7 @@ import { Button, ButtonText } from "@/components/ui/button";
 import curriculum from "@/data/curriculum.json";
 import { Divider } from "@/components/ui/divider";
 import AsyncStorage from "@react-native-async-storage/async-storage";
+import { Input, InputField } from "@/components/ui/input";
 
 const Curriculum = () => {
   const [cgpa, setCgpa] = useState(0);
@@ -157,7 +158,26 @@ const Curriculum = () => {
               {courses.length}
             </Heading>
           </Card>
+          <Card className="w-[20%] bg-white">
+            <Text size="xs" className="w-full text-center">
+              GPA
+            </Text>
+            <Heading size="xl" className="w-full text-center">
+              {gpa}
+            </Heading>
+          </Card>
         </View>
+      </View>
+
+      {/* Search Section */}
+      <View className="w-full px-5">
+        <Input
+          variant="outline"
+          size="md"
+          className="bg-white mt-5 rounded-full"
+        >
+          <InputField placeholder="Search Courses..." />
+        </Input>
       </View>
 
       {/* Courses Section */}
