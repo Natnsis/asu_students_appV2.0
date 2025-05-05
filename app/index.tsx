@@ -1,22 +1,42 @@
-import { Button, ButtonGroup, ButtonIcon, ButtonSpinner, ButtonText } from "@/components/ui/button";
+import {
+  Button,
+  ButtonGroup,
+  ButtonIcon,
+  ButtonSpinner,
+  ButtonText,
+} from "@/components/ui/button";
 import { Heading } from "@/components/ui/heading";
 import { Text } from "@/components/ui/text";
 import { Image } from "@/components/ui/image";
 import { View } from "react-native";
-import { Link } from "expo-router";
+import { Link, router } from "expo-router";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
 export default function Index() {
+  const checkInformedStats = async () => {
+    const userdata = await AsyncStorage.getItem("userData");
+    if (userdata) {
+      const isInfromed = JSON.parse(userdata).isInformed;
+      if (isInfromed) {
+        router.push("/(tabs)");
+      } else {
+        router.push("/(screens)/studentInfo");
+      }
+    }
+  };
+
   return (
     <View className="p-5 bg-white flex-1">
       <Heading size="2xl" className="text-center">
-        Welcome to 
+        Welcome to
       </Heading>
       <Heading size="xl" className="text-center">
         Asu Students App
       </Heading>
 
       <Text size="sm" className="text-center mt-5">
-        Access your Academic resources, campus events and student service; all in one place
+        Access your Academic resources, campus events and student service; all
+        in one place
       </Text>
 
       <Image
@@ -27,21 +47,29 @@ export default function Index() {
         alt="firstPage"
         className="w-full mt-5 rounded-lg"
       />
-      <Link href="/login" asChild>
-        <Button size="xl" variant="solid" action="primary" className="mt-5 ">
-            <ButtonText>Sign In</ButtonText>
-        </Button>
-      </Link>
+
+      <Button
+        size="xl"
+        variant="solid"
+        action="primary"
+        className="mt-5 "
+        onPress={() => checkInformedStats()}
+      >
+        <ButtonText>Sign In</ButtonText>
+      </Button>
 
       <Button size="xl" variant="outline" action="primary" className="mt-5 ">
-          <ButtonText>Continue as Guest</ButtonText>
+        <ButtonText>Continue as Guest</ButtonText>
       </Button>
 
       <Text size="sm" className="text-center mt-5 mb-1">
-        New to this platform? 
+        New to this platform?
       </Text>
       <Text size="sm" className="text-center ">
-        create an account to get started <Link href="/" className="text-blue-700">Register here</Link>
+        create an account to get started{" "}
+        <Link href="/" className="text-blue-700">
+          Register here
+        </Link>
       </Text>
 
       <View className="absolute bottom-5 flex-row px-2">
@@ -57,7 +85,7 @@ export default function Index() {
         </View>
         <View>
           <Text size="sm" className="w-[40vw] text-center">
-            💭 24/7 Support 
+            💭 24/7 Support
           </Text>
         </View>
       </View>

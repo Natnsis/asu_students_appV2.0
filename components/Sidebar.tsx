@@ -10,15 +10,47 @@ import {
 import { Heading } from "@/components/ui/heading";
 import { Text } from "@/components/ui/text";
 import { CloseIcon, Icon, MenuIcon, StarIcon } from "@/components/ui/icon";
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { Card } from "./ui/card";
 import { View } from "react-native";
 import { Divider } from "./ui/divider";
 import { Center } from "./ui/center";
-import { Link } from "expo-router";
+import { Link, router } from "expo-router";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
 export function Sidebar() {
-  const [showDrawer, setShowDrawer] = React.useState(false);
+  interface UserData {
+    fullName: string;
+    [key: string]: any;
+  }
+  const [userData, setUserData] = useState<UserData | null>(null);
+  const [showDrawer, setShowDrawer] = useState(false);
+
+  useEffect(() => {
+    const fetchData = async () => {
+      const userInformation = await AsyncStorage.getItem("userData");
+      if (userInformation) {
+        setUserData(JSON.parse(userInformation));
+      } else {
+        console.log("No data found");
+      }
+    };
+    fetchData();
+  }, []);
+
+  const handleNavigation = async (
+    pathIfFilled: string,
+    fallbackPath: string
+  ) => {
+    const studentStatus = await AsyncStorage.getItem("studentStatus");
+    if (studentStatus) {
+      router.push(pathIfFilled as any);
+    } else {
+      router.push(fallbackPath as any);
+    }
+    setShowDrawer(false);
+  };
+
   return (
     <>
       <Button
@@ -66,113 +98,113 @@ export function Sidebar() {
                   </Button>
                 </View>
                 <View>
-                  <Heading size="lg">Alex Thompson</Heading>
-                  <Text size="sm">Computer Science Year-3</Text>
+                  <Heading size="lg">{userData?.fullName ?? "Guest"}</Heading>
+                  <Text size="sm">
+                    {userData?.department ?? "no-department"}
+                  </Text>
                 </View>
               </View>
             </Card>
 
             <Divider className="my-5" />
 
-            <View className="flex flex-col gap-4">
-              {/* First Row */}
-              <View className="flex flex-row justify-between gap-4">
-                <Card
-                  variant="filled"
-                  className="w-[48%] h-[100px] flex justify-center items-center"
-                >
-                  <Center>
-                    <Text>📚</Text>
-                    <Text>Library</Text>
-                  </Center>
-                </Card>
-                <Card
-                  variant="filled"
-                  className="w-[48%] h-[100px] flex justify-center items-center"
-                >
-                  <Center>
-                    <Text>📖</Text>
-                    <Text>Books</Text>
-                  </Center>
-                </Card>
-              </View>
-
-              {/* Second Row */}
-              <View className="flex flex-row justify-between gap-4">
-                <Card
-                  variant="filled"
-                  className="w-[48%] h-[100px] flex justify-center items-center"
-                >
-                  <Center>
-                    <Text>🎓</Text>
-                    <Text>Graduation</Text>
-                  </Center>
-                </Card>
-                <Card
-                  variant="filled"
-                  className="w-[48%] h-[100px] flex justify-center items-center"
-                >
-                  <Center>
-                    <Text>🖥️</Text>
-                    <Text>Labs</Text>
-                  </Center>
-                </Card>
-              </View>
-            </View>
-
-            <Divider className="my-5" />
-
-            <View className="gap-y-5">
+            <View className="gap-y-3">
               <Button
-                variant="outline"
-                onPress={() => {
-                  setShowDrawer(false);
-                }}
+                variant="link"
+                onPress={() =>
+                  handleNavigation(
+                    "/(otherScreens)/curriculum",
+                    "/(otherScreens)/studentStatus"
+                  )
+                }
               >
-                <ButtonText>Materials</ButtonText>
+                <ButtonText>
+                  <Heading>Curriculum</Heading>
+                </ButtonText>
               </Button>
               <Button
-                variant="outline"
-                onPress={() => {
-                  setShowDrawer(false);
-                }}
+                variant="link"
+                onPress={() =>
+                  handleNavigation(
+                    "/(otherScreens)/gpa-calculator",
+                    "/(otherScreens)/studentStatus"
+                  )
+                }
               >
-                <ButtonText>Settings</ButtonText>
+                <ButtonText>
+                  <Heading>GPA Calculator</Heading>
+                </ButtonText>
               </Button>
               <Button
-                variant="outline"
+                variant="link"
                 onPress={() => {
+                  router.push("/(otherScreens)/campus-map/index.tsx");
                   setShowDrawer(false);
                 }}
               >
-                <ButtonText>Logout</ButtonText>
+                <ButtonText>
+                  <Heading>Campus Map</Heading>
+                </ButtonText>
               </Button>
               <Button
-                variant="outline"
+                variant="link"
                 onPress={() => {
+                  router.push("/(otherScreens)/lounges");
                   setShowDrawer(false);
                 }}
               >
-                <Link
-                  href="/(otherScreens)/about"
-                  className="w-full text-center"
-                >
-                  <ButtonText>About ASU</ButtonText>
-                </Link>
+                <ButtonText>
+                  <Heading>Lounges</Heading>
+                </ButtonText>
               </Button>
               <Button
-                variant="outline"
+                variant="link"
+                onPress={() => {
+                  router.push("/(otherScreens)/gallery");
+                  setShowDrawer(false);
+                }}
+              >
+                <ButtonText>
+                  <Heading>Gallery</Heading>
+                </ButtonText>
+              </Button>
+              <Button
+                variant="link"
+                onPress={() => {
+                  router.push("/(otherScreens)/remainders");
+                  setShowDrawer(false);
+                }}
+              >
+                <ButtonText>
+                  <Heading>Remainder</Heading>
+                </ButtonText>
+              </Button>
+              <Button
+                variant="link"
+                onPress={() => {
+                  router.push("/(otherScreens)/about");
+                  setShowDrawer(false);
+                }}
+              >
+                <ButtonText>
+                  <Heading>About Asu</Heading>
+                </ButtonText>
+              </Button>
+              <Button
+                variant="link"
                 onPress={() => {
                   setShowDrawer(false);
                 }}
               >
-                <ButtonText>Contact Us</ButtonText>
+                <ButtonText>
+                  <Heading>Contact Us</Heading>
+                </ButtonText>
               </Button>
             </View>
           </DrawerBody>
           <DrawerFooter>
             <Text size="sm" className="w-full text-center absolute bottom-0">
-              Developed by Natnael Sisay
+              Developed by Natnael Sisay with ❤️
             </Text>
           </DrawerFooter>
         </DrawerContent>
