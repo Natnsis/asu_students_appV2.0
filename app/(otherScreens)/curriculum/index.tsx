@@ -1,59 +1,34 @@
 import { View, ScrollView } from "react-native";
-import React, { useEffect, useState, useMemo } from "react";
+import React, { useEffect, useState } from "react";
 import { Heading } from "@/components/ui/heading";
 import { Avatar, AvatarFallbackText } from "@/components/ui/avatar";
 import { Card } from "@/components/ui/card";
 import { Text } from "@/components/ui/text";
 import { Input, InputField } from "@/components/ui/input";
 import { Button, ButtonText } from "@/components/ui/button";
-import { Progress, ProgressFilledTrack } from "@/components/ui/progress";
+import curriculum from "@/data/curriculum.json";
 import { Divider } from "@/components/ui/divider";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 
 const Curriculum = () => {
   const [cgpa, setCgpa] = useState(0);
+  const [courses, setCourses] = useState<
+    {
+      code: string;
+      title: string;
+      description: string;
+      credit: number;
+      room: string;
+    }[]
+  >([]);
   const [semester, setSemester] = useState("-");
   const [courseCount, setCourseCount] = useState(0);
   const [gpa, setGpa] = useState(0);
+  const [department, setDepartment] = useState("");
 
-  // Memoize the courses array to prevent re-creation on every render
-  const courses = useMemo(
-    () => [
-      {
-        code: "CS301",
-        title: "Data Structure & Algorithm",
-        description:
-          "Advanced data structures and algorithms design techniques.",
-        credit: 4,
-        instructor: "Dr. Sarah Chen",
-        progress: 75,
-        materials: 12,
-        assignments: 8,
-        due: "Binary Trees Quiz",
-        schedule: "Mon, Wed 10:00-11:30",
-        room: "CS Lab-2",
-      },
-      {
-        code: "CS302",
-        title: "Operating Systems",
-        description:
-          "Introduction to operating systems and process management.",
-        credit: 3,
-        instructor: "Dr. John Doe",
-        progress: 60,
-        materials: 10,
-        assignments: 6,
-        due: "Memory Management Assignment",
-        schedule: "Tue, Thu 12:00-1:30",
-        room: "CS Lab-1",
-      },
-    ],
-    []
-  );
-
-  // Fetch data from AsyncStorage
+  // Fetch student status data
   useEffect(() => {
-    const fetchData = async () => {
+    const fetchStudentStatus = async () => {
       const data = await AsyncStorage.getItem("studentStatus");
       const parsedData = data ? JSON.parse(data) : null;
       if (parsedData) {
@@ -61,46 +36,111 @@ const Curriculum = () => {
         setSemester(parsedData.currentSemester);
         setGpa(parsedData.semesterGpa);
       } else {
-        console.log("No data found");
+        console.log("No student status data found");
       }
     };
-    fetchData();
+    fetchStudentStatus();
   }, []);
 
-  // Update course count based on semester
+  // Fetch user data for department
+  useEffect(() => {
+    const fetchUserData = async () => {
+      const data = await AsyncStorage.getItem("userData");
+      const parsedData = data ? JSON.parse(data) : null;
+      if (parsedData) {
+        setDepartment(parsedData.department);
+      } else {
+        console.log("No user data found");
+      }
+    };
+    fetchUserData();
+  }, []);
+
+  // Update courses and course count based on semester and department
   useEffect(() => {
     switch (semester) {
       case "RM":
         setCourseCount(5);
+        const rmCurriculum = curriculum.find((item) => item.RM);
+        setCourses(rmCurriculum?.RM || []);
         break;
       case "Y1S1":
         setCourseCount(6);
+        const y1s1Curriculum = curriculum.find((item) => item.Y1S1);
+        setCourses(y1s1Curriculum?.Y1S1 || []);
         break;
       case "Y1S2":
         setCourseCount(7);
+        const y1s2Curriculum = curriculum.find((item) => item.Y1S2);
+        setCourses(
+          Array.isArray(y1s2Curriculum?.Y1S2) ? y1s2Curriculum.Y1S2 : []
+        );
         break;
       case "Y2S1":
         setCourseCount(6);
+        const y2s1Curriculum = curriculum.find((item) => item.Y2S1);
+        setCourses(
+          Array.isArray(y2s1Curriculum?.Y2S1) ? y2s1Curriculum.Y2S1 : []
+        );
         break;
       case "Y2S2":
         setCourseCount(5);
+        const y2s2Curriculum = curriculum.find((item) => item.Y2S2);
+        setCourses(
+          Array.isArray(y2s2Curriculum?.Y2S2)
+            ? y2s2Curriculum.Y2S2
+            : y2s2Curriculum?.Y2S2?.[
+                department as keyof typeof y2s2Curriculum.Y2S2
+              ] || []
+        );
         break;
       case "Y3S1":
-        setCourseCount(4);
+        setCourseCount(6);
+        const y3s1Curriculum = curriculum.find((item) => item.Y3S1);
+        setCourses(
+          Array.isArray(y3s1Curriculum?.Y3S1)
+            ? y3s1Curriculum.Y3S1
+            : y3s1Curriculum?.Y3S1?.[
+                department as keyof typeof y3s1Curriculum.Y3S1
+              ] || []
+        );
         break;
       case "Y3S2":
         setCourseCount(4);
+        const y3s2Curriculum = curriculum.find((item) => item.Y3S2);
+        setCourses(
+          Array.isArray(y3s2Curriculum?.Y3S2)
+            ? y3s2Curriculum.Y3S2
+            : y3s2Curriculum?.Y3S2?.[
+                department as keyof typeof y3s2Curriculum.Y3S2
+              ] || []
+        );
         break;
       case "Y4S1":
         setCourseCount(3);
+        const y4s1Curriculum = curriculum.find((item) => item.Y4S1);
+        setCourses(
+          Array.isArray(y4s1Curriculum?.Y4S1)
+            ? y4s1Curriculum.Y4S1
+            : y4s1Curriculum?.Y4S1?.[
+                department as keyof typeof y4s1Curriculum.Y4S1
+              ] || []
+        );
         break;
       case "Y4S2":
         setCourseCount(6);
+        const y4s2Curriculum = curriculum.find((item) => item.Y4S2);
+        if (department.toLowerCase() === "law") {
+          setCourses(y4s2Curriculum?.Y4S2?.["Law Department"] || []);
+        } else {
+          setCourses(y4s2Curriculum?.Y4S2?.["Computer Science"] || []);
+        }
         break;
       default:
         setCourseCount(0);
+        setCourses([]);
     }
-  }, [semester]);
+  }, [semester, department]);
 
   return (
     <ScrollView
@@ -184,7 +224,7 @@ const Curriculum = () => {
                 isDisabled={true}
               >
                 <ButtonText className="text-primary-950">
-                  Hello World!
+                  {course.credit} Credits
                 </ButtonText>
               </Button>
             </View>
@@ -194,53 +234,11 @@ const Curriculum = () => {
               <Text className="w-4/5">{course.description}</Text>
             </View>
 
-            <View className="flex-row items-center w-full mb-10">
-              <Text className="mr-5">
-                Credit: <Text className="font-extrabold">{course.credit}</Text>
-              </Text>
-              <Text>
-                Instructor:{" "}
-                <Text className="font-extrabold">{course.instructor}</Text>
-              </Text>
-            </View>
-
-            <View className="flex-row items-center mb-4">
-              <Text className="mr-3">
-                Progress:{" "}
-                <Text className="font-extrabold">{course.progress}%</Text>
-              </Text>
-              <Text className="mr-3">
-                Materials:{" "}
-                <Text className="font-extrabold">{course.materials}</Text>
-              </Text>
-              <Text className="mr-3">
-                Assignments:{" "}
-                <Text className="font-extrabold">{course.assignments}</Text>
-              </Text>
-            </View>
-
-            <View>
-              <Text className="text-red-500 text-right w-full mb-1">
-                Due: {course.due}
-              </Text>
-              <Progress
-                value={course.progress}
-                size="sm"
-                orientation="horizontal"
-              >
-                <ProgressFilledTrack />
-              </Progress>
-            </View>
-
             <Divider className="my-5" />
 
             <View className="flex-row items-center mb-5 ">
               <Text>
-                Schedule:{" "}
-                <Text className="font-extrabold">{course.schedule}</Text>
-              </Text>
-              <Text>
-                Rooms: <Text className="font-extrabold">{course.room}</Text>
+                Room: <Text className="font-extrabold">{course.room}</Text>
               </Text>
             </View>
           </View>

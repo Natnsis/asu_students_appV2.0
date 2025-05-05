@@ -418,6 +418,20 @@
           "room": "Law Library"
         },
         {
+          "code": "LW402",
+          "title": "Legal Research and Writing",
+          "description": "Techniques for conducting legal research and drafting legal documents.",
+          "credit": 3,
+          "room": "Law Library"
+        },
+        {
+          "code": "LW402",
+          "title": "Legal Research and Writing",
+          "description": "Techniques for conducting legal research and drafting legal documents.",
+          "credit": 3,
+          "room": "Law Library"
+        },
+        {
           "code": "LA401",
           "title": "Law and Technology",
           "description": "Legal issues arising from technological advancements.",
