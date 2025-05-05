@@ -1,6 +1,5 @@
 import { View, ScrollView } from "react-native";
-import React from "react";
-import { Sidebar } from "@/components/Sidebar";
+import React, { useEffect, useState, useMemo } from "react";
 import { Heading } from "@/components/ui/heading";
 import { Avatar, AvatarFallbackText } from "@/components/ui/avatar";
 import { Card } from "@/components/ui/card";
@@ -9,62 +8,99 @@ import { Input, InputField } from "@/components/ui/input";
 import { Button, ButtonText } from "@/components/ui/button";
 import { Progress, ProgressFilledTrack } from "@/components/ui/progress";
 import { Divider } from "@/components/ui/divider";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
 const Curriculum = () => {
-  const courses = [
-    {
-      code: "CS301",
-      title: "Data Structure & Algorithm",
-      description: "Advanced data structures and algorithms design techniques.",
-      credit: 4,
-      instructor: "Dr. Sarah Chen",
-      progress: 75,
-      materials: 12,
-      assignments: 8,
-      due: "Binary Trees Quiz",
-      schedule: "Mon, Wed 10:00-11:30",
-      room: "CS Lab-2",
-    },
-    {
-      code: "CS302",
-      title: "Operating Systems",
-      description: "Introduction to operating systems and process management.",
-      credit: 3,
-      instructor: "Dr. John Doe",
-      progress: 60,
-      materials: 10,
-      assignments: 6,
-      due: "Memory Management Assignment",
-      schedule: "Tue, Thu 12:00-1:30",
-      room: "CS Lab-1",
-    },
-    {
-      code: "CS302",
-      title: "Operating Systems",
-      description: "Introduction to operating systems and process management.",
-      credit: 3,
-      instructor: "Dr. John Doe",
-      progress: 60,
-      materials: 10,
-      assignments: 6,
-      due: "Memory Management Assignment",
-      schedule: "Tue, Thu 12:00-1:30",
-      room: "CS Lab-1",
-    },
-    {
-      code: "CS302",
-      title: "Operating Systems",
-      description: "Introduction to operating systems and process management.",
-      credit: 3,
-      instructor: "Dr. John Doe",
-      progress: 60,
-      materials: 10,
-      assignments: 6,
-      due: "Memory Management Assignment",
-      schedule: "Tue, Thu 12:00-1:30",
-      room: "CS Lab-1",
-    },
-  ];
+  const [cgpa, setCgpa] = useState(0);
+  const [semester, setSemester] = useState("-");
+  const [courseCount, setCourseCount] = useState(0);
+  const [gpa, setGpa] = useState(0);
+
+  // Memoize the courses array to prevent re-creation on every render
+  const courses = useMemo(
+    () => [
+      {
+        code: "CS301",
+        title: "Data Structure & Algorithm",
+        description:
+          "Advanced data structures and algorithms design techniques.",
+        credit: 4,
+        instructor: "Dr. Sarah Chen",
+        progress: 75,
+        materials: 12,
+        assignments: 8,
+        due: "Binary Trees Quiz",
+        schedule: "Mon, Wed 10:00-11:30",
+        room: "CS Lab-2",
+      },
+      {
+        code: "CS302",
+        title: "Operating Systems",
+        description:
+          "Introduction to operating systems and process management.",
+        credit: 3,
+        instructor: "Dr. John Doe",
+        progress: 60,
+        materials: 10,
+        assignments: 6,
+        due: "Memory Management Assignment",
+        schedule: "Tue, Thu 12:00-1:30",
+        room: "CS Lab-1",
+      },
+    ],
+    []
+  );
+
+  // Fetch data from AsyncStorage
+  useEffect(() => {
+    const fetchData = async () => {
+      const data = await AsyncStorage.getItem("studentStatus");
+      const parsedData = data ? JSON.parse(data) : null;
+      if (parsedData) {
+        setCgpa(parsedData.cumulativeGpa);
+        setSemester(parsedData.currentSemester);
+        setGpa(parsedData.semesterGpa);
+      } else {
+        console.log("No data found");
+      }
+    };
+    fetchData();
+  }, []);
+
+  // Update course count based on semester
+  useEffect(() => {
+    switch (semester) {
+      case "RM":
+        setCourseCount(5);
+        break;
+      case "Y1S1":
+        setCourseCount(6);
+        break;
+      case "Y1S2":
+        setCourseCount(7);
+        break;
+      case "Y2S1":
+        setCourseCount(6);
+        break;
+      case "Y2S2":
+        setCourseCount(5);
+        break;
+      case "Y3S1":
+        setCourseCount(4);
+        break;
+      case "Y3S2":
+        setCourseCount(4);
+        break;
+      case "Y4S1":
+        setCourseCount(3);
+        break;
+      case "Y4S2":
+        setCourseCount(6);
+        break;
+      default:
+        setCourseCount(0);
+    }
+  }, [semester]);
 
   return (
     <ScrollView
@@ -93,29 +129,29 @@ const Curriculum = () => {
       <View className="w-full mt-5">
         <View className="flex-row justify-between items-center w-full px-5">
           <Card className="w-fit bg-white">
-            <Text size="xs">Credits</Text>
+            <Text size="xs">CGPA</Text>
             <Heading size="xl" className="w-full text-center">
-              25
+              {cgpa}
             </Heading>
           </Card>
           <Card className="w-fit bg-white">
-            <Text size="xs">Completed</Text>
+            <Text size="xs">Semester</Text>
             <Heading size="xl" className="w-full text-center">
-              25
+              {semester}
             </Heading>
           </Card>
-          <Card className="w-fit bg-white">
+          <Card className="w-[20%] bg-white">
             <Text size="xs" className="w-full text-center">
               GPA
             </Text>
             <Heading size="xl" className="w-full text-center">
-              3.85
+              {gpa}
             </Heading>
           </Card>
           <Card className="w-fit bg-white">
             <Text size="xs">Courses</Text>
             <Heading size="xl" className="w-full text-center">
-              8
+              {courseCount}
             </Heading>
           </Card>
         </View>

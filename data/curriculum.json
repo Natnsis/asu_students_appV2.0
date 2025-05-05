@@ -1,0 +1,534 @@
+[
+  {
+    "RM": [
+      {
+        "code": "CS101",
+        "title": "Introduction to Programming",
+        "description": "Learn the basics of programming using Python.",
+        "credit": 3,
+        "room": "CS Lab-1"
+      },
+      {
+        "code": "CS102",
+        "title": "Discrete Mathematics",
+        "description": "Introduction to mathematical reasoning and logic.",
+        "credit": 4,
+        "room": "Math Hall-2"
+      },
+      {
+        "code": "HD101",
+        "title": "Introduction to Anatomy",
+        "description": "Learn the basics of human anatomy and physiology.",
+        "credit": 3,
+        "room": "Health Lab-1"
+      },
+      {
+        "code": "HD102",
+        "title": "Health and Nutrition",
+        "description": "Understand the principles of nutrition and healthy living.",
+        "credit": 2,
+        "room": "Health Hall-3"
+      }
+    ]
+  },
+  {
+    "Y1S1": [
+      {
+        "code": "CS201",
+        "title": "Data Structures",
+        "description": "Learn about arrays, linked lists, stacks, and queues.",
+        "credit": 4,
+        "room": "CS Lab-2"
+      },
+      {
+        "code": "CS202",
+        "title": "Computer Architecture",
+        "description": "Introduction to computer hardware and architecture.",
+        "credit": 3,
+        "room": "CS Lab-1"
+      },
+      {
+        "code": "CS202",
+        "title": "Computer Architecture",
+        "description": "Introduction to computer hardware and architecture.",
+        "credit": 3,
+        "room": "CS Lab-1"
+      },
+      {
+        "code": "CS202",
+        "title": "Computer Architecture",
+        "description": "Introduction to computer hardware and architecture.",
+        "credit": 3,
+        "room": "CS Lab-1"
+      }
+    ]
+  },
+  {
+    "Y1S2": {
+      "Engineering": [
+        {
+          "code": "EN101",
+          "title": "Introduction to Engineering",
+          "description": "Fundamental concepts and principles of engineering.",
+          "credit": 3,
+          "room": "Eng Hall-1"
+        },
+        {
+          "code": "MA101",
+          "title": "Calculus I",
+          "description": "Limits, derivatives, and basic integration.",
+          "credit": 4,
+          "room": "Math Hall-1"
+        }
+      ],
+      "Computer Science": [
+        {
+          "code": "CS301",
+          "title": "Data Structure & Algorithm",
+          "description": "Advanced data structures and algorithms design techniques.",
+          "credit": 4,
+          "room": "CS Lab-2"
+        },
+        {
+          "code": "CS302",
+          "title": "Operating Systems",
+          "description": "Introduction to operating systems and process management.",
+          "credit": 3,
+          "room": "CS Lab-1"
+        }
+      ],
+      "Law Department": [
+        {
+          "code": "LW101",
+          "title": "Introduction to Law",
+          "description": "Fundamental principles and concepts of legal systems.",
+          "credit": 3,
+          "room": "Law Auditorium-1"
+        },
+        {
+          "code": "PL101",
+          "title": "Legal Philosophy",
+          "description": "Exploring different schools of thought in jurisprudence.",
+          "credit": 2,
+          "room": "Law Seminar-1"
+        }
+      ]
+    }
+  },
+  {
+    "Y2S1": {
+      "Engineering": [
+        {
+          "code": "EN201",
+          "title": "Circuit Theory",
+          "description": "Analysis of electrical circuits and their components.",
+          "credit": 4,
+          "room": "Eng Lab-1"
+        },
+        {
+          "code": "PH201",
+          "title": "Physics for Engineers",
+          "description": "Fundamental physics principles relevant to engineering.",
+          "credit": 3,
+          "room": "Physics Lab-1"
+        }
+      ],
+      "Computer Science": [
+        {
+          "code": "CS301",
+          "title": "Data Structure & Algorithm",
+          "description": "Advanced data structures and algorithms design techniques.",
+          "credit": 4,
+          "room": "CS Lab-2"
+        },
+        {
+          "code": "CS302",
+          "title": "Operating Systems",
+          "description": "Introduction to operating systems and process management.",
+          "credit": 3,
+          "room": "CS Lab-1"
+        }
+      ],
+      "Law Department": [
+        {
+          "code": "LW201",
+          "title": "Constitutional Law",
+          "description": "Study of the fundamental laws and governance of the state.",
+          "credit": 4,
+          "room": "Law Auditorium-2"
+        },
+        {
+          "code": "CR201",
+          "title": "Criminal Law",
+          "description": "Principles of criminal offenses and legal procedures.",
+          "credit": 3,
+          "room": "Law Seminar-2"
+        }
+      ]
+    }
+  },
+  {
+    "Y2S2": {
+      "Engineering": [
+        {
+          "code": "EN202",
+          "title": "Digital Logic Design",
+          "description": "Fundamentals of digital circuits and systems.",
+          "credit": 3,
+          "room": "Eng Lab-2"
+        },
+        {
+          "code": "MA201",
+          "title": "Calculus II",
+          "description": "Advanced integration techniques and series.",
+          "credit": 4,
+          "room": "Math Hall-2"
+        }
+      ],
+      "Computer Science": [
+        {
+          "code": "CS301",
+          "title": "Data Structure & Algorithm",
+          "description": "Advanced data structures and algorithms design techniques.",
+          "credit": 4,
+          "room": "CS Lab-2"
+        },
+        {
+          "code": "CS302",
+          "title": "Operating Systems",
+          "description": "Introduction to operating systems and process management.",
+          "credit": 3,
+          "room": "CS Lab-1"
+        }
+      ],
+      "Law Department": [
+        {
+          "code": "LW202",
+          "title": "Contract Law",
+          "description": "Principles governing the formation and enforcement of contracts.",
+          "credit": 3,
+          "room": "Law Auditorium-1"
+        },
+        {
+          "code": "TR201",
+          "title": "Tort Law",
+          "description": "Legal liabilities for civil wrongs.",
+          "credit": 4,
+          "room": "Law Seminar-1"
+        }
+      ]
+    }
+  },
+  {
+    "Y3S1": {
+      "Engineering": [
+        {
+          "code": "EN301",
+          "title": "Signals and Systems",
+          "description": "Analysis of continuous and discrete-time signals and systems.",
+          "credit": 4,
+          "room": "Eng Hall-2"
+        },
+        {
+          "code": "EE301",
+          "title": "Electromagnetics",
+          "description": "Fundamental principles of electric and magnetic fields.",
+          "credit": 3,
+          "room": "Eng Lab-3"
+        }
+      ],
+      "Computer Science": [
+        {
+          "code": "CS301",
+          "title": "Data Structure & Algorithm",
+          "description": "Advanced data structures and algorithms design techniques.",
+          "credit": 4,
+          "room": "CS Lab-2"
+        },
+        {
+          "code": "CS302",
+          "title": "Operating Systems",
+          "description": "Introduction to operating systems and process management.",
+          "credit": 3,
+          "room": "CS Lab-1"
+        }
+      ],
+      "Law Department": [
+        {
+          "code": "LW301",
+          "title": "Property Law",
+          "description": "Legal rights and interests in real and personal property.",
+          "credit": 4,
+          "room": "Law Auditorium-2"
+        },
+        {
+          "code": "CO301",
+          "title": "Corporate Law",
+          "description": "Legal framework governing business organizations and corporations.",
+          "credit": 3,
+          "room": "Law Seminar-2"
+        }
+      ]
+    }
+  },
+  {
+    "Y3S2": {
+      "Engineering": [
+        {
+          "code": "EN302",
+          "title": "Control Systems",
+          "description": "Analysis and design of feedback control systems.",
+          "credit": 3,
+          "room": "Eng Lab-4"
+        },
+        {
+          "code": "ME301",
+          "title": "Thermodynamics",
+          "description": "Principles of energy conversion and heat transfer.",
+          "credit": 4,
+          "room": "Eng Hall-3"
+        }
+      ],
+      "Computer Science": [
+        {
+          "code": "CS301",
+          "title": "Data Structure & Algorithm",
+          "description": "Advanced data structures and algorithms design techniques.",
+          "credit": 4,
+          "room": "CS Lab-2"
+        },
+        {
+          "code": "CS302",
+          "title": "Operating Systems",
+          "description": "Introduction to operating systems and process management.",
+          "credit": 3,
+          "room": "CS Lab-1"
+        }
+      ],
+      "Law Department": [
+        {
+          "code": "LW302",
+          "title": "Civil Procedure",
+          "description": "Rules and processes governing civil litigation.",
+          "credit": 3,
+          "room": "Law Auditorium-1"
+        },
+        {
+          "code": "EV301",
+          "title": "Environmental Law",
+          "description": "Legal regulations concerning environmental protection and sustainability.",
+          "credit": 4,
+          "room": "Law Seminar-1"
+        }
+      ]
+    }
+  },
+  {
+    "Y4S1": {
+      "Engineering": [
+        {
+          "code": "EN401",
+          "title": "Capstone Design Project I",
+          "description": "Initiation of a comprehensive engineering design project.",
+          "credit": 3,
+          "room": "Design Studio-1"
+        },
+        {
+          "code": "ES401",
+          "title": "Engineering Economics",
+          "description": "Economic principles applied to engineering decision-making.",
+          "credit": 3,
+          "room": "Eng Hall-1"
+        }
+      ],
+      "Computer Science": [
+        {
+          "code": "CS301",
+          "title": "Data Structure & Algorithm",
+          "description": "Advanced data structures and algorithms design techniques.",
+          "credit": 4,
+          "room": "CS Lab-2"
+        },
+        {
+          "code": "CS302",
+          "title": "Operating Systems",
+          "description": "Introduction to operating systems and process management.",
+          "credit": 3,
+          "room": "CS Lab-1"
+        }
+      ],
+      "Law Department": [
+        {
+          "code": "LW401",
+          "title": "Evidence",
+          "description": "Rules governing the admissibility of evidence in legal proceedings.",
+          "credit": 3,
+          "room": "Law Moot Court"
+        },
+        {
+          "code": "IP401",
+          "title": "Intellectual Property Law",
+          "description": "Legal protection of inventions, literary, and artistic works.",
+          "credit": 3,
+          "room": "Law Seminar-2"
+        }
+      ]
+    }
+  },
+  {
+    "Y4S2": {
+      "Engineering": [
+        {
+          "code": "EN402",
+          "title": "Capstone Design Project II",
+          "description": "Completion and presentation of the engineering design project.",
+          "credit": 4,
+          "room": "Design Studio-1"
+        },
+        {
+          "code": "EN403",
+          "title": "Professional Ethics",
+          "description": "Ethical responsibilities and professional conduct in engineering.",
+          "credit": 2,
+          "room": "Eng Hall-1"
+        }
+      ],
+      "Computer Science": [
+        {
+          "code": "CS301",
+          "title": "Data Structure & Algorithm",
+          "description": "Advanced data structures and algorithms design techniques.",
+          "credit": 4,
+          "room": "CS Lab-2"
+        },
+        {
+          "code": "CS302",
+          "title": "Operating Systems",
+          "description": "Introduction to operating systems and process management.",
+          "credit": 3,
+          "room": "CS Lab-1"
+        }
+      ],
+      "Law Department": [
+        {
+          "code": "LW402",
+          "title": "Legal Research and Writing",
+          "description": "Techniques for conducting legal research and drafting legal documents.",
+          "credit": 3,
+          "room": "Law Library"
+        },
+        {
+          "code": "LA401",
+          "title": "Law and Technology",
+          "description": "Legal issues arising from technological advancements.",
+          "credit": 3,
+          "room": "Law Seminar-1"
+        }
+      ]
+    }
+  },
+  {
+    "Y5S1": {
+      "Engineering": [
+        {
+          "code": "EN501",
+          "title": "Advanced Engineering Topics I",
+          "description": "Specialized topics in a specific engineering discipline.",
+          "credit": 3,
+          "room": "To be Announced"
+        },
+        {
+          "code": "EN502",
+          "title": "Engineering Project Management",
+          "description": "Principles and practices of managing engineering projects.",
+          "credit": 3,
+          "room": "To be Announced"
+        }
+      ],
+      "Computer Science": [
+        {
+          "code": "CS301",
+          "title": "Data Structure & Algorithm",
+          "description": "Advanced data structures and algorithms design techniques.",
+          "credit": 4,
+          "room": "CS Lab-2"
+        },
+        {
+          "code": "CS302",
+          "title": "Operating Systems",
+          "description": "Introduction to operating systems and process management.",
+          "credit": 3,
+          "room": "CS Lab-1"
+        }
+      ],
+      "Law Department": [
+        {
+          "code": "LW501",
+          "title": "Jurisprudence",
+          "description": "Advanced study of legal theories and philosophies.",
+          "credit": 3,
+          "room": "To be Announced"
+        },
+        {
+          "code": "IN501",
+          "title": "International Law",
+          "description": "Legal principles governing relations between nations.",
+          "credit": 4,
+          "room": "To be Announced"
+        }
+      ]
+    }
+  },
+  {
+    "Y5S2": {
+      "Engineering": [
+        {
+          "code": "EN503",
+          "title": "Advanced Engineering Topics II",
+          "description": "Further specialization in a specific engineering discipline.",
+          "credit": 3,
+          "room": "To be Announced"
+        },
+        {
+          "code": "EN504",
+          "title": "Internship/Research Project",
+          "description": "Practical experience or research in an engineering field.",
+          "credit": 6,
+          "room": "To be Announced"
+        }
+      ],
+      "Computer Science": [
+        {
+          "code": "CS301",
+          "title": "Data Structure & Algorithm",
+          "description": "Advanced data structures and algorithms design techniques.",
+          "credit": 4,
+          "room": "CS Lab-2"
+        },
+        {
+          "code": "CS302",
+          "title": "Operating Systems",
+          "description": "Introduction to operating systems and process management.",
+          "credit": 3,
+          "room": "CS Lab-1"
+        }
+      ],
+      "Law Department": [
+        {
+          "code": "LW502",
+          "title": "Legal Ethics",
+          "description": "Professional responsibility and ethical conduct for lawyers.",
+          "credit": 2,
+          "room": "To be Announced"
+        },
+        {
+          "code": "LW503",
+          "title": "Clinical Legal Education",
+          "description": "Practical legal experience through case work and client interaction.",
+          "credit": 4,
+          "room": "To be Announced"
+        }
+      ]
+    }
+  }
+]
