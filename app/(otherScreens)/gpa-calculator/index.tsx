@@ -19,6 +19,7 @@ import {
   SelectPortal,
   SelectTrigger,
 } from "@/components/ui/select";
+import { router } from "expo-router";
 
 const gpa = () => {
   const [courses, setCourses] = useState([
@@ -54,6 +55,9 @@ const gpa = () => {
             variant="solid"
             action="primary"
             className="rounded-full"
+            onPress={() => {
+              router.push("/(otherScreens)/add-course/index");
+            }}
           >
             <ButtonIcon as={AddIcon} />
             <ButtonText>Add Courses</ButtonText>
@@ -104,7 +108,7 @@ const gpa = () => {
             <Text size="sm" className="font-medium">
               Projected GPA:{" "}
             </Text>
-            <Heading size="md" className="text-primary-600">
+            <Heading size="md" className="text-3xl text-green-600">
               3.74
             </Heading>
           </View>
