@@ -7,6 +7,18 @@ import { Button, ButtonIcon, ButtonText } from "@/components/ui/button";
 import { AddIcon, ChevronDownIcon } from "@/components/ui/icon";
 import { Card } from "@/components/ui/card";
 import { Divider } from "@/components/ui/divider";
+import {
+  Select,
+  SelectBackdrop,
+  SelectContent,
+  SelectDragIndicator,
+  SelectDragIndicatorWrapper,
+  SelectIcon,
+  SelectInput,
+  SelectItem,
+  SelectPortal,
+  SelectTrigger,
+} from "@/components/ui/select";
 
 const gpa = () => {
   const [courses, setCourses] = useState([
@@ -99,11 +111,8 @@ const gpa = () => {
           <Divider className="my-5" />
 
           {/* Table Header */}
-          <View className="flex-row w-full bg-gray-100 p-3 rounded-t-lg">
+          <View className="flex-row w-full bg-gray-100 p-3 rounded-t-lg justify-between">
             <Text className="w-[50%] font-bold">Course</Text>
-            <Text className="w-[15%] text-center font-bold" size="xs">
-              Credits
-            </Text>
             <Text className="w-[20%] text-center font-bold" size="xs">
               Grade
             </Text>
@@ -116,41 +125,34 @@ const gpa = () => {
           {courses.map((course) => (
             <View
               key={course.id}
-              className="flex-row w-full p-3 border-b border-gray-200"
+              className="flex-row w-full p-3 border-b border-gray-200 justify-between"
             >
               <Text className="w-[50%]" size="xs">
                 {course.course}
               </Text>
-              <Text className="w-[15%] text-center" size="xs">
-                {course.credits}
-              </Text>
-              <View className="w-[20%] text-center">
-                <Picker
-                  selectedValue={course.grade}
-                  onValueChange={(itemValue) =>
-                    handleGradeChange(course.id, itemValue)
-                  }
-                  style={{
-                    height: 40,
-                    width: "100%",
-                    borderWidth: 1,
-                    borderColor: "#ccc",
-                    borderRadius: 5,
-                  }}
-                >
-                  <Picker.Item label="A+" value="A+" />
-                  <Picker.Item label="A" value="A" />
-                  <Picker.Item label="A-" value="A-" />
-                  <Picker.Item label="B+" value="B+" />
-                  <Picker.Item label="B" value="B" />
-                  <Picker.Item label="B-" value="B-" />
-                  <Picker.Item label="C+" value="C+" />
-                  <Picker.Item label="C" value="C" />
-                  <Picker.Item label="C-" value="C-" />
-                  <Picker.Item label="D" value="D" />
-                  <Picker.Item label="F" value="F" />
-                </Picker>
-              </View>
+              <Select className="w-14">
+                <SelectTrigger>
+                  <SelectInput className="flex-1 justify-center h-[30vw]  text-sm w-[30vw] " />
+                </SelectTrigger>
+                <SelectPortal>
+                  <SelectBackdrop />
+                  <SelectContent>
+                    <SelectDragIndicatorWrapper>
+                      <SelectDragIndicator />
+                    </SelectDragIndicatorWrapper>
+                    <SelectItem label="A+" value="4" />
+                    <SelectItem label="A" value="4" />
+                    <SelectItem label="A-" value="3.75" />
+                    <SelectItem label="B+" value="3.5" />
+                    <SelectItem label="B" value="3" />
+                    <SelectItem label="B-" value="2.75" />
+                    <SelectItem label="C+" value="2.5" />
+                    <SelectItem label="C" value="2" />
+                    <SelectItem label="D" value="1" />
+                    <SelectItem label="F" value="0" />
+                  </SelectContent>
+                </SelectPortal>
+              </Select>
 
               <View className="w-[16%] text-center">
                 <Button size="xs" variant="link" action="negative">
