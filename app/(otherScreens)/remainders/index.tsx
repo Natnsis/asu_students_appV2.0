@@ -1,5 +1,6 @@
 import { View, ScrollView } from "react-native";
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
+import { useFocusEffect } from "@react-navigation/native"; // Import useFocusEffect
 import { Heading } from "@/components/ui/heading";
 import { Text } from "@/components/ui/text";
 import { Button, ButtonIcon, ButtonText } from "@/components/ui/button";
@@ -20,36 +21,40 @@ const Reminders = () => {
   >([]);
 
   // Fetch reminders from AsyncStorage
-  useEffect(() => {
-    const fetchReminders = async () => {
-      const storedReminders = await AsyncStorage.getItem("reminders");
-      if (storedReminders) {
-        const parsedReminders = JSON.parse(storedReminders);
+  const fetchReminders = async () => {
+    const storedReminders = await AsyncStorage.getItem("reminders");
+    if (storedReminders) {
+      const parsedReminders = JSON.parse(storedReminders);
 
-        // Calculate status for each reminder
-        const updatedReminders = parsedReminders.map((reminder: any) => {
-          const currentDate = new Date();
-          const dueDate = new Date(reminder.endDate); // Parse the ISO string into a Date object
-          const timeDifference = dueDate.getTime() - currentDate.getTime();
-          const daysLeft = Math.ceil(timeDifference / (1000 * 60 * 60 * 24)); // Convert to days
+      // Calculate status for each reminder
+      const updatedReminders = parsedReminders.map((reminder: any) => {
+        const currentDate = new Date();
+        const dueDate = new Date(reminder.endDate); // Parse the ISO string into a Date object
+        const timeDifference = dueDate.getTime() - currentDate.getTime();
+        const daysLeft = Math.ceil(timeDifference / (1000 * 60 * 60 * 24)); // Convert to days
 
-          let status = "";
-          if (daysLeft > 0) {
-            status = `${daysLeft} day(s) left`;
-          } else if (daysLeft === 0) {
-            status = "Due today";
-          } else {
-            status = "Overdue";
-          }
+        let status = "";
+        if (daysLeft > 0) {
+          status = `${daysLeft} day(s) left`;
+        } else if (daysLeft === 0) {
+          status = "Due today";
+        } else {
+          status = "Overdue";
+        }
 
-          return { ...reminder, status }; // Add status to the reminder
-        });
+        return { ...reminder, status }; // Add status to the reminder
+      });
 
-        setReminders(updatedReminders);
-      }
-    };
-    fetchReminders();
-  }, []);
+      setReminders(updatedReminders);
+    }
+  };
+
+  // Use useFocusEffect to fetch reminders when the screen is focused
+  useFocusEffect(
+    React.useCallback(() => {
+      fetchReminders();
+    }, [])
+  );
 
   // Handle deleting a reminder
   const handleDeleteReminder = async (id: number) => {

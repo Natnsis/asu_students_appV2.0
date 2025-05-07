@@ -1,5 +1,6 @@
 import { View, ScrollView } from "react-native";
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
+import { useFocusEffect } from "@react-navigation/native"; // Import useFocusEffect
 import { Heading } from "@/components/ui/heading";
 import { Text } from "@/components/ui/text";
 import { Button, ButtonIcon, ButtonText } from "@/components/ui/button";
@@ -24,19 +25,22 @@ const GPA = () => {
   const [courses, setCourses] = useState<
     { name: string; credit: number; grade?: string }[]
   >([]);
-
   const [gpa, setGpa] = useState<string | number>("");
-  const [grade, setGrade] = useState("");
 
-  useEffect(() => {
-    const fetchCourses = async () => {
-      const storedCourses = await AsyncStorage.getItem("courses");
-      if (storedCourses) {
-        setCourses(JSON.parse(storedCourses));
-      }
-    };
-    fetchCourses();
-  }, []);
+  // Fetch courses from AsyncStorage
+  const fetchCourses = async () => {
+    const storedCourses = await AsyncStorage.getItem("courses");
+    if (storedCourses) {
+      setCourses(JSON.parse(storedCourses));
+    }
+  };
+
+  // Use useFocusEffect to fetch courses when the screen is focused
+  useFocusEffect(
+    React.useCallback(() => {
+      fetchCourses();
+    }, [])
+  );
 
   const handleGradeChange = (id: number, newGrade: string) => {
     const updatedCourses = courses.map((course, index) =>
@@ -173,7 +177,7 @@ const GPA = () => {
               <Select
                 className="w-14"
                 onValueChange={(value) => handleGradeChange(index, value)}
-                selectedValue={grade}
+                selectedValue={courses.grade}
               >
                 <SelectTrigger>
                   <SelectInput className="flex-1 justify-center h-[30vw]  text-sm w-[30vw] " />
