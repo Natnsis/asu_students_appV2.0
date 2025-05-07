@@ -1,10 +1,9 @@
 import { View, ScrollView } from "react-native";
-import React, { useState } from "react";
-import { Picker } from "@react-native-picker/picker";
+import React, { useEffect, useState } from "react";
 import { Heading } from "@/components/ui/heading";
 import { Text } from "@/components/ui/text";
 import { Button, ButtonIcon, ButtonText } from "@/components/ui/button";
-import { AddIcon, ChevronDownIcon } from "@/components/ui/icon";
+import { AddIcon } from "@/components/ui/icon";
 import { Card } from "@/components/ui/card";
 import { Divider } from "@/components/ui/divider";
 import {
@@ -13,26 +12,63 @@ import {
   SelectContent,
   SelectDragIndicator,
   SelectDragIndicatorWrapper,
-  SelectIcon,
   SelectInput,
   SelectItem,
   SelectPortal,
   SelectTrigger,
 } from "@/components/ui/select";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 import { router } from "expo-router";
 
-const gpa = () => {
-  const [courses, setCourses] = useState([
-    { id: 1, course: "Data Structures and Algorithms", credits: 3, grade: "A" },
-    { id: 2, course: "Operating Systems", credits: 4, grade: "B+" },
-    { id: 3, course: "Database Systems", credits: 3, grade: "A-" },
-  ]);
+const GPA = () => {
+  const [courses, setCourses] = useState<
+    { name: string; credit: number; grade?: string }[]
+  >([]);
+
+  const [gpa, setGpa] = useState<string | number>("");
+  const [grade, setGrade] = useState("");
+
+  useEffect(() => {
+    const fetchCourses = async () => {
+      const storedCourses = await AsyncStorage.getItem("courses");
+      if (storedCourses) {
+        setCourses(JSON.parse(storedCourses));
+      }
+    };
+    fetchCourses();
+  }, []);
+
   const handleGradeChange = (id: number, newGrade: string) => {
-    setCourses((prevCourses) =>
-      prevCourses.map((course) =>
-        course.id === id ? { ...course, grade: newGrade } : course
-      )
+    const updatedCourses = courses.map((course, index) =>
+      index === id ? { ...course, grade: newGrade } : course
     );
+    setCourses(updatedCourses);
+    AsyncStorage.setItem("courses", JSON.stringify(updatedCourses));
+  };
+
+  const handleDeleteCourse = async (id: number) => {
+    const updatedCourses = courses.filter((_, index) => index !== id);
+    setCourses(updatedCourses);
+    await AsyncStorage.setItem("courses", JSON.stringify(updatedCourses));
+  };
+
+  const calculateGpa = () => {
+    let totalWeightedGrade = 0;
+    let totalCredits = 0;
+
+    courses.forEach((course) => {
+      if (course.grade) {
+        const gradeValue = parseFloat(course.grade);
+        totalWeightedGrade += gradeValue * (course.credit || 0);
+        totalCredits += course.credit || 0;
+      }
+    });
+
+    const calculatedGpa =
+      totalCredits > 0
+        ? (totalWeightedGrade / totalCredits).toFixed(2)
+        : "0.00";
+    setGpa(calculatedGpa);
   };
 
   return (
@@ -56,7 +92,7 @@ const gpa = () => {
             action="primary"
             className="rounded-full"
             onPress={() => {
-              router.push("/(otherScreens)/add-course/index");
+              router.push("/(otherScreens)/add-course");
             }}
           >
             <ButtonIcon as={AddIcon} />
@@ -109,7 +145,7 @@ const gpa = () => {
               Projected GPA:{" "}
             </Text>
             <Heading size="md" className="text-3xl text-green-600">
-              3.74
+              {gpa}
             </Heading>
           </View>
           <Divider className="my-5" />
@@ -126,15 +162,19 @@ const gpa = () => {
           </View>
 
           {/* Table Body */}
-          {courses.map((course) => (
+          {courses.map((courses, index) => (
             <View
-              key={course.id}
+              key={index}
               className="flex-row w-full p-3 border-b border-gray-200 justify-between"
             >
-              <Text className="w-[50%]" size="xs">
-                {course.course}
+              <Text className="w-[50%]" size="xs" numberOfLines={1}>
+                {courses.name || "N/A"}
               </Text>
-              <Select className="w-14">
+              <Select
+                className="w-14"
+                onValueChange={(value) => handleGradeChange(index, value)}
+                selectedValue={grade}
+              >
                 <SelectTrigger>
                   <SelectInput className="flex-1 justify-center h-[30vw]  text-sm w-[30vw] " />
                 </SelectTrigger>
@@ -159,112 +199,25 @@ const gpa = () => {
               </Select>
 
               <View className="w-[16%] text-center">
-                <Button size="xs" variant="link" action="negative">
+                <Button
+                  size="xs"
+                  variant="link"
+                  action="negative"
+                  onPress={() => handleDeleteCourse(index)}
+                >
                   <ButtonText>Remove</ButtonText>
                 </Button>
               </View>
             </View>
           ))}
-        </View>
-      </View>
-
-      <View className="w-full mt-5 px-5">
-        <View className="bg-white p-4 rounded-md shadow-md">
-          <Heading>Previous Semester</Heading>
           <Divider className="my-5" />
-          <View className="flex-row items-center justify-between w-full mb-5">
-            <Text className="w-[50%]">Fall 2023</Text>
-            <Text>GPA:3.85</Text>
-          </View>
-          <View className="flex-row items-center w-full gap-3 mb-3">
-            <Card
-              variant="filled"
-              className="rounded-md px-2 py-3 w-[50%] h-25 "
-            >
-              <Heading size="md" className="mb-2">
-                Programming Fundamentals
-              </Heading>
-              <Text size="xs">Grade: A</Text>
-            </Card>
-            <Card
-              variant="filled"
-              className="rounded-md px-2 py-3 w-[50%] h-25"
-            >
-              <Heading size="md" className="mb-2">
-                Programming Fundamentals
-              </Heading>
-              <Text size="xs">Grade: A</Text>
-            </Card>
-          </View>
-          <View className="flex-row items-center w-full gap-3 mb-3">
-            <Card
-              variant="filled"
-              className="rounded-md px-2 py-3 w-[50%] h-25 "
-            >
-              <Heading size="md" className="mb-2">
-                Programming Fundamentals
-              </Heading>
-              <Text size="xs">Grade: A</Text>
-            </Card>
-            <Card
-              variant="filled"
-              className="rounded-md px-2 py-3 w-[50%] h-25"
-            >
-              <Heading size="md" className="mb-2">
-                Programming Fundamentals
-              </Heading>
-              <Text size="xs">Grade: A</Text>
-            </Card>
-          </View>
-          <Divider className="my-5" />
-          <View className="flex-row items-center justify-between w-full mb-5">
-            <Text className="w-[50%]">Fall 2023</Text>
-            <Text>GPA:3.85</Text>
-          </View>
-          <View className="flex-row items-center w-full gap-3 mb-3">
-            <Card
-              variant="filled"
-              className="rounded-md px-2 py-3 w-[50%] h-25 "
-            >
-              <Heading size="md" className="mb-2">
-                Programming Fundamentals
-              </Heading>
-              <Text size="xs">Grade: A</Text>
-            </Card>
-            <Card
-              variant="filled"
-              className="rounded-md px-2 py-3 w-[50%] h-25"
-            >
-              <Heading size="md" className="mb-2">
-                Programming Fundamentals
-              </Heading>
-              <Text size="xs">Grade: A</Text>
-            </Card>
-          </View>
-          <View className="flex-row items-center w-full gap-3 mb-3">
-            <Card
-              variant="filled"
-              className="rounded-md px-2 py-3 w-[50%] h-25 "
-            >
-              <Heading size="md" className="mb-2">
-                Programming Fundamentals
-              </Heading>
-              <Text size="xs">Grade: A</Text>
-            </Card>
-            <Card
-              variant="filled"
-              className="rounded-md px-2 py-3 w-[50%] h-25"
-            >
-              <Heading size="md" className="mb-2">
-                Programming Fundamentals
-              </Heading>
-              <Text size="xs">Grade: A</Text>
-            </Card>
-          </View>
+          <Button onPress={calculateGpa}>
+            <ButtonText>Calculate GPA</ButtonText>
+          </Button>
         </View>
       </View>
     </ScrollView>
   );
 };
 
-export default gpa;
+export default GPA;
