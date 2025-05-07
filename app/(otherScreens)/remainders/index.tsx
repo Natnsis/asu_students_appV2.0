@@ -10,6 +10,7 @@ import {
   CheckboxIcon,
   CheckboxIndicator,
 } from "@/components/ui/checkbox";
+import { router } from "expo-router";
 
 const Reminders = () => {
   const reminders = [
@@ -56,6 +57,7 @@ const Reminders = () => {
             variant="solid"
             action="primary"
             className="rounded-full"
+            onPress={() => router.push("/(otherScreens)/add-reminder")}
           >
             <ButtonIcon as={AddIcon} />
             <ButtonText>Add Reminder</ButtonText>
