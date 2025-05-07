@@ -1,41 +1,62 @@
 import { View, ScrollView } from "react-native";
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { Heading } from "@/components/ui/heading";
 import { Text } from "@/components/ui/text";
 import { Button, ButtonIcon, ButtonText } from "@/components/ui/button";
-import { AddIcon, CheckIcon } from "@/components/ui/icon";
+import { AddIcon, StarIcon } from "@/components/ui/icon";
 import { Input, InputField } from "@/components/ui/input";
-import {
-  Checkbox,
-  CheckboxIcon,
-  CheckboxIndicator,
-} from "@/components/ui/checkbox";
 import { router } from "expo-router";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
 const Reminders = () => {
-  const reminders = [
+  const [reminders, setReminders] = useState<
     {
-      id: 1,
-      title: "Database Project Submission",
-      description: "Complete and submit the final database design project.",
-      dueDate: "2024-02-19 11:00",
-      status: "Due soon",
-    },
-    {
-      id: 2,
-      title: "Team Meeting",
-      description: "Attend the weekly team meeting to discuss project updates.",
-      dueDate: "2024-02-20 14:00",
-      status: "Upcoming",
-    },
-    {
-      id: 3,
-      title: "Submit Assignment",
-      description: "Submit the assignment for the Data Structures course.",
-      dueDate: "2024-02-21 09:00",
-      status: "Upcoming",
-    },
-  ];
+      id: number;
+      title: string;
+      description: string;
+      endDate: string; // Use endDate as the due date
+      status: string; // Status will show days left
+    }[]
+  >([]);
+
+  // Fetch reminders from AsyncStorage
+  useEffect(() => {
+    const fetchReminders = async () => {
+      const storedReminders = await AsyncStorage.getItem("reminders");
+      if (storedReminders) {
+        const parsedReminders = JSON.parse(storedReminders);
+
+        // Calculate status for each reminder
+        const updatedReminders = parsedReminders.map((reminder: any) => {
+          const currentDate = new Date();
+          const dueDate = new Date(reminder.endDate); // Parse the ISO string into a Date object
+          const timeDifference = dueDate.getTime() - currentDate.getTime();
+          const daysLeft = Math.ceil(timeDifference / (1000 * 60 * 60 * 24)); // Convert to days
+
+          let status = "";
+          if (daysLeft > 0) {
+            status = `${daysLeft} day(s) left`;
+          } else if (daysLeft === 0) {
+            status = "Due today";
+          } else {
+            status = "Overdue";
+          }
+
+          return { ...reminder, status }; // Add status to the reminder
+        });
+
+        setReminders(updatedReminders);
+      }
+    };
+    fetchReminders();
+  }, []);
+
+  // Handle deleting a reminder
+  const handleDeleteReminder = async (id: number) => {
+    const updatedReminders = reminders.filter((reminder) => reminder.id !== id);
+    setReminders(updatedReminders);
+    await AsyncStorage.setItem("reminders", JSON.stringify(updatedReminders));
+  };
 
   return (
     <ScrollView
@@ -78,43 +99,45 @@ const Reminders = () => {
 
       {/* Reminders Section */}
       <View className="w-full px-5 mb-5">
-        {reminders.map((reminder) => (
-          <View
-            key={reminder.id}
-            className="w-full p-5 flex-row bg-white rounded-lg shadow-sm gap-5 mb-5"
-          >
-            {/* Checkbox */}
-            <View className="w-[10%]">
-              <Checkbox size="md" value={""} className="mt-10">
-                <CheckboxIndicator>
-                  <CheckboxIcon as={CheckIcon} size="lg" />
-                </CheckboxIndicator>
-              </Checkbox>
-            </View>
+        {reminders.length > 0 ? (
+          reminders.map((reminder) => (
+            <View
+              key={reminder.id}
+              className="w-full p-5 flex-row bg-white rounded-lg shadow-sm gap-5 mb-5"
+            >
+              <View className="flex items-center justify-center bg-blue-100 p-3 rounded-full">
+                <StarIcon width={24} height={24} color="#2563eb" />
+              </View>
 
-            {/* Reminder Content */}
-            <View className="w-[90%]">
-              <Heading>{reminder.title}</Heading>
-              <Text size="sm" className="mt-3 text-gray-600">
-                {reminder.description}
-              </Text>
-              <View className="flex-row gap-5 my-5">
-                <Text>⏰ {reminder.dueDate}</Text>
-                <Text>⌛ {reminder.status}</Text>
-              </View>
-              <View>
-                <Button
-                  size="sm"
-                  variant="solid"
-                  action="negative"
-                  className="w-[40%]"
-                >
-                  <ButtonText>Delete</ButtonText>
-                </Button>
+              {/* Reminder Content */}
+              <View className="w-[90%]">
+                <Heading>{reminder.title}</Heading>
+                <Text size="sm" className="mt-3 text-gray-600">
+                  {reminder.description}
+                </Text>
+                <View className="flex-col gap-5 my-5">
+                  <Text>
+                    ⏰ Due: {new Date(reminder.endDate).toLocaleString()}
+                  </Text>
+                  <Text>⌛ {reminder.status}</Text>
+                </View>
+                <View>
+                  <Button
+                    size="sm"
+                    variant="solid"
+                    action="negative"
+                    className="w-[40%]"
+                    onPress={() => handleDeleteReminder(reminder.id)}
+                  >
+                    <ButtonText>Delete</ButtonText>
+                  </Button>
+                </View>
               </View>
             </View>
-          </View>
-        ))}
+          ))
+        ) : (
+          <Text className="text-center text-gray-500">No reminders found.</Text>
+        )}
       </View>
     </ScrollView>
   );

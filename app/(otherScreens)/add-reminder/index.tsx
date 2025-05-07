@@ -1,5 +1,5 @@
-import { ScrollView, View } from "react-native";
 import React, { useState } from "react";
+import { ScrollView, View } from "react-native";
 import { Heading } from "@/components/ui/heading";
 import { Text } from "@/components/ui/text";
 import { Card } from "@/components/ui/card";
@@ -9,60 +9,66 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
 import { Textarea, TextareaInput } from "@/components/ui/textarea";
 import CustomDatePicker from "@/components/CustomDatePicker";
 
-const index = () => {
+const AddReminder = () => {
   const [title, setTitle] = useState<string>("");
   const [description, setDescription] = useState<string>("");
-
-  const [startDate, setStartDate] = useState(new Date());
-  const [endDate, setEndDate] = useState(new Date());
-  const [showStartPicker, setShowStartPicker] = useState(false);
-  const [showEndPicker, setShowEndPicker] = useState(false);
+  const [endDate, setEndDate] = useState<Date | null>(null);
 
   const handleAddReminder = async () => {
-    if (!title || !description) {
+    if (!title || !description || !endDate) {
       alert("Please fill in all fields.");
       return;
     }
 
-    const newReminder = {
-      title,
-      description,
-      startDate,
-      endDate,
-    };
+    try {
+      const newReminder = {
+        id: Date.now(), // Unique ID for the reminder
+        title,
+        description,
+        endDate: endDate.toISOString(), // Save the end date as an ISO string
+      };
 
-    const storedReminders = await AsyncStorage.getItem("reminders");
-    const reminders = storedReminders ? JSON.parse(storedReminders) : [];
-    reminders.push(newReminder);
+      // Fetch existing reminders from AsyncStorage
+      const storedReminders = await AsyncStorage.getItem("reminders");
+      const reminders = storedReminders ? JSON.parse(storedReminders) : [];
 
-    await AsyncStorage.setItem("reminders", JSON.stringify(reminders));
-    setTitle("");
-    setDescription("");
-    setStartDate(new Date());
-    setEndDate(new Date());
+      // Add the new reminder
+      reminders.push(newReminder);
+
+      // Save the updated reminders back to AsyncStorage
+      await AsyncStorage.setItem("reminders", JSON.stringify(reminders));
+
+      // Reset the form fields
+      setTitle("");
+      setDescription("");
+      setEndDate(null);
+
+      alert("Reminder added successfully!");
+    } catch (error) {
+      console.error("Error saving reminder:", error);
+      alert("Failed to save the reminder. Please try again.");
+    }
   };
 
   return (
     <ScrollView>
-      <View className="p-5 flex-row justify-between w-full ">
-        <Heading size="xl">Add Reminders here</Heading>
-        <Text>⌚📝</Text>
+      <View className="p-5 flex-row justify-between w-full">
+        <Heading size="xl">Add Reminder</Heading>
       </View>
 
       <View className="w-full px-8 gap-5">
         <Card className="bg-white p-5 rounded-lg shadow-md">
-          <Text size="sm">Reminder's Title</Text>
+          <Text size="sm">Reminder Title</Text>
           <Input className="bg-white mb-5">
             <InputField
-              placeholder="Physics"
-              variant="rounded"
+              placeholder="Enter title"
               value={title}
               onChangeText={(text) => setTitle(text)}
             />
           </Input>
 
           <Text>Description</Text>
-          <Textarea size="md" className="w-full">
+          <Textarea size="md" className="w-full mb-5">
             <TextareaInput
               placeholder="Write information about the reminder..."
               value={description}
@@ -70,10 +76,10 @@ const index = () => {
             />
           </Textarea>
 
-          <Text size="sm">End Date and Time</Text>
-          <CustomDatePicker />
+          <Text size="sm">End Date</Text>
+          <CustomDatePicker date={endDate} setDate={setEndDate} />
 
-          <Button onPress={handleAddReminder}>
+          <Button onPress={handleAddReminder} className="mt-5">
             <ButtonText>Add Reminder</ButtonText>
           </Button>
         </Card>
@@ -82,4 +88,4 @@ const index = () => {
   );
 };
 
-export default index;
+export default AddReminder;
