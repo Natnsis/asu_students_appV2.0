@@ -14,8 +14,7 @@ import React, { useEffect, useState } from "react";
 import { Card } from "./ui/card";
 import { View } from "react-native";
 import { Divider } from "./ui/divider";
-import { Center } from "./ui/center";
-import { Link, router } from "expo-router";
+import { router } from "expo-router";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 
 export function Sidebar() {
@@ -110,6 +109,7 @@ export function Sidebar() {
 
             <View className="gap-y-3">
               <Button
+                className="w-full"
                 variant="link"
                 onPress={() =>
                   handleNavigation(
@@ -118,11 +118,12 @@ export function Sidebar() {
                   )
                 }
               >
-                <ButtonText>
-                  <Heading>Curriculum</Heading>
+                <ButtonText className="w-full">
+                  <Heading>✅ Curriculum</Heading>
                 </ButtonText>
               </Button>
               <Button
+                className="w-full"
                 variant="link"
                 onPress={() =>
                   handleNavigation(
@@ -131,8 +132,8 @@ export function Sidebar() {
                   )
                 }
               >
-                <ButtonText>
-                  <Heading>GPA Calculator</Heading>
+                <ButtonText className="w-full">
+                  <Heading>🧮 GPA Calculator</Heading>
                 </ButtonText>
               </Button>
               <Button
@@ -142,19 +143,20 @@ export function Sidebar() {
                   setShowDrawer(false);
                 }}
               >
-                <ButtonText>
-                  <Heading>Campus Map</Heading>
+                <ButtonText className="w-full">
+                  <Heading>🗺 Campus Map</Heading>
                 </ButtonText>
               </Button>
               <Button
+                className="w-full"
                 variant="link"
                 onPress={() => {
                   router.push("/(otherScreens)/lounges");
                   setShowDrawer(false);
                 }}
               >
-                <ButtonText>
-                  <Heading>Lounges</Heading>
+                <ButtonText className="w-full">
+                  <Heading>🍴 Lounges</Heading>
                 </ButtonText>
               </Button>
               <Button
@@ -164,40 +166,43 @@ export function Sidebar() {
                   setShowDrawer(false);
                 }}
               >
-                <ButtonText>
-                  <Heading>Gallery</Heading>
+                <ButtonText className="w-full">
+                  <Heading>📷 Gallery</Heading>
                 </ButtonText>
               </Button>
               <Button
+                className="w-full"
                 variant="link"
                 onPress={() => {
                   router.push("/(otherScreens)/remainders");
                   setShowDrawer(false);
                 }}
               >
-                <ButtonText>
-                  <Heading>Remainder</Heading>
+                <ButtonText className="w-full">
+                  <Heading>📝 Remainder</Heading>
                 </ButtonText>
               </Button>
               <Button
+                className="w-full"
                 variant="link"
                 onPress={() => {
                   router.push("/(otherScreens)/about");
                   setShowDrawer(false);
                 }}
               >
-                <ButtonText>
-                  <Heading>About Asu</Heading>
+                <ButtonText className="w-full">
+                  <Heading>🔔 About Asu</Heading>
                 </ButtonText>
               </Button>
               <Button
+                className="w-full"
                 variant="link"
                 onPress={() => {
                   setShowDrawer(false);
                 }}
               >
-                <ButtonText>
-                  <Heading>Contact Us</Heading>
+                <ButtonText className="w-full">
+                  <Heading>📧 Contact Us</Heading>
                 </ButtonText>
               </Button>
             </View>
