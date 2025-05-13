@@ -4,11 +4,10 @@ import { Heading } from "@/components/ui/heading";
 import { Avatar, AvatarFallbackText } from "@/components/ui/avatar";
 import { Card } from "@/components/ui/card";
 import { Text } from "@/components/ui/text";
-import { Button, ButtonText } from "@/components/ui/button";
-import curriculum from "@/data/curriculum.json";
-import { Divider } from "@/components/ui/divider";
+
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { Input, InputField } from "@/components/ui/input";
+import { Button, ButtonText } from "@/components/ui/button";
 
 const Curriculum = () => {
   const [cgpa, setCgpa] = useState(0);
@@ -20,7 +19,6 @@ const Curriculum = () => {
     room: string;
   }
 
-  const [courses, setCourses] = useState<Course[]>([]);
   const [semester, setSemester] = useState("-");
   const [gpa, setGpa] = useState(0);
   const [department, setDepartment] = useState("");
@@ -41,7 +39,6 @@ const Curriculum = () => {
     fetchStudentStatus();
   }, []);
 
-  // Fetch user data for department
   useEffect(() => {
     const fetchUserData = async () => {
       const data = await AsyncStorage.getItem("userData");
@@ -54,65 +51,6 @@ const Curriculum = () => {
     };
     fetchUserData();
   }, []);
-
-  // Update courses based on semester and department
-  useEffect(() => {
-    let selectedCourses: Course[] = [];
-    switch (semester) {
-      case "RM":
-        selectedCourses = curriculum.find((item) => item.RM)?.RM || [];
-        break;
-      case "Y1S1":
-        selectedCourses = curriculum.find((item) => item.Y1S1)?.Y1S1 || [];
-        break;
-      case "Y1S2":
-        const y1s2Curriculum = curriculum.find((item) => item.Y1S2)?.Y1S2;
-        selectedCourses = Array.isArray(y1s2Curriculum) ? y1s2Curriculum : [];
-        break;
-      case "Y2S1":
-        const y2s1Curriculum = curriculum.find((item) => item.Y2S1)?.Y2S1;
-        selectedCourses = Array.isArray(y2s1Curriculum) ? y2s1Curriculum : [];
-        break;
-      case "Y2S2":
-        const y2s2Curriculum = curriculum.find((item) => item.Y2S2);
-        selectedCourses =
-          y2s2Curriculum?.Y2S2?.[
-            department as keyof typeof y2s2Curriculum.Y2S2
-          ] || [];
-        break;
-      case "Y3S1":
-        const y3s1Curriculum = curriculum.find((item) => item.Y3S1);
-        selectedCourses =
-          y3s1Curriculum?.Y3S1?.[
-            department as keyof typeof y3s1Curriculum.Y3S1
-          ] || [];
-        break;
-      case "Y3S2":
-        const y3s2Curriculum = curriculum.find((item) => item.Y3S2);
-        selectedCourses =
-          y3s2Curriculum?.Y3S2?.[
-            department as keyof typeof y3s2Curriculum.Y3S2
-          ] || [];
-        break;
-      case "Y4S1":
-        const y4s1Curriculum = curriculum.find((item) => item.Y4S1);
-        selectedCourses =
-          y4s1Curriculum?.Y4S1?.[
-            department as keyof typeof y4s1Curriculum.Y4S1
-          ] || [];
-        break;
-      case "Y4S2":
-        const y4s2Curriculum = curriculum.find((item) => item.Y4S2);
-        selectedCourses =
-          department.toLowerCase() === "law"
-            ? y4s2Curriculum?.Y4S2?.["Law Department"] || []
-            : y4s2Curriculum?.Y4S2?.["Computer Science"] || [];
-        break;
-      default:
-        selectedCourses = [];
-    }
-    setCourses(selectedCourses);
-  }, [semester, department]);
 
   return (
     <ScrollView
@@ -153,9 +91,9 @@ const Curriculum = () => {
             </Heading>
           </Card>
           <Card className="w-fit bg-white">
-            <Text size="xs">Courses</Text>
+            <Text size="xs">Dep't</Text>
             <Heading size="xl" className="w-full text-center">
-              {courses.length}
+              16
             </Heading>
           </Card>
           <Card className="w-[20%] bg-white">
@@ -176,45 +114,70 @@ const Curriculum = () => {
           size="md"
           className="bg-white mt-5 rounded-full"
         >
-          <InputField placeholder="Search Courses..." />
+          <InputField placeholder="Search Department..." />
         </Input>
       </View>
 
-      {/* Courses Section */}
+      {/* Departments Section */}
       <View className="px-5 w-full mt-10 mb-10">
-        {courses.map((course, index) => (
-          <View key={index} className="w-full bg-white rounded-md p-5 mb-5">
-            <View className="flex-row items-center w-full">
-              <Heading size="md" className="mr-3">
-                {course.code}
-              </Heading>
-              <Button
-                size="xs"
-                variant="solid"
-                action="secondary"
-                className="rounded-full"
-                isDisabled={true}
-              >
-                <ButtonText className="text-primary-950">
-                  {course.credit} Credits
-                </ButtonText>
-              </Button>
-            </View>
-
-            <View className="my-2 w-full">
-              <Heading>{course.title}</Heading>
-              <Text className="w-4/5">{course.description}</Text>
-            </View>
-
-            <Divider className="my-5" />
-
-            <View className="flex-row items-center mb-5 ">
-              <Text>
-                Room: <Text className="font-extrabold">{course.room}</Text>
-              </Text>
-            </View>
-          </View>
-        ))}
+        <View className="p-5 bg-white ">
+          <Text className="mb-3">Departments:</Text>
+          <Button variant="outline" className="mb-5">
+            <ButtonText className="w-full gap-1">
+              <Heading> 💻 Computer Science</Heading>
+            </ButtonText>
+          </Button>
+          <Button variant="outline" className="mb-5">
+            <ButtonText className="w-full gap-1">
+              <Heading> 📡 Information Technology</Heading>
+            </ButtonText>
+          </Button>
+          <Button variant="outline" className="mb-5">
+            <ButtonText className="w-full gap-1">
+              <Heading> 📝 Information Science</Heading>
+            </ButtonText>
+          </Button>
+          <Button variant="outline" className="mb-5">
+            <ButtonText className="w-full gap-1">
+              <Heading> 💊 Pharmacy</Heading>
+            </ButtonText>
+          </Button>
+          <Button variant="outline" className="mb-5">
+            <ButtonText className="w-full gap-1">
+              <Heading> 🔬 Medical Laboratory</Heading>
+            </ButtonText>
+          </Button>
+          <Button variant="outline" className="mb-5">
+            <ButtonText className="w-full gap-1">
+              <Heading> 💉 Nurse</Heading>
+            </ButtonText>
+          </Button>
+          <Button variant="outline" className="mb-5">
+            <ButtonText className="w-full gap-1">
+              <Heading> ⚖ Law</Heading>
+            </ButtonText>
+          </Button>
+          <Button variant="outline" className="mb-5">
+            <ButtonText className="w-full gap-1">
+              <Heading> 💹 Economics</Heading>
+            </ButtonText>
+          </Button>
+          <Button variant="outline" className="mb-5">
+            <ButtonText className="w-full gap-1">
+              <Heading> 🧮 Accounting</Heading>
+            </ButtonText>
+          </Button>
+          <Button variant="outline" className="mb-5">
+            <ButtonText className="w-full gap-1">
+              <Heading> 📰 Journalism</Heading>
+            </ButtonText>
+          </Button>
+          <Button variant="outline" className="mb-5">
+            <ButtonText className="w-full gap-1">
+              <Heading> 🌱 Agro Economics</Heading>
+            </ButtonText>
+          </Button>
+        </View>
       </View>
     </ScrollView>
   );
