@@ -1,18 +1,16 @@
 import {
   Button,
-  ButtonGroup,
-  ButtonIcon,
-  ButtonSpinner,
   ButtonText,
 } from "@/components/ui/button";
 import { Heading } from "@/components/ui/heading";
 import { Text } from "@/components/ui/text";
 import { Image } from "@/components/ui/image";
 import { View } from "react-native";
-import { Link, router } from "expo-router";
+import { router } from "expo-router";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 
 export default function Index() {
+
   const checkInformedStats = async () => {
     const userdata = await AsyncStorage.getItem("userData");
     if (userdata) {
@@ -24,6 +22,10 @@ export default function Index() {
       }
     }
   };
+
+  const justGo = () =>{
+      router.push("/(screens)/studentInfo")
+  }
 
   return (
     <View className="p-5 bg-white flex-1">
@@ -53,42 +55,10 @@ export default function Index() {
         variant="solid"
         action="primary"
         className="mt-5 "
-        onPress={() => checkInformedStats()}
+        onPress={() => justGo()}
       >
-        <ButtonText>Sign In</ButtonText>
+        <ButtonText>Get Started</ButtonText>
       </Button>
-
-      <Button size="xl" variant="outline" action="primary" className="mt-5 ">
-        <ButtonText>Continue as Guest</ButtonText>
-      </Button>
-
-      <Text size="sm" className="text-center mt-5 mb-1">
-        New to this platform?
-      </Text>
-      <Text size="sm" className="text-center ">
-        create an account to get started{" "}
-        <Link href="/" className="text-blue-700">
-          Register here
-        </Link>
-      </Text>
-
-      <View className="absolute bottom-5 flex-row px-2">
-        <View className="">
-          <Text size="sm" className="w-[30vw] text-center">
-            🔐 Secure login
-          </Text>
-        </View>
-        <View>
-          <Text size="sm" className="w-[40vw] text-center">
-            📱 Mobile friendly
-          </Text>
-        </View>
-        <View>
-          <Text size="sm" className="w-[40vw] text-center">
-            💭 24/7 Support
-          </Text>
-        </View>
-      </View>
-    </View>
+   </View>
   );
 }
