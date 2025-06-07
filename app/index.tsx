@@ -37,8 +37,7 @@ export default function Index() {
       </Heading>
 
       <Text size="sm" className="text-center mt-5">
-        Access your Academic resources, campus events and student service; all
-        in one place
+        Access your Academic resources, campus events and student service; all in one place
       </Text>
 
       <Image
@@ -57,7 +56,7 @@ export default function Index() {
         className="mt-5 "
         onPress={() => justGo()}
       >
-        <ButtonText>Get Started</ButtonText>
+        <ButtonText>Get Started here</ButtonText>
       </Button>
    </View>
   );
