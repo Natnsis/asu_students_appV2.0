@@ -46,7 +46,7 @@ const StudentInfo = () => {
 
   return (
     <View className="flex-1 justify-center items-center">
-      <View className="bg-white w-[90vw] shadow-md rounded-lg px-3 gap-5 pt-5 pb-10">
+      <View className="bg-white w-[90vw] shadow-md rounded-lg px-3 gap-5 pt-5 pb-10 shadow-gray-100">
         <Heading size="xl" className="pb-5">
           Student Information
         </Heading>
@@ -149,8 +149,11 @@ const StudentInfo = () => {
           </Select>
         </View>
 
-        {/* Submit Button */}
-        <Button size="xl" onPress={handleSubmit}>
+        <Button
+          size="xl"
+          onPress={handleSubmit}
+          className="bg-success-700 shadow-success-50 shadow-md"
+        >
           <ButtonText>Submit Information</ButtonText>
         </Button>
       </View>

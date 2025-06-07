@@ -1,63 +1,39 @@
-import {
-  Button,
-  ButtonText,
-} from "@/components/ui/button";
-import { Heading } from "@/components/ui/heading";
+import { Button, ButtonText } from "@/components/ui/button";
 import { Text } from "@/components/ui/text";
 import { Image } from "@/components/ui/image";
 import { View } from "react-native";
 import { router } from "expo-router";
-import AsyncStorage from "@react-native-async-storage/async-storage";
 
 export default function Index() {
-
-  const checkInformedStats = async () => {
-    const userdata = await AsyncStorage.getItem("userData");
-    if (userdata) {
-      const isInfromed = JSON.parse(userdata).isInformed;
-      if (isInfromed) {
-        router.push("/(tabs)");
-      } else {
-        router.push("/(screens)/studentInfo");
-      }
-    }
-  };
-
-  const justGo = () =>{
-      router.push("/(screens)/studentInfo")
-  }
-
   return (
     <View className="p-5 bg-white flex-1">
-      <Heading size="2xl" className="text-center">
-        Welcome to
-      </Heading>
-      <Heading size="xl" className="text-center">
-        Asu Students App
-      </Heading>
+      <Text size="xl" className="text-center font-extrabold">
+        <Text size="xl" className="text-success-700">
+          Asu
+        </Text>{" "}
+        Students App
+      </Text>
 
-      <Text size="sm" className="text-center mt-5">
-        Access your Academic resources, campus events and student service; all in one place
+      <Text size="4xl" className="text-center mt-5 font-extrabold text-black  ">
+        Experience the ultimate student assistance
       </Text>
 
       <Image
         size="2xl"
-        source={{
-          uri: "https://images.unsplash.com/photo-1472214103451-9374bd1c798e?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80",
-        }}
+        source={require("@/assets/images/college students-bro.png")}
         alt="firstPage"
-        className="w-full mt-5 rounded-lg"
+        className="w-full my-5 rounded-lg"
       />
 
       <Button
         size="xl"
         variant="solid"
         action="primary"
-        className="mt-5 "
-        onPress={() => justGo()}
+        className="mt-5 bg-success-700"
+        onPress={() => router.push("/second")}
       >
-        <ButtonText>Get Started here</ButtonText>
+        <ButtonText>Get Started</ButtonText>
       </Button>
-   </View>
+    </View>
   );
 }
