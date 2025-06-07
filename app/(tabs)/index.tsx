@@ -57,6 +57,7 @@ const Index = () => {
     checkInformedStats();
   }, []);
 
+  const ministyle = "bg-success-50 px-2 text-base rounded-lg text-center w-fit";
   return (
     <ScrollView
       contentContainerStyle={{
@@ -70,7 +71,12 @@ const Index = () => {
       <View className="flex-row justify-between items-center p-4 bg-white w-full">
         <View className="gap-2 flex-row items-center w-full">
           <Sidebar />
-          <Heading size="lg">ASU Students App</Heading>
+          <Heading size="lg">
+            ASU Students App{" "}
+            <Text className="border border-success-700 text-green-400 py-3 px-1">
+              beta
+            </Text>
+          </Heading>
         </View>
         <Button variant="link">
           <ButtonIcon as={GripVerticalIcon} />
@@ -84,14 +90,14 @@ const Index = () => {
           <Text>
             Track your academic progress and campus life all in one place.
           </Text>
-          <View className="flex-row justify-between items-center gap-3">
-            <Text className="text-white bg-primary-700 rounded-full px-3 py-1">
+          <View className="flex-row justify-between items-center gap-3 px-4">
+            <Text className="text-white  rounded-full px-3 py-1 bg-success-700 w-fit">
               {userInfo.department}
             </Text>
-            <Text className="text-white bg-primary-700 rounded-full px-3 py-1 w-20">
+            <Text className="text-white bg-success-700 rounded-full px-3 py-1 text-base">
               Year: {userInfo.year}
             </Text>
-            <Text className="text-white bg-primary-700 rounded-full px-3 py-1">
+            <Text className="text-white bg-success-700 rounded-full px-3 py-1">
               {userInfo.gender}
             </Text>
           </View>
@@ -117,10 +123,10 @@ const Index = () => {
               Track your courses and credits
             </Text>
             <View className="flex-row  items-center justify-center gap-3 w-full">
-              <Text className="bg-gray-200 rounded-lg text-center w-20">
+              <Text className="bg-success-50 px-2 rounded-lg text-center w-fit text-base">
                 4.0 GPA
               </Text>
-              <Text className="bg-gray-200 rounded-lg text-center w-32">
+              <Text className="bg-success-50 px-2 text-base rounded-lg text-center w-fit">
                 96 credits
               </Text>
             </View>
@@ -141,12 +147,10 @@ const Index = () => {
               Navigate your campus with ease
             </Text>
             <View className="flex-row justify-between items-center gap-3">
-              <Text className="bg-gray-200 rounded-lg text-center w-24">
+              <Text className="bg-success-50 px-2 text-base rounded-lg text-center w-fit">
                 Building A
               </Text>
-              <Text className="bg-gray-200 rounded-lg text-center w-24">
-                Library
-              </Text>
+              <Text className={ministyle}>Library</Text>
             </View>
           </Center>
         </Link>
@@ -165,12 +169,8 @@ const Index = () => {
               Find study and relaxation spaces
             </Text>
             <View className="flex-row justify-between items-center gap-3">
-              <Text className="bg-gray-200 rounded-lg text-center w-28">
-                120 credits
-              </Text>
-              <Text className="bg-gray-200 rounded-lg text-center w-36">
-                3 semesters left
-              </Text>
+              <Text className={ministyle}>120 credits</Text>
+              <Text className={ministyle}>3 semesters left</Text>
             </View>
           </Center>
         </Link>
@@ -191,12 +191,8 @@ const Index = () => {
             <Heading>GPA Calculator</Heading>
             <Text className="w-full text-center">Calculate your grades</Text>
             <View className="flex-row justify-between items-center gap-3">
-              <Text className="bg-gray-200 rounded-lg text-center w-28">
-                120 credits
-              </Text>
-              <Text className="bg-gray-200 rounded-lg text-center w-36">
-                3 semesters left
-              </Text>
+              <Text className={ministyle}>120 credits</Text>
+              <Text className={ministyle}>3 semesters left</Text>
             </View>
           </Center>
         </Link>
@@ -215,12 +211,8 @@ const Index = () => {
               University photo galleries
             </Text>
             <View className="flex-row justify-between items-center gap-3">
-              <Text className="bg-gray-200 rounded-lg text-center w-28">
-                120 credits
-              </Text>
-              <Text className="bg-gray-200 rounded-lg text-center w-36">
-                3 semesters left
-              </Text>
+              <Text className={ministyle}>120 credits</Text>
+              <Text className={ministyle}>3 semesters left</Text>
             </View>
           </Center>
         </Link>
@@ -239,12 +231,8 @@ const Index = () => {
               Stay on top of your tasks
             </Text>
             <View className="flex-row justify-between items-center gap-3">
-              <Text className="bg-gray-200 rounded-lg text-center w-28">
-                120 credits
-              </Text>
-              <Text className="bg-gray-200 rounded-lg text-center w-36">
-                3 semesters left
-              </Text>
+              <Text className={ministyle}>120 credits</Text>
+              <Text className={ministyle}>3 semesters left</Text>
             </View>
           </Center>
         </Link>

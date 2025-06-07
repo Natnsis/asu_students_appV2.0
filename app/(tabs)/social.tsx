@@ -99,21 +99,6 @@ const social = () => {
         </Input>
       </View>
 
-      <View className="flex-row justify-between items-center w-full mt-5 bg-white px-3">
-        <Button variant="link">
-          <ButtonText>🎯 All</ButtonText>
-        </Button>
-        <Button variant="link">
-          <ButtonText>📚 Academic</ButtonText>
-        </Button>
-        <Button variant="link">
-          <ButtonText>⚽ Sports</ButtonText>
-        </Button>
-        <Button variant="link">
-          <ButtonText>🎨 Arts</ButtonText>
-        </Button>
-      </View>
-
       <View className="mb-20">
         {sections.map((section, index) => (
           <View
@@ -126,16 +111,20 @@ const social = () => {
                   {section.emoji}
                 </Text>
                 <Heading>{section.title}</Heading>
-                <Button variant="solid" action="primary">
+                <Button
+                  variant="solid"
+                  action="primary"
+                  className="bg-success-700"
+                >
                   <ButtonText>Join</ButtonText>
                 </Button>
               </View>
-              <Text className="w-fit">{section.description}</Text>
+              <Text className="text-base">{section.description}</Text>
               <View className="flex-row justify-between items-center gap-3">
                 {section.infos.map((info, infoIndex) => (
                   <Text
                     key={infoIndex}
-                    className={`bg-gray-200 rounded-lg text-center ${info.width}`}
+                    className={`bg-success-50 text-base rounded-lg text-center ${info.width}`}
                   >
                     {info.label}
                   </Text>

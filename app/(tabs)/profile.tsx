@@ -39,7 +39,7 @@ const Profile = () => {
       {/* Profile Info */}
       <View className="mt-5 bg-white flex-row justify-between items-center px-5 py-5 shadow-md">
         <Heading>Profile</Heading>
-        <Button>
+        <Button className="bg-success-700">
           <ButtonText>Edit Profile</ButtonText>
         </Button>
       </View>

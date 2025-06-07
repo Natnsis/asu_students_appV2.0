@@ -92,7 +92,10 @@ export function Sidebar() {
             <Card className="w-full" variant="filled">
               <View className="flex-row items-center gap-2">
                 <View>
-                  <Button size="lg" className="rounded-full p-3.5">
+                  <Button
+                    size="lg"
+                    className="rounded-full p-3.5 bg-success-700"
+                  >
                     <ButtonIcon as={StarIcon} />
                   </Button>
                 </View>

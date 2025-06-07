@@ -27,6 +27,7 @@ const second = () => {
         variant="solid"
         action="primary"
         className="mt-5 bg-success-700"
+        onPress={() => router.push("/third")}
       >
         <ButtonText>Next</ButtonText>
       </Button>

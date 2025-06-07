@@ -27,8 +27,9 @@ const third = () => {
         variant="solid"
         action="primary"
         className="mt-5 bg-success-700"
+        onPress={() => router.push("/(tabs)")}
       >
-        <ButtonText>Next</ButtonText>
+        <ButtonText>Start</ButtonText>
       </Button>
 
       <Button variant="link">
