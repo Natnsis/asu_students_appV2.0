@@ -2,23 +2,14 @@ import { View, ScrollView } from "react-native";
 import React, { useEffect, useState } from "react";
 import { Heading } from "@/components/ui/heading";
 import { Avatar, AvatarFallbackText } from "@/components/ui/avatar";
-import { Card } from "@/components/ui/card";
 import { Text } from "@/components/ui/text";
-
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { Input, InputField } from "@/components/ui/input";
 import { Button, ButtonText } from "@/components/ui/button";
+import { Card } from "@/components/ui/card";
 
 const Curriculum = () => {
   const [cgpa, setCgpa] = useState(0);
-  interface Course {
-    code: string;
-    credit: number;
-    title: string;
-    description: string;
-    room: string;
-  }
-
   const [semester, setSemester] = useState("-");
   const [gpa, setGpa] = useState(0);
   const [department, setDepartment] = useState("");
@@ -51,6 +42,56 @@ const Curriculum = () => {
     };
     fetchUserData();
   }, []);
+
+  const courses = [
+    {
+      id: 1,
+      name: "💻 Computer Science",
+    },
+    {
+      id: 2,
+      name: "📡 Information Technology",
+    },
+    {
+      id: 3,
+      name: "📝 Information Science",
+    },
+    {
+      id: 4,
+      name: "💊 Pharmacy",
+    },
+
+    {
+      id: 5,
+      name: "🔬 Medical Laboratory",
+    },
+    {
+      id: 6,
+      name: "⚖ Law",
+    },
+    {
+      id: 7,
+      name: "💹 Economics",
+    },
+    {
+      id: 8,
+      name: "🧮 Accounting",
+    },
+    {
+      id: 9,
+      name: "📰 Journalism",
+    },
+    {
+      id: 10,
+      name: "🌱 Agro Economics",
+    },
+    {
+      id: 11,
+      name: "💉 Nurse",
+    },
+  ];
+
+  const checkCourse = async (id: number) => {};
 
   return (
     <ScrollView
@@ -122,61 +163,17 @@ const Curriculum = () => {
       <View className="px-5 w-full mt-10 mb-10">
         <View className="p-5 bg-white ">
           <Text className="mb-3">Departments:</Text>
-          <Button variant="outline" className="mb-5">
-            <ButtonText className="w-full gap-1">
-              <Heading> 💻 Computer Science</Heading>
-            </ButtonText>
-          </Button>
-          <Button variant="outline" className="mb-5">
-            <ButtonText className="w-full gap-1">
-              <Heading> 📡 Information Technology</Heading>
-            </ButtonText>
-          </Button>
-          <Button variant="outline" className="mb-5">
-            <ButtonText className="w-full gap-1">
-              <Heading> 📝 Information Science</Heading>
-            </ButtonText>
-          </Button>
-          <Button variant="outline" className="mb-5">
-            <ButtonText className="w-full gap-1">
-              <Heading> 💊 Pharmacy</Heading>
-            </ButtonText>
-          </Button>
-          <Button variant="outline" className="mb-5">
-            <ButtonText className="w-full gap-1">
-              <Heading> 🔬 Medical Laboratory</Heading>
-            </ButtonText>
-          </Button>
-          <Button variant="outline" className="mb-5">
-            <ButtonText className="w-full gap-1">
-              <Heading> 💉 Nurse</Heading>
-            </ButtonText>
-          </Button>
-          <Button variant="outline" className="mb-5">
-            <ButtonText className="w-full gap-1">
-              <Heading> ⚖ Law</Heading>
-            </ButtonText>
-          </Button>
-          <Button variant="outline" className="mb-5">
-            <ButtonText className="w-full gap-1">
-              <Heading> 💹 Economics</Heading>
-            </ButtonText>
-          </Button>
-          <Button variant="outline" className="mb-5">
-            <ButtonText className="w-full gap-1">
-              <Heading> 🧮 Accounting</Heading>
-            </ButtonText>
-          </Button>
-          <Button variant="outline" className="mb-5">
-            <ButtonText className="w-full gap-1">
-              <Heading> 📰 Journalism</Heading>
-            </ButtonText>
-          </Button>
-          <Button variant="outline" className="mb-5">
-            <ButtonText className="w-full gap-1">
-              <Heading> 🌱 Agro Economics</Heading>
-            </ButtonText>
-          </Button>
+          {courses.map((course) => (
+            <Button
+              variant="link"
+              className="mb-5 bg-success-50"
+              onPress={checkCourse(course.id)}
+            >
+              <ButtonText className="w-full gap-1 py-1 px-2">
+                <Heading> {course.name}</Heading>
+              </ButtonText>
+            </Button>
+          ))}
         </View>
       </View>
     </ScrollView>

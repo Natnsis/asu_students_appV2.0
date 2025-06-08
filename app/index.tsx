@@ -2,9 +2,24 @@ import { Button, ButtonText } from "@/components/ui/button";
 import { Text } from "@/components/ui/text";
 import { Image } from "@/components/ui/image";
 import { View } from "react-native";
-import { router } from "expo-router";
+import { Redirect, router } from "expo-router";
+import { useEffect, useState } from "react";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
 export default function Index() {
+  const [isInformed, setIsInformed] = useState<boolean>(false);
+  const checkInformed = async () => {
+    const studentStatus: any = await AsyncStorage.getItem("studentStatus");
+    const parsedData = JSON.parse(studentStatus);
+
+    if (parsedData.isInformed) {
+      return <Redirect href="/(tabs)" />;
+    }
+  };
+
+  useEffect(() => {
+    checkInformed();
+  }, []);
   return (
     <View className="p-5 bg-white flex-1">
       <Text size="xl" className="text-center font-extrabold">
@@ -33,6 +48,7 @@ export default function Index() {
         onPress={() => router.push("/second")}
       >
         <ButtonText>Get Started</ButtonText>
+        <Text>{isInformed}</Text>
       </Button>
     </View>
   );
