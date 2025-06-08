@@ -32,7 +32,7 @@ const second = () => {
         <ButtonText>Next</ButtonText>
       </Button>
 
-      <Button variant="link">
+      <Button variant="link" onPress={() => router.push("/firstForm")}>
         <ButtonText className="text-success-700 text-extrabold">
           Skip
         </ButtonText>

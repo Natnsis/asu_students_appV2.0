@@ -27,12 +27,12 @@ const third = () => {
         variant="solid"
         action="primary"
         className="mt-5 bg-success-700"
-        onPress={() => router.push("/(tabs)")}
+        onPress={() => router.push("/firstForm")}
       >
         <ButtonText>Start</ButtonText>
       </Button>
 
-      <Button variant="link">
+      <Button variant="link" onPress={() => router.push("/firstForm")}>
         <ButtonText className="text-success-700 text-extrabold">
           Skip
         </ButtonText>

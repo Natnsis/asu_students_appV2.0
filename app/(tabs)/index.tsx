@@ -73,7 +73,10 @@ const Index = () => {
           <Sidebar />
           <Heading size="lg">
             ASU Students App{" "}
-            <Text className="border border-success-700 text-green-400 py-3 px-1">
+            <Text
+              size="2xs"
+              className="border border-success-700 text-green-400 px-2 rounded-lg"
+            >
               beta
             </Text>
           </Heading>

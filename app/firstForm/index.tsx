@@ -144,6 +144,7 @@ const StudentInfo = () => {
                 <SelectItem label="2" value="2" />
                 <SelectItem label="3" value="3" />
                 <SelectItem label="4" value="4" />
+                <SelectItem label="5" value="5" />
               </SelectContent>
             </SelectPortal>
           </Select>
