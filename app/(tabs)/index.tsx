@@ -8,6 +8,7 @@ import { Button, ButtonIcon } from "@/components/ui/button";
 import { GripVerticalIcon } from "@/components/ui/icon";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { Center } from "@/components/ui/center";
+import { SafeAreaView } from "react-native-safe-area-context";
 
 const Index = () => {
   interface UserInfo {
@@ -68,23 +69,19 @@ const Index = () => {
       className="w-full flex-col"
     >
       {/* Header Section */}
-      <View className="flex-row justify-between items-center p-4 bg-white w-full">
-        <View className="gap-2 flex-row items-center w-full">
-          <Sidebar />
-          <Heading size="lg">
-            ASU Students App{" "}
-            <Text
-              size="2xs"
-              className="border border-success-700 text-green-400 px-2 rounded-lg"
-            >
-              beta
-            </Text>
-          </Heading>
+      <SafeAreaView className="w-full bg-white h-24">
+        <View className="flex-row justify-between items-center  bg-white w-full">
+          <View className="gap-2 flex-row  w-full pt-5 items-center">
+            <Sidebar />
+            <Heading size="lg">
+              ASU Students App{" "}
+              <Text size="2xs" className="mt-[-10] text-green-400 rounded-lg">
+                beta
+              </Text>{" "}
+            </Heading>
+          </View>
         </View>
-        <Button variant="link">
-          <ButtonIcon as={GripVerticalIcon} />
-        </Button>
-      </View>
+      </SafeAreaView>
 
       {/* Welcome Section */}
       <View className="bg-white w-[90vw] mt-6 rounded-lg shadow-md p-3">

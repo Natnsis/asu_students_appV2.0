@@ -5,6 +5,7 @@ import { Text } from "@/components/ui/text";
 import { Center } from "@/components/ui/center";
 import { Button, ButtonText } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
+import { SafeAreaView } from "react-native-safe-area-context";
 
 const chat = () => {
   return (
@@ -16,12 +17,15 @@ const chat = () => {
       }}
       className="w-full flex-col"
     >
-      <View className="bg-white w-full flex-row justify-between items-center p-4 mb-10">
-        <Heading>Chat Space</Heading>
-        <Text className="w-[30px] h-[30px] rounded-full bg-blue-700 text-white text-center text-lg">
-          A
-        </Text>
-      </View>
+      <SafeAreaView className="w-full bg-white h-24 px-5 mb-5">
+        <View className="flex-row justify-between items-center w-full">
+          <View className="gap-2 flex-row  w-full pt-5 items-center">
+            <Heading size="lg" className="h-[30px] pl-10">
+              Chat Space
+            </Heading>
+          </View>
+        </View>
+      </SafeAreaView>
 
       <View className="w-[40vw] h-[40vw] rounded-full bg-blue-500 flex-row justify-center items-center">
         <View className="w-[35vw] h-[35vw] rounded-full bg-blue-700 flex justify-center items-center">

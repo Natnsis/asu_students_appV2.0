@@ -8,6 +8,7 @@ import { AddIcon, StarIcon } from "@/components/ui/icon";
 import { Input, InputField } from "@/components/ui/input";
 import { router } from "expo-router";
 import AsyncStorage from "@react-native-async-storage/async-storage";
+import { SafeAreaView } from "react-native-safe-area-context";
 
 const Reminders = () => {
   const [reminders, setReminders] = useState<
@@ -73,23 +74,28 @@ const Reminders = () => {
       className="w-full flex-col"
     >
       {/* Header Section */}
-      <View className="flex-row justify-between items-center p-4 bg-white w-full">
-        <View className="gap-2 flex-row items-center">
-          <Heading size="lg">Reminders</Heading>
+
+      <SafeAreaView className="w-full bg-white h-24 px-5 mb-5">
+        <View className="flex-row justify-between items-center w-full">
+          <View className="gap-2 flex-row  w-full pt-5 items-center">
+            <Heading size="lg" className="h-[30px] ">
+              Reminders
+            </Heading>
+          </View>
+          <View>
+            <Button
+              size="sm"
+              variant="solid"
+              action="primary"
+              className="rounded-full"
+              onPress={() => router.push("/(otherScreens)/add-reminder")}
+            >
+              <ButtonIcon as={AddIcon} />
+              <ButtonText>Add Reminder</ButtonText>
+            </Button>
+          </View>
         </View>
-        <View>
-          <Button
-            size="sm"
-            variant="solid"
-            action="primary"
-            className="rounded-full"
-            onPress={() => router.push("/(otherScreens)/add-reminder")}
-          >
-            <ButtonIcon as={AddIcon} />
-            <ButtonText>Add Reminder</ButtonText>
-          </Button>
-        </View>
-      </View>
+      </SafeAreaView>
 
       {/* Search Section */}
       <View className="w-full px-5 mb-5">

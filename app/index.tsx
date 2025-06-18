@@ -18,9 +18,9 @@ export default function Index() {
     <SafeAreaView className="flex h-full items-center justify-between bg-white">
       <TouchableOpacity
         onPress={() => {
-          router.replace("/(tabs)");
+          router.replace("/firstForm");
         }}
-        className="w-full flex justify-end items-end p-5"
+        className="w-full flex justify-end items-end p-5 "
       >
         <Text className="text-black text-md font-extrabold">Skip</Text>
       </TouchableOpacity>
@@ -37,10 +37,10 @@ export default function Index() {
         onIndexChanged={(index) => setActiveIndex(index)}
       >
         {home.map((item, title) => (
-          <View key={title} className="flex-1 items-center justify-center">
+          <View key={title} className="flex-1 items-center justify-center ">
             <Text
               size="xl"
-              className="text-center font-extrabold pt-5 text-success-700"
+              className="text-center font-extrabold text-success-700 px-5"
             >
               {item.title}
             </Text>
@@ -66,7 +66,7 @@ export default function Index() {
               className="w-full rounded-full flex-row justify-center items-center shadow-md shadow-neutral-400/70 bg-success-700 "
               onPress={() => {
                 if (isLastSlide) {
-                  router.replace("/(tabs)");
+                  router.replace("/firstForm");
                 } else if (swiperRef.current) {
                   swiperRef.current.scrollBy(1);
                 }

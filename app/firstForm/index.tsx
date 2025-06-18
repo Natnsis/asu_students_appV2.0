@@ -19,6 +19,7 @@ import {
 } from "@/components/ui/select";
 import { ChevronDownIcon } from "@/components/ui/icon";
 import { useRouter } from "expo-router";
+import { SafeAreaView } from "react-native-safe-area-context";
 
 const StudentInfo = () => {
   const router = useRouter();
@@ -45,7 +46,7 @@ const StudentInfo = () => {
   };
 
   return (
-    <View className="flex-1 justify-center items-center">
+    <SafeAreaView className="flex-1 justify-center items-center">
       <View className="bg-white w-[90vw] shadow-md rounded-lg px-3 gap-5 pt-5 pb-10 shadow-gray-100">
         <Heading size="xl" className="pb-5">
           Student Information
@@ -158,7 +159,7 @@ const StudentInfo = () => {
           <ButtonText>Submit Information</ButtonText>
         </Button>
       </View>
-    </View>
+    </SafeAreaView>
   );
 };
 

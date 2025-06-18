@@ -11,12 +11,21 @@ const _layout = () => {
         headerShown: false,
         tabBarShowLabel: false,
         tabBarStyle: {
-          marginBottom: 15,
           position: "absolute",
+          left: 16,
+          right: 16,
+          bottom: 50,
+          height: 48,
           borderRadius: 25,
           backgroundColor: "#fff",
+          elevation: 5,
+          shadowColor: "#000",
+          shadowOffset: { width: 0, height: 2 },
+          shadowOpacity: 0.1,
+          shadowRadius: 8,
         },
       }}
+      safeAreaInsets={{ bottom: 16 }}
     >
       <Tabs.Screen
         name="index"

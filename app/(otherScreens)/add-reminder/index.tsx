@@ -8,6 +8,7 @@ import { Button, ButtonText } from "@/components/ui/button";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { Textarea, TextareaInput } from "@/components/ui/textarea";
 import CustomDatePicker from "@/components/CustomDatePicker";
+import { SafeAreaView } from "react-native-safe-area-context";
 
 const AddReminder = () => {
   const [title, setTitle] = useState<string>("");
@@ -51,7 +52,7 @@ const AddReminder = () => {
   };
 
   return (
-    <ScrollView>
+    <SafeAreaView>
       <View className="p-5 flex-row justify-between w-full">
         <Heading size="xl">Add Reminder</Heading>
       </View>
@@ -84,7 +85,7 @@ const AddReminder = () => {
           </Button>
         </Card>
       </View>
-    </ScrollView>
+    </SafeAreaView>
   );
 };
 

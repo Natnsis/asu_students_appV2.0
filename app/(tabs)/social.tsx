@@ -5,6 +5,7 @@ import { Text } from "@/components/ui/text";
 import { Input, InputField } from "@/components/ui/input";
 import { Button, ButtonText } from "@/components/ui/button";
 import { Center } from "@/components/ui/center";
+import { SafeAreaView } from "react-native-safe-area-context";
 
 const social = () => {
   const sections = [
@@ -79,12 +80,15 @@ const social = () => {
       }}
       className="w-full flex-col"
     >
-      <View className="bg-white w-full flex-row justify-between items-center p-4 mb-5">
-        <Heading>Social Hub</Heading>
-        <Text className="w-[30px] h-[30px] rounded-full bg-blue-700 text-white text-center text-lg">
-          A
-        </Text>
-      </View>
+      <SafeAreaView className="w-full bg-white h-24 px-5 mb-5">
+        <View className="flex-row justify-between items-center  bg-white w-full">
+          <View className="gap-2 flex-row  w-full pt-5 items-center">
+            <Heading size="lg" className="h-[30px] pl-10">
+              Social Hub
+            </Heading>
+          </View>
+        </View>
+      </SafeAreaView>
 
       <View className="w-full px-4">
         <Input

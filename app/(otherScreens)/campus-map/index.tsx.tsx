@@ -7,6 +7,7 @@ import { Input, InputField } from "@/components/ui/input";
 import { Card } from "@/components/ui/card";
 import { Text } from "@/components/ui/text";
 import { EditIcon, Icon } from "@/components/ui/icon";
+import { SafeAreaView } from "react-native-safe-area-context";
 
 const map = () => {
   const locations = [
@@ -46,18 +47,15 @@ const map = () => {
       className="w-full flex-col"
     >
       {/* Header Section */}
-      <View className="flex-row justify-between items-center p-4 bg-white w-full">
-        <View className="gap-2 flex-row items-center">
-          <Heading size="lg">Campus Map</Heading>
+      <SafeAreaView className="w-full bg-white h-24 px-5 mb-5">
+        <View className="flex-row justify-between items-center w-full">
+          <View className="gap-2 flex-row  w-full pt-5 items-center">
+            <Heading size="lg" className="h-[30px] pl-10">
+              Campus Map
+            </Heading>
+          </View>
         </View>
-        <View>
-          <Avatar className="bg-blue-600 rounded-full ">
-            <AvatarFallbackText className="text-white font-extrabold">
-              Alex
-            </AvatarFallbackText>
-          </Avatar>
-        </View>
-      </View>
+      </SafeAreaView>
 
       {/* Search Section */}
       <View className="w-full px-5">

@@ -19,16 +19,9 @@ const Profile = () => {
     >
       {/* Profile Header */}
       <View>
-        <View className="absolute z-10 bottom-0 w-full flex-row justify-center">
-          <Avatar className="bg-blue-600 border-4 border-white rounded-full h-28 w-28">
-            <AvatarFallbackText className="text-white font-extrabold text-3xl">
-              Alex Thomson
-            </AvatarFallbackText>
-          </Avatar>
-        </View>
         <Image
           size="2xl"
-          className="w-full"
+          className="w-full h-[20vh]"
           source={{
             uri: "https://images.unsplash.com/photo-1472214103451-9374bd1c798e?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80",
           }}
