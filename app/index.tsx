@@ -1,55 +1,82 @@
-import { Button, ButtonText } from "@/components/ui/button";
+import { router } from "expo-router";
+import { useRef, useState } from "react";
+import { TouchableOpacity, View } from "react-native";
+import { SafeAreaView } from "react-native-safe-area-context";
+import Swiper from "react-native-swiper";
+import { home } from "./constants";
 import { Text } from "@/components/ui/text";
 import { Image } from "@/components/ui/image";
-import { View } from "react-native";
-import { Redirect, router } from "expo-router";
-import { useEffect, useState } from "react";
-import AsyncStorage from "@react-native-async-storage/async-storage";
+import { Button, ButtonText } from "@/components/ui/button";
 
 export default function Index() {
-  const [isInformed, setIsInformed] = useState<boolean>(false);
-  const checkInformed = async () => {
-    const studentStatus: any = await AsyncStorage.getItem("studentStatus");
-    const parsedData = JSON.parse(studentStatus);
+  const swiperRef = useRef<Swiper>(null);
+  const [activeIndex, setActiveIndex] = useState(0);
+  const ButtonName = activeIndex === home.length - 1 ? "Get Started" : "Next";
+  const isLastSlide = activeIndex === home.length - 1;
 
-    if (parsedData.isInformed) {
-      return <Redirect href="/(tabs)" />;
-    }
-  };
-
-  useEffect(() => {
-    checkInformed();
-  }, []);
   return (
-    <View className="p-5 bg-white flex-1">
-      <Text size="xl" className="text-center font-extrabold">
-        <Text size="xl" className="text-success-700">
-          Asu
-        </Text>{" "}
-        Students App
-      </Text>
-
-      <Text size="4xl" className="text-center mt-5 font-extrabold text-black  ">
-        Experience the ultimate student assistance
-      </Text>
-
-      <Image
-        size="2xl"
-        source={require("@/assets/images/college students-bro.png")}
-        alt="firstPage"
-        className="w-full my-5 rounded-lg"
-      />
-
-      <Button
-        size="xl"
-        variant="solid"
-        action="primary"
-        className="mt-5 bg-success-700"
-        onPress={() => router.push("/second")}
+    <SafeAreaView className="flex h-full items-center justify-between bg-white">
+      <TouchableOpacity
+        onPress={() => {
+          router.replace("/(tabs)");
+        }}
+        className="w-full flex justify-end items-end p-5"
       >
-        <ButtonText>Get Started</ButtonText>
-        <Text>{isInformed}</Text>
-      </Button>
-    </View>
+        <Text className="text-black text-md font-extrabold">Skip</Text>
+      </TouchableOpacity>
+
+      <Swiper
+        ref={swiperRef}
+        loop={false}
+        dot={
+          <View className="w-[32px] h-[4px] mx-1 bg-[#E2E8F0] rounded-full" />
+        }
+        activeDot={
+          <View className="w-[32px] h-[4px] mx-1 bg-[#0286FF] rounded-full" />
+        }
+        onIndexChanged={(index) => setActiveIndex(index)}
+      >
+        {home.map((item, title) => (
+          <View key={title} className="flex-1 items-center justify-center">
+            <Text
+              size="xl"
+              className="text-center font-extrabold pt-5 text-success-700"
+            >
+              {item.title}
+            </Text>
+
+            <Text
+              size="4xl"
+              className="text-center my-5 font-extrabold text-black  "
+            >
+              {item.description}
+            </Text>
+
+            <Image
+              size="2xl"
+              source={item.image}
+              alt="missing image"
+              className="w-full my-5 rounded-lg"
+            />
+
+            <Button
+              size="xl"
+              variant="solid"
+              action="primary"
+              className="w-full rounded-full flex-row justify-center items-center shadow-md shadow-neutral-400/70 bg-success-700 "
+              onPress={() => {
+                if (isLastSlide) {
+                  router.replace("/(tabs)");
+                } else if (swiperRef.current) {
+                  swiperRef.current.scrollBy(1);
+                }
+              }}
+            >
+              <ButtonText>{ButtonName}</ButtonText>
+            </Button>
+          </View>
+        ))}
+      </Swiper>
+    </SafeAreaView>
   );
 }

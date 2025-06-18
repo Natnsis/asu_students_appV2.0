@@ -103,7 +103,7 @@ const social = () => {
         {sections.map((section, index) => (
           <View
             key={index}
-            className="bg-white w-[90vw] mt-6 rounded-lg shadow-md p-5"
+            className="bg-white w-[90vw] mt-6 rounded-lg shadow-hard-1 p-5"
           >
             <Center className="gap-3">
               <View className="flex-row justify-between items-center w-full">
