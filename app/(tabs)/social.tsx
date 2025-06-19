@@ -1,4 +1,4 @@
-import { View, ScrollView } from "react-native";
+import { View, ScrollView, Linking } from "react-native";
 import React from "react";
 import { Heading } from "@/components/ui/heading";
 import { Text } from "@/components/ui/text";
@@ -14,6 +14,7 @@ const social = () => {
       title: "Curriculum",
       media: "telegram",
       description: "Track your courses and credits",
+      telegram: "https://t.me/css_study",
       infos: [
         { label: "4.0 GPA", width: "w-20" },
         { label: "t.me/css.study", width: "w-32" },
@@ -24,6 +25,7 @@ const social = () => {
       title: "Campus Map",
       media: "telegram",
       description: "Navigate your campus with ease",
+      telegram: "https://t.me/campus_map",
       infos: [
         { label: "Building A", width: "w-24" },
         { label: "Library", width: "w-24" },
@@ -34,6 +36,7 @@ const social = () => {
       title: "Lounges",
       media: "telegram",
       description: "find study and relaxation spaces",
+      telegram: "https://t.me/lounges_group",
       infos: [
         { label: "120 credits", width: "w-28" },
         { label: "3 semesters left", width: "w-36" },
@@ -44,6 +47,7 @@ const social = () => {
       title: "Gpa Calculator",
       media: "telegram",
       description: "Calculate your grades",
+      telegram: "https://t.me/gpa_calculator",
       infos: [
         { label: "120 credits", width: "w-28" },
         { label: "3 semesters left", width: "w-36" },
@@ -54,6 +58,7 @@ const social = () => {
       title: "Gallery",
       media: "telegram",
       description: "University photo galleries",
+      telegram: "https://t.me/university_gallery",
       infos: [
         { label: "120 credits", width: "w-28" },
         { label: "3 semesters left", width: "w-36" },
@@ -64,12 +69,19 @@ const social = () => {
       title: "Remainders",
       media: "telegram",
       description: "Stay on top of your tasks",
+      telegram: "https://t.me/remainders_channel",
       infos: [
         { label: "120 credits", width: "w-28" },
         { label: "3 semesters left", width: "w-36" },
       ],
     },
   ];
+
+  const handleJoinPress = (telegramLink: string) => {
+    if (telegramLink) {
+      Linking.openURL(telegramLink);
+    }
+  };
 
   return (
     <ScrollView
@@ -83,7 +95,7 @@ const social = () => {
       <SafeAreaView className="w-full bg-white h-24 px-5 mb-5">
         <View className="flex-row justify-between items-center  bg-white w-full">
           <View className="gap-2 flex-row  w-full pt-5 items-center">
-            <Heading size="lg" className="h-[30px] pl-10">
+            <Heading size="lg" className="h-[30px]">
               Social Hub
             </Heading>
           </View>
@@ -119,6 +131,7 @@ const social = () => {
                   variant="solid"
                   action="primary"
                   className="bg-success-700"
+                  onPress={() => handleJoinPress(section.telegram)}
                 >
                   <ButtonText>Join</ButtonText>
                 </Button>

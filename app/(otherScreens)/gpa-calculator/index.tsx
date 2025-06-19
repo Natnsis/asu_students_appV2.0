@@ -1,6 +1,6 @@
 import { View, ScrollView } from "react-native";
 import React, { useState } from "react";
-import { useFocusEffect } from "@react-navigation/native"; // Import useFocusEffect
+import { useFocusEffect } from "@react-navigation/native";
 import { Heading } from "@/components/ui/heading";
 import { Text } from "@/components/ui/text";
 import { Button, ButtonIcon, ButtonText } from "@/components/ui/button";
@@ -20,6 +20,7 @@ import {
 } from "@/components/ui/select";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { router } from "expo-router";
+import { SafeAreaView } from "react-native-safe-area-context";
 
 const GPA = () => {
   const [courses, setCourses] = useState<
@@ -85,16 +86,14 @@ const GPA = () => {
       className="w-full flex-col"
     >
       {/* Header Section */}
-      <View className="flex-row justify-between items-center p-4 bg-white w-full">
-        <View className="gap-2 flex-row items-center">
+      <SafeAreaView className="w-full bg-white">
+        <View className="flex-row items-center justify-between w-full px-4 py-2">
           <Heading size="lg">GPA Calculator</Heading>
-        </View>
-        <View>
           <Button
             size="sm"
             variant="solid"
             action="primary"
-            className="rounded-full"
+            className="rounded-full flex-row items-center h-auto min-h-0 py-1"
             onPress={() => {
               router.push("/(otherScreens)/add-course");
             }}
@@ -103,12 +102,12 @@ const GPA = () => {
             <ButtonText>Add Courses</ButtonText>
           </Button>
         </View>
-      </View>
+      </SafeAreaView>
 
       {/* Body Section */}
       <View className="w-full mt-5">
         <View className="flex-row justify-between items-center w-full px-5">
-          <Card className="w-[27vw] bg-white h-[15vh] flex-col items-center justify-center shadow-md">
+          <Card className="flex-1 mx-1 bg-white h-[15vh] flex-col items-center justify-center shadow-md">
             <Text size="xs" className="w-full text-center">
               Current GPA
             </Text>
@@ -116,7 +115,7 @@ const GPA = () => {
               3.77
             </Heading>
           </Card>
-          <Card className="w-[27vw] bg-white h-[15vh] flex-col items-center justify-center shadow-md">
+          <Card className="flex-1 mx-1 bg-white h-[15vh] flex-col items-center justify-center shadow-md">
             <Text size="xs" className="w-full text-center">
               Target GPA
             </Text>
@@ -124,7 +123,7 @@ const GPA = () => {
               3.80
             </Heading>
           </Card>
-          <Card className="w-[27vw] bg-white h-[15vh] flex-col items-center justify-center shadow-md">
+          <Card className="flex-1 mx-1 bg-white h-[15vh] flex-col items-center justify-center shadow-md">
             <Text size="xs" className="w-full text-center ">
               Credits
             </Text>
@@ -166,21 +165,21 @@ const GPA = () => {
           </View>
 
           {/* Table Body */}
-          {courses.map((courses, index) => (
+          {courses.map((course, index) => (
             <View
               key={index}
               className="flex-row w-full p-3 border-b border-gray-200 justify-between"
             >
               <Text className="w-[50%]" size="xs" numberOfLines={1}>
-                {courses.name || "N/A"}
+                {course.name || "N/A"}
               </Text>
               <Select
                 className="w-14"
                 onValueChange={(value) => handleGradeChange(index, value)}
-                selectedValue={courses.grade}
+                selectedValue={course.grade}
               >
                 <SelectTrigger>
-                  <SelectInput className="flex-1 justify-center h-[30vw]  text-sm w-[30vw] " />
+                  <SelectInput className="flex-1 justify-center h-[30vw] text-sm w-[30vw]" />
                 </SelectTrigger>
                 <SelectPortal>
                   <SelectBackdrop />

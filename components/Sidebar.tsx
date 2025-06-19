@@ -139,17 +139,7 @@ export function Sidebar() {
                   <Heading>🧮 GPA Calculator</Heading>
                 </ButtonText>
               </Button>
-              <Button
-                variant="link"
-                onPress={() => {
-                  router.push("/(otherScreens)/campus-map/index.tsx");
-                  setShowDrawer(false);
-                }}
-              >
-                <ButtonText className="w-full">
-                  <Heading>🗺 Campus Map</Heading>
-                </ButtonText>
-              </Button>
+
               <Button
                 className="w-full"
                 variant="link"
@@ -211,7 +201,7 @@ export function Sidebar() {
             </View>
           </DrawerBody>
           <DrawerFooter>
-            <Text size="sm" className="w-full text-center absolute bottom-0">
+            <Text size="sm" className="w-full text-center absolute bottom-10">
               Developed by Natnael Sisay with ❤️
             </Text>
           </DrawerFooter>

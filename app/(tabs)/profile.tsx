@@ -38,7 +38,7 @@ const Profile = () => {
       </View>
 
       <Text className="w-full text-center mb-1" size="sm">
-        alex@thomson.com
+        yourname@gmail.com
       </Text>
 
       {/* Navigation Buttons */}

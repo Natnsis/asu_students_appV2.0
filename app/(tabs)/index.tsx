@@ -133,28 +133,6 @@ const Index = () => {
           </Center>
         </Link>
 
-        {/* Campus Map */}
-        <Link
-          href="/(otherScreens)/campus-map/index.tsx"
-          className="w-[90vw] bg-white mt-6 rounded-lg shadow-md p-5"
-        >
-          <Center className="gap-3 w-full">
-            <Text className="bg-blue-600 rounded-full px-3 py-1" size="xl">
-              🗺
-            </Text>
-            <Heading>Campus Map</Heading>
-            <Text className="w-full text-center">
-              Navigate your campus with ease
-            </Text>
-            <View className="flex-row justify-between items-center gap-3">
-              <Text className="bg-success-50 px-2 text-base rounded-lg text-center w-fit">
-                Building A
-              </Text>
-              <Text className={ministyle}>Library</Text>
-            </View>
-          </Center>
-        </Link>
-
         {/* Lounges */}
         <Link
           href="/(otherScreens)/lounges"
