@@ -20,7 +20,7 @@ const chat = () => {
       <SafeAreaView className="w-full bg-white h-24 px-5 mb-5">
         <View className="flex-row justify-between items-center w-full">
           <View className="gap-2 flex-row  w-full pt-5 items-center">
-            <Heading size="lg" className="h-[30px] pl-10">
+            <Heading size="lg" className="h-[30px] ">
               Chat Space
             </Heading>
           </View>
@@ -77,7 +77,17 @@ const chat = () => {
 
       <View>
         <Center className="gap-3">
-          <Button variant="solid" size="lg" className="mt-10">
+          <Button
+            variant="solid"
+            size="lg"
+            className="mt-10"
+            onPress={() => {
+              const telegramUrl = "https://t.me/your_channel_name";
+              import("react-native").then(({ Linking }) => {
+                Linking.openURL(telegramUrl);
+              });
+            }}
+          >
             <ButtonText>Get Notified</ButtonText>
           </Button>
 

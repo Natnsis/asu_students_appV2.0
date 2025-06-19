@@ -52,7 +52,7 @@ const Gallery = () => {
       <SafeAreaView className="w-full bg-white h-24 px-5 mb-5">
         <View className="flex-row justify-between items-center w-full">
           <View className="gap-2 flex-row  w-full pt-5 items-center">
-            <Heading size="lg" className="h-[30px] pl-10">
+            <Heading size="lg" className="h-[30px] ">
               University Gallery
             </Heading>
           </View>

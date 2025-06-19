@@ -1,4 +1,4 @@
-import { View, ScrollView, ImageBackground } from "react-native";
+import { View, ScrollView, ImageBackground, SafeAreaView } from "react-native";
 import React from "react";
 import { Heading } from "@/components/ui/heading";
 import { Button, ButtonText } from "@/components/ui/button";
@@ -17,7 +17,7 @@ const About = () => {
       className="w-full flex-col"
     >
       {/* Header Section */}
-      <View className="flex-row justify-between items-center p-4 bg-white w-full">
+      <SafeAreaView className="flex-row justify-between items-center p-4 bg-white w-full">
         <View className="gap-2 flex-row items-center">
           <Heading size="lg">About Our University</Heading>
         </View>
@@ -31,7 +31,7 @@ const About = () => {
             <ButtonText>Contact us</ButtonText>
           </Button>
         </View>
-      </View>
+      </SafeAreaView>
 
       {/* image section  */}
       <View className="w-full px-5 mb-5">

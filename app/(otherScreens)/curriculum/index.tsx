@@ -9,8 +9,6 @@ import { Card } from "@/components/ui/card";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { useRouter } from "expo-router";
 
-
-
 const Curriculum = () => {
   const [cgpa, setCgpa] = useState(0);
   const [semester, setSemester] = useState("-");
@@ -51,13 +49,13 @@ const Curriculum = () => {
     { id: 2, name: "📡 Information Technology" },
     { id: 3, name: "📝 Information Science" },
     { id: 4, name: "💊 Pharmacy" },
-    { id: 5, name: "🔬 Medical Laboratory" },
-    { id: 6, name: "⚖ Law" },
-    { id: 7, name: "💹 Economics" },
-    { id: 8, name: "🧮 Accounting" },
-    { id: 9, name: "📰 Journalism" },
-    { id: 10, name: "🌱 Agro Economics" },
-    { id: 11, name: "💉 Nurse" },
+    { id: 5, name: "⚖ Law" },
+    { id: 6, name: "💹 Economics" },
+    { id: 7, name: "🧮 Accounting" },
+    { id: 8, name: "🌱 Agro Economics" },
+    { id: 9, name: "💉 Nurse" },
+    { id: 10, name: "🔬 Medical Laboratory" },
+    { id: 11, name: "📰 Journalism" },
   ];
 
   const handleDepartmentPress = (id: number) => {
@@ -76,7 +74,6 @@ const Curriculum = () => {
       {/* Header Section */}
       <SafeAreaView className="w-full bg-white h-24 px-5 mb-5">
         <View className="flex-row justify-between items-center w-full">
-          
           <View className="gap-2 flex-row w-full pt-5 items-center">
             <Heading size="lg" className="h-[30px] pl-10">
               Curriculum

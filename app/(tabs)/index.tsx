@@ -86,7 +86,7 @@ const Index = () => {
       {/* Welcome Section */}
       <View className="bg-white w-[90vw] mt-6 rounded-lg shadow-md p-3">
         <View className="p-5 flex-col gap-3">
-          <Heading size="lg">Welcome back, {firstName || "Guest"}</Heading>
+          <Heading size="lg">Welcome, {firstName || "Guest"}</Heading>
           <Text>
             Track your academic progress and campus life all in one place.
           </Text>

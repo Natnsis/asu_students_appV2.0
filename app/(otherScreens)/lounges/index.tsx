@@ -1,15 +1,12 @@
-import { View, ScrollView } from "react-native";
+import { View, ScrollView, SafeAreaView } from "react-native";
 import React from "react";
-import { Sidebar } from "@/components/Sidebar";
 import { Heading } from "@/components/ui/heading";
 import { Text } from "@/components/ui/text";
-import { Avatar, AvatarFallbackText } from "@/components/ui/avatar";
 import { Input, InputField } from "@/components/ui/input";
 import { Alert, AlertText } from "@/components/ui/alert";
 import { Divider } from "@/components/ui/divider";
 
 const Lounges = () => {
-  // Array of lounge data
   const lounges = [
     {
       title: "Library Study Hub",
@@ -44,91 +41,89 @@ const Lounges = () => {
   ];
 
   return (
-    <ScrollView
-      contentContainerStyle={{
-        flexGrow: 1,
-        alignItems: "center",
-        paddingBottom: 10,
-      }}
-      className="w-full flex-col"
+    <SafeAreaView
+      style={{ flex: 1, backgroundColor: "white" }}
+      className="py-5"
     >
-      {/* Header Section */}
-      <View className="flex-row justify-between items-center p-4 bg-white w-full">
-        <View className="gap-2 flex-row items-center">
-          <Heading size="lg">Campus Lounges</Heading>
-        </View>
-        <View>
-          <Avatar className="bg-blue-600 rounded-full ">
-            <AvatarFallbackText className="text-white font-extrabold">
-              Alex
-            </AvatarFallbackText>
-          </Avatar>
-        </View>
-      </View>
-
-      {/* Search Section */}
-      <View className="w-full px-5">
-        <Input
-          variant="outline"
-          size="md"
-          className="bg-white mt-5 rounded-full"
-        >
-          <InputField placeholder="Search locations..." />
-        </Input>
-      </View>
-
-      {/* Lounge Cards Section */}
-      <View className="w-full mt-5">
-        {lounges.map((lounge, index) => (
-          <View
-            key={index}
-            className="bg-white rounded-b-lg shadow-md p-4 mx-5 mb-5"
-          >
-            <View className="w-full h-[30vh] bg-primary-300 flex justify-center items-center">
-              <Heading className="w-full text-white text-center">
-                {lounge.title}
-              </Heading>
-            </View>
-            <View>
-              <Heading>{lounge.subtitle}</Heading>
-              <Text size="sm" className="mb-5">
-                {lounge.location}
-              </Text>
-              <View className="flex-row justify-between items-center mb-5">
-                <View className="flex-row items-center gap-2">
-                  <Text>Available: </Text>
-                  <Alert action="success" variant="solid">
-                    <AlertText>{lounge.availability}</AlertText>
-                  </Alert>
-                </View>
-                <View className="flex-row items-center gap-2">
-                  <Text>Noise: </Text>
-                  <Alert action="warning" variant="solid">
-                    <AlertText>{lounge.noise}</AlertText>
-                  </Alert>
-                </View>
-              </View>
-              <View className="flex-row justify-between items-center mb-5">
-                <View className="flex-row items-center gap-2">
-                  <Text>Temperature: </Text>
-                  <Alert action="muted" variant="solid">
-                    <AlertText>{lounge.temperature}</AlertText>
-                  </Alert>
-                </View>
-                <View className="flex-row items-center gap-2">
-                  <Text>Capacity: </Text>
-                  <Alert action="info" variant="solid">
-                    <AlertText>{lounge.capacity}</AlertText>
-                  </Alert>
-                </View>
-              </View>
-              <Divider className="mb-5" />
-              <Text className="mb-5">{lounge.hours}</Text>
-            </View>
+      <ScrollView
+        contentContainerStyle={{
+          flexGrow: 1,
+          alignItems: "center",
+          paddingBottom: 10,
+        }}
+        className="w-full flex-col"
+      >
+        {/* Header Section */}
+        <View className="flex-row justify-between items-center p-4 bg-white w-full">
+          <View className="gap-2 flex-row items-center">
+            <Heading size="lg">Campus Lounges</Heading>
           </View>
-        ))}
-      </View>
-    </ScrollView>
+        </View>
+
+        {/* Search Section */}
+        <View className="w-full px-5">
+          <Input
+            variant="outline"
+            size="md"
+            className="bg-white mt-5 rounded-full"
+          >
+            <InputField placeholder="Search locations..." />
+          </Input>
+        </View>
+
+        {/* Lounge Cards Section */}
+        <View className="w-full mt-5">
+          {lounges.map((lounge, index) => (
+            <View
+              key={index}
+              className="bg-white rounded-b-lg shadow-md p-4 mx-5 mb-5"
+            >
+              <View className="w-full h-[30vh] bg-primary-300 flex justify-center items-center">
+                <Heading className="w-full text-white text-center">
+                  {lounge.title}
+                </Heading>
+              </View>
+              <View>
+                <Heading>{lounge.subtitle}</Heading>
+                <Text size="sm" className="mb-5">
+                  {lounge.location}
+                </Text>
+                <View className="flex-row justify-between items-center mb-5">
+                  <View className="flex-row items-center gap-2">
+                    <Text>Available: </Text>
+                    <Alert action="success" variant="solid">
+                      <AlertText>{lounge.availability}</AlertText>
+                    </Alert>
+                  </View>
+                  <View className="flex-row items-center gap-2">
+                    <Text>Noise: </Text>
+                    <Alert action="warning" variant="solid">
+                      <AlertText>{lounge.noise}</AlertText>
+                    </Alert>
+                  </View>
+                </View>
+                <View className="flex-row justify-between items-center mb-5">
+                  <View className="flex-row items-center gap-2">
+                    <Text>Temperature: </Text>
+                    <Alert action="muted" variant="solid">
+                      <AlertText>{lounge.temperature}</AlertText>
+                    </Alert>
+                  </View>
+                  <View className="flex-row items-center gap-2">
+                    <Text>Capacity: </Text>
+                    <Alert action="info" variant="solid">
+                      <AlertText>{lounge.capacity}</AlertText>
+                    </Alert>
+                  </View>
+                </View>
+                <Divider className="mb-5" />
+                <Text className="mb-5">{lounge.hours}</Text>
+              </View>
+            </View>
+          ))}
+        </View>
+      </ScrollView>
+    </SafeAreaView>
   );
 };
 
