@@ -1,8 +1,15 @@
 import React, { useEffect } from "react";
-import { Tabs } from "expo-router";
+import { Redirect, Tabs } from "expo-router";
 import { Ionicons } from "@expo/vector-icons";
+import { useAuth } from "@clerk/clerk-expo";
 
 const _layout = () => {
+  const { isSignedIn } = useAuth();
+
+  if (isSignedIn) {
+    return <Redirect href={"/"} />;
+  }
+
   return (
     <Tabs
       screenOptions={{

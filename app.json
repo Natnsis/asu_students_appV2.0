@@ -1,7 +1,7 @@
 {
   "expo": {
     "name": "beta",
-    "slug": "v2.0",
+    "slug": "v1",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/images/icon.png",
@@ -16,7 +16,8 @@
       "adaptiveIcon": {
         "foregroundImage": "./assets/images/adaptive-icon.png",
         "backgroundColor": "#ffffff"
-      }
+      },
+      "package": "com.nati2362.v1"
     },
     "web": {
       "bundler": "metro",
@@ -39,6 +40,12 @@
     ],
     "experiments": {
       "typedRoutes": true
+    },
+    "extra": {
+      "router": {},
+      "eas": {
+        "projectId": "a40350fb-0cd7-4e29-9f04-23d2c3de6adf"
+      }
     }
   }
 }
