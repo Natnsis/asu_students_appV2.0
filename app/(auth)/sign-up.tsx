@@ -17,13 +17,11 @@ export default function SignUpScreen() {
   const [password, setPassword] = React.useState("");
   const [pendingVerification, setPendingVerification] = React.useState(false);
   const [code, setCode] = React.useState("");
-
+  const toast = useToast();
+  const [errorMessage, setErrorMessage] = React.useState(0);
   // Handle submission of sign-up form
   const onSignUpPress = async () => {
     if (!isLoaded) return;
-    const toast = useToast();
-    const [errorMessage, setErrorMessage] = React.useState(0);
-
     // Start sign-up process using email and password provided
     try {
       await signUp.create({
