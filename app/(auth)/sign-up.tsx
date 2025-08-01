@@ -2,6 +2,12 @@ import * as React from "react";
 import { Text, TextInput, TouchableOpacity, View } from "react-native";
 import { useSignUp } from "@clerk/clerk-expo";
 import { Link, useRouter } from "expo-router";
+import {
+  Toast,
+  ToastDescription,
+  ToastTitle,
+  useToast,
+} from "@/components/ui/toast";
 
 export default function SignUpScreen() {
   const { isLoaded, signUp, setActive } = useSignUp();
@@ -15,6 +21,8 @@ export default function SignUpScreen() {
   // Handle submission of sign-up form
   const onSignUpPress = async () => {
     if (!isLoaded) return;
+    const toast = useToast();
+    const [errorMessage, setErrorMessage] = React.useState(0);
 
     // Start sign-up process using email and password provided
     try {
@@ -29,14 +37,31 @@ export default function SignUpScreen() {
       // Set 'pendingVerification' to true to display second form
       // and capture OTP code
       setPendingVerification(true);
-    } catch (err) {
-      // See https://clerk.com/docs/custom-flows/error-handling
-      // for more info on error handling
-      console.error(JSON.stringify(err, null, 2));
+    } catch (err: any) {
+      const message = err?.errors?.[0]?.message;
+      setErrorMessage(message);
+      toast.show({
+        placement: "top",
+        duration: 3000,
+        render: ({ id }) => {
+          return (
+            <Toast
+              nativeID={`toast-${id}`}
+              action="error"
+              variant="solid"
+              className="mt-10"
+            >
+              <ToastTitle className="text-white">Sign-up Error</ToastTitle>
+              <ToastDescription className="text-white">
+                {errorMessage}
+              </ToastDescription>
+            </Toast>
+          );
+        },
+      });
     }
   };
 
-  // Handle submission of verification form
   const onVerifyPress = async () => {
     if (!isLoaded) return;
 

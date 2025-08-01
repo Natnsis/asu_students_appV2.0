@@ -2,6 +2,13 @@ import { useSignIn } from "@clerk/clerk-expo";
 import { Link, useRouter } from "expo-router";
 import { Text, TextInput, TouchableOpacity, View } from "react-native";
 import React from "react";
+import {
+  Toast,
+  ToastDescription,
+  ToastTitle,
+  useToast,
+} from "@/components/ui/toast";
+import { SafeAreaView } from "react-native-safe-area-context";
 
 export default function Page() {
   const { signIn, setActive, isLoaded } = useSignIn();
@@ -10,6 +17,7 @@ export default function Page() {
 
   const [emailAddress, setEmailAddress] = React.useState("");
   const [password, setPassword] = React.useState("");
+  const toast = useToast();
 
   // Handle the submission of the sign-in form
   const onSignInPress = async () => {
@@ -35,12 +43,30 @@ export default function Page() {
     } catch (err: any) {
       const message = err?.errors?.[0]?.message;
       setErrorMessage(message);
-      console.error(JSON.stringify(err, null, 2));
+      toast.show({
+        placement: "top",
+        duration: 3000,
+        render: ({ id }) => {
+          return (
+            <Toast
+              nativeID={`toast-${id}`}
+              action="error"
+              variant="solid"
+              className="mt-10"
+            >
+              <ToastTitle className="text-white">Sign-in Error</ToastTitle>
+              <ToastDescription className="text-white">
+                {errorMessage}
+              </ToastDescription>
+            </Toast>
+          );
+        },
+      });
     }
   };
 
   return (
-    <View className="flex-1 justify-center items-center bg-white px-4">
+    <SafeAreaView className="flex-1 justify-center items-center bg-white px-4">
       <Text className="text-2xl font-bold text-main mb-6 text-center">
         Sign in
       </Text>
@@ -74,6 +100,6 @@ export default function Page() {
           <Text className="text-green-700 font-semibold">Sign up</Text>
         </Link>
       </View>
-    </View>
+    </SafeAreaView>
   );
 }
