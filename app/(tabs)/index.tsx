@@ -1,4 +1,3 @@
-import { SignedIn, SignedOut, useUser } from "@clerk/clerk-expo";
 import { ScrollView, View } from "react-native";
 import { Link } from "expo-router";
 import { Sidebar } from "@/components/Sidebar";
@@ -6,75 +5,80 @@ import { Heading } from "@/components/ui/heading";
 import { Text } from "@/components/ui/text";
 import { Center } from "@/components/ui/center";
 import { SafeAreaView } from "react-native-safe-area-context";
-import { SignOutButton } from "@/components/SignOutButton";
+import ProfileButton from "@/components/ProfileButton";
 
 const Index = () => {
-  const ministyle = "bg-success-50 px-2 text-base rounded-lg text-center w-fit";
+  const ministyle = "bg-success-50 px-2 text-base rounded-lg text-center";
+
   return (
     <ScrollView
       contentContainerStyle={{
         flexGrow: 1,
-        alignItems: "center",
-        paddingBottom: 10,
+        paddingBottom: 20,
       }}
-      className="w-full flex-col"
+      className="w-full flex-col bg-gray-100"
     >
       {/* Header Section */}
-      <SafeAreaView className="w-full bg-white h-24">
-        <View className="flex-row justify-between items-center  bg-white w-full">
-          <View className="gap-2 flex-row  w-full pt-5 items-center">
+      <SafeAreaView className="w-full bg-white shadow-sm pb-4">
+        <View className="flex-row items-center justify-between px-4 pt-4">
+          <View className="flex-row items-center gap-3">
             <Sidebar />
-            <Heading size="lg">
-              ASU Students App{" "}
-              <Text size="2xs" className="mt-[-10] text-green-400 rounded-lg">
-                beta
-              </Text>{" "}
-            </Heading>
-            <SignOutButton />
+            <View className="flex-col">
+              <View className="flex-row items-center gap-1">
+                <Heading size="lg">ASU Students App</Heading>
+                <Text size="2xs" className="text-green-400 font-bold ml-1">
+                  beta
+                </Text>
+              </View>
+            </View>
           </View>
+          <ProfileButton />
         </View>
       </SafeAreaView>
 
       {/* Welcome Section */}
-      <View className="bg-white w-[90vw] mt-6 rounded-lg shadow-md p-3">
-        <View className="p-5 flex-col gap-3">
-          <Heading size="lg">Welcome, Guest</Heading>
-          <Text>
+      <View className="bg-white w-[90vw] mt-6 mx-auto rounded-xl shadow-lg p-6">
+        <View className="flex-col gap-4">
+          <Heading size="xl">Welcome, Guest</Heading>
+          <Text className="text-gray-600 leading-snug">
             Track your academic progress and campus life all in one place.
           </Text>
-          <View className="flex-row justify-between items-center gap-3 px-4">
-            <Text className="text-white  rounded-full px-3 py-1 bg-success-700 w-fit">
+          <View className="flex-row flex-wrap justify-between items-center gap-2">
+            <Text className="text-white rounded-full px-3 py-1 bg-success-700 font-medium">
               department
             </Text>
-            <Text className="text-white bg-success-700 rounded-full px-3 py-1 text-base">
+            <Text className="text-white bg-success-700 rounded-full px-3 py-1 text-sm font-medium">
               Year: 4
             </Text>
-            <Text className="text-white bg-success-700 rounded-full px-3 py-1">
+            <Text className="text-white bg-success-700 rounded-full px-3 py-1 text-sm font-medium">
               male
             </Text>
           </View>
         </View>
       </View>
+
       {/* Sections */}
-      <View className="mb-20">
+      <View className="mt-6 w-[90vw] mx-auto mb-20 gap-4">
         {/* Curriculum */}
         <Link
           href="/(otherScreens)/curriculum"
-          className="w-[90vw] bg-white mt-6 rounded-lg shadow-md p-5"
+          className="w-full bg-white rounded-xl shadow-lg p-6"
         >
           <Center className="gap-3 w-full">
-            <Text className="bg-blue-600 rounded-full px-3 py-1" size="xl">
+            <Text className="bg-blue-600 rounded-full p-2" size="xl">
               📚
             </Text>
-            <Heading>Curriculum</Heading>
-            <Text className="w-full text-center">
+            <Heading size="md" className="font-bold">
+              Curriculum
+            </Heading>
+            <Text className="w-full text-center text-gray-500 text-sm">
               Track your courses and credits
             </Text>
-            <View className="flex-row  items-center justify-center gap-3 w-full">
-              <Text className="bg-success-50 px-2 rounded-lg text-center w-fit text-base">
+            <View className="flex-row items-center justify-center gap-3 w-full mt-2">
+              <Text className="bg-success-50 px-3 py-1 rounded-lg text-center font-bold text-success-700">
                 4.0 GPA
               </Text>
-              <Text className="bg-success-50 px-2 text-base rounded-lg text-center w-fit">
+              <Text className="bg-success-50 px-3 py-1 rounded-lg text-center font-bold text-success-700">
                 96 credits
               </Text>
             </View>
@@ -84,17 +88,19 @@ const Index = () => {
         {/* Lounges */}
         <Link
           href="/(otherScreens)/lounges"
-          className="w-[90vw] bg-white mt-6 rounded-lg shadow-md p-5"
+          className="w-full bg-white rounded-xl shadow-lg p-6"
         >
           <Center className="gap-3 w-full">
-            <Text className="bg-blue-600 rounded-full px-3 py-1" size="xl">
+            <Text className="bg-blue-600 rounded-full p-2" size="xl">
               🪑
             </Text>
-            <Heading>Lounges</Heading>
-            <Text className="w-full text-center">
+            <Heading size="md" className="font-bold">
+              Lounges
+            </Heading>
+            <Text className="w-full text-center text-gray-500 text-sm">
               Find study and relaxation spaces
             </Text>
-            <View className="flex-row justify-between items-center gap-3">
+            <View className="flex-row justify-center items-center gap-3 mt-2">
               <Text className={ministyle}>120 credits</Text>
               <Text className={ministyle}>3 semesters left</Text>
             </View>
@@ -104,15 +110,19 @@ const Index = () => {
         {/* GPA Calculator */}
         <Link
           href="/(otherScreens)/gpa-calculator"
-          className="w-[90vw] bg-white mt-6 rounded-lg shadow-md p-5"
+          className="w-full bg-white rounded-xl shadow-lg p-6"
         >
           <Center className="gap-3 w-full">
-            <Text className="bg-blue-600 rounded-full px-3 py-1" size="xl">
+            <Text className="bg-blue-600 rounded-full p-2" size="xl">
               🧮
             </Text>
-            <Heading>GPA Calculator</Heading>
-            <Text className="w-full text-center">Calculate your grades</Text>
-            <View className="flex-row justify-between items-center gap-3">
+            <Heading size="md" className="font-bold">
+              GPA Calculator
+            </Heading>
+            <Text className="w-full text-center text-gray-500 text-sm">
+              Calculate your grades
+            </Text>
+            <View className="flex-row justify-center items-center gap-3 mt-2">
               <Text className={ministyle}>120 credits</Text>
               <Text className={ministyle}>3 semesters left</Text>
             </View>
@@ -122,17 +132,19 @@ const Index = () => {
         {/* Gallery */}
         <Link
           href="/(otherScreens)/gallery"
-          className="w-[90vw] bg-white mt-6 rounded-lg shadow-md p-5"
+          className="w-full bg-white rounded-xl shadow-lg p-6"
         >
           <Center className="gap-3 w-full">
-            <Text className="bg-blue-600 rounded-full px-3 py-1" size="xl">
+            <Text className="bg-blue-600 rounded-full p-2" size="xl">
               📸
             </Text>
-            <Heading>Gallery</Heading>
-            <Text className="w-full text-center">
+            <Heading size="md" className="font-bold">
+              Gallery
+            </Heading>
+            <Text className="w-full text-center text-gray-500 text-sm">
               University photo galleries
             </Text>
-            <View className="flex-row justify-between items-center gap-3">
+            <View className="flex-row justify-center items-center gap-3 mt-2">
               <Text className={ministyle}>120 credits</Text>
               <Text className={ministyle}>3 semesters left</Text>
             </View>
@@ -142,17 +154,19 @@ const Index = () => {
         {/* Reminders */}
         <Link
           href="/(otherScreens)/remainders"
-          className="w-[90vw] bg-white mt-6 rounded-lg shadow-md p-5"
+          className="w-full bg-white rounded-xl shadow-lg p-6"
         >
           <Center className="gap-3 w-full">
-            <Text className="bg-blue-600 rounded-full px-3 py-1" size="xl">
+            <Text className="bg-blue-600 rounded-full p-2" size="xl">
               ⏰
             </Text>
-            <Heading>Reminders</Heading>
-            <Text className="w-full text-center">
+            <Heading size="md" className="font-bold">
+              Reminders
+            </Heading>
+            <Text className="w-full text-center text-gray-500 text-sm">
               Stay on top of your tasks
             </Text>
-            <View className="flex-row justify-between items-center gap-3">
+            <View className="flex-row justify-center items-center gap-3 mt-2">
               <Text className={ministyle}>120 credits</Text>
               <Text className={ministyle}>3 semesters left</Text>
             </View>

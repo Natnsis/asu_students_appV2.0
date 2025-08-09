@@ -18,20 +18,18 @@ const _layout = () => {
           tabBarShowLabel: false,
           tabBarStyle: {
             position: "absolute",
-            left: 16,
-            right: 16,
-            bottom: 50,
-            height: 48,
-            borderRadius: 25,
+            marginHorizontal: 16, // Use margin for responsiveness
+            marginBottom: 30, // Pushes the tab bar up from the bottom of the screen
+            height: 56, // Slightly increased height for a more modern feel
+            borderRadius: 28, // Increased border radius for a pill-shaped look
             backgroundColor: "#fff",
-            elevation: 5,
+            elevation: 10, // Increased elevation for a more prominent shadow
             shadowColor: "#000",
-            shadowOffset: { width: 0, height: 2 },
+            shadowOffset: { width: 0, height: 4 },
             shadowOpacity: 0.1,
-            shadowRadius: 8,
+            shadowRadius: 10,
           },
         }}
-        safeAreaInsets={{ bottom: 16 }}
       >
         <Tabs.Screen
           name="index"

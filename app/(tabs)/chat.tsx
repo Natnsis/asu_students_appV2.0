@@ -1,4 +1,4 @@
-import { View, ScrollView } from "react-native";
+import { View, ScrollView, Linking } from "react-native";
 import React from "react";
 import { Heading } from "@/components/ui/heading";
 import { Text } from "@/components/ui/text";
@@ -12,111 +12,103 @@ const chat = () => {
     <ScrollView
       contentContainerStyle={{
         flexGrow: 1,
-        alignItems: "center",
-        paddingBottom: 10,
+        paddingBottom: 20,
       }}
-      className="w-full flex-col"
+      className="w-full flex-col bg-gray-100"
     >
-      <SafeAreaView className="w-full bg-white h-24 px-5 mb-5">
-        <View className="flex-row justify-between items-center w-full">
-          <View className="gap-2 flex-row  w-full pt-5 items-center">
-            <Heading size="lg" className="h-[30px] ">
-              Chat Space
-            </Heading>
-          </View>
+      {/* Header Section */}
+      <SafeAreaView className="w-full bg-white shadow-sm pb-4">
+        <View className="flex-row items-center justify-start px-4 pt-4">
+          <Heading size="lg">Chat Space</Heading>
         </View>
       </SafeAreaView>
 
-      <View className="w-[40vw] h-[40vw] rounded-full bg-blue-500 flex-row justify-center items-center">
-        <View className="w-[35vw] h-[35vw] rounded-full bg-blue-700 flex justify-center items-center">
-          <Text className="text-[40px]">💭</Text>
+      {/* Main "Coming Soon" Section */}
+      <View className="mt-8 mb-6 p-4 w-[90vw] mx-auto bg-white rounded-xl shadow-lg flex-col items-center gap-4">
+        <View className="w-[40vw] h-[40vw] rounded-full bg-blue-500 flex justify-center items-center shadow-lg">
+          <View className="w-[35vw] h-[35vw] rounded-full bg-blue-700 flex justify-center items-center shadow-inner">
+            <Text className="text-[40px]">💭</Text>
+          </View>
         </View>
-      </View>
-
-      <View className="mt-5 w-full">
-        <Center>
-          <Heading size="xl">Chat Space</Heading>
-          <Heading size="xl">Coming Soon</Heading>
-        </Center>
-      </View>
-
-      <View className="mt-10 w-full">
-        <Center className="gap-1">
-          <Text size="sm" className="w-full text-center">
-            Group Discussions
-          </Text>
-          <Text size="sm" className="w-full px-5 text-center">
-            We're building a better way for students to connect, collaborate,
-            and communicate.
-          </Text>
-          <Text className="text-blue-700 w-full text-center">
-            Direct Message
-          </Text>
-        </Center>
-      </View>
-
-      <View className="mt-10 w-full">
-        <Center>
-          <Heading size="2xl" className="w-full text-center">
-            15
+        <Center className="gap-2">
+          <Heading size="2xl" className="text-center font-bold">
+            Chat Space
           </Heading>
-          <Text size="sm" className="w-full text-center">
-            Hours
-          </Text>
+          <Heading size="lg" className="text-center font-bold text-gray-500">
+            Coming Soon
+          </Heading>
         </Center>
       </View>
 
-      <View className="mt-10 w-full">
-        <Center className="gap-3">
-          <Text className="w-full text-center">File Sharing</Text>
-          <Text className="w-full text-center">Voice Channels</Text>
-          <Text className="w-full text-center">Study Groups</Text>
-          <Text className="w-full text-center">Event Planning</Text>
+      {/* Feature Details Section */}
+      <View className="mt-4 p-6 w-[90vw] mx-auto bg-white rounded-xl shadow-lg">
+        <Center className="gap-4">
+          <View className="flex-col items-center gap-2">
+            <Heading size="lg" className="text-center font-bold text-gray-800">
+              Group Discussions
+            </Heading>
+            <Text className="w-full text-center text-gray-600 px-4 leading-snug">
+              We're building a better way for students to connect, collaborate,
+              and communicate.
+            </Text>
+          </View>
+          <View className="flex-col items-center gap-2">
+            <Heading size="xl" className="w-full text-center font-bold">
+              15
+            </Heading>
+            <Text size="sm" className="w-full text-center text-gray-500">
+              Days to Launch
+            </Text>
+          </View>
         </Center>
       </View>
 
-      <View>
+      {/* Get Notified Section */}
+      <View className="mt-6 p-6 w-[90vw] mx-auto bg-white rounded-xl shadow-lg">
         <Center className="gap-3">
           <Button
             variant="solid"
             size="lg"
-            className="mt-10"
+            className="bg-success-700 w-full rounded-full shadow-md"
             onPress={() => {
-              const telegramUrl = "https://t.me/your_channel_name";
-              import("react-native").then(({ Linking }) => {
-                Linking.openURL(telegramUrl);
-              });
+              const telegramUrl = "https://t.me/bugpusher";
+              Linking.openURL(telegramUrl);
             }}
           >
-            <ButtonText>Get Notified</ButtonText>
+            <ButtonText className="text-white font-bold">
+              Get Notified
+            </ButtonText>
           </Button>
-
-          <Text className="w-full text-center">
+          <Text className="w-full text-center text-gray-500">
             We'll let you know when we launch!
           </Text>
-          <Heading>Coming Soon</Heading>
         </Center>
       </View>
 
-      <View className="flex-row justify-evenly items-center gap-3 mb-24 p-5">
-        <Card variant="outline" className="w-[30vw] mt-10 p-2">
-          <Center>
-            <Heading>👨‍👩‍👧‍👦</Heading>
-            <Text className="text-center">Connect with peers</Text>
+      {/* Feature Cards Section */}
+      <View className="flex-row justify-evenly items-center gap-3 w-[90vw] mx-auto mb-24 mt-6">
+        <Card className="w-[30vw] p-4 bg-white rounded-xl shadow-lg">
+          <Center className="gap-2">
+            <Heading size="lg">👨‍👩‍👧‍👦</Heading>
+            <Text className="text-center text-sm text-gray-500 leading-tight">
+              Connect with peers
+            </Text>
           </Center>
         </Card>
-
-        <Card variant="outline" className="w-[30vw] mt-10 p-2">
-          <Center>
-            <Heading>🤝</Heading>
-            <Text className="text-center">Collaborate Easily</Text>
+        <Card className="w-[30vw] p-4 bg-white rounded-xl shadow-lg">
+          <Center className="gap-2">
+            <Heading size="lg">🤝</Heading>
+            <Text className="text-center text-sm text-gray-500 leading-tight">
+              Collaborate Easily
+            </Text>
           </Center>
         </Card>
-
-        <Card variant="outline" className="w-[30vw] mt-10 p-2">
-          <Center>
-            <Heading>🚀</Heading>
-            <Text className="text-center">Stay Productive</Text>
+        <Card className="w-[30vw] p-4 bg-white rounded-xl shadow-lg">
+          <Center className="gap-2">
+            <Heading size="lg">🚀</Heading>
+            <Text className="text-center text-sm text-gray-500 leading-tight">
+              Stay Productive
+            </Text>
           </Center>
         </Card>
       </View>

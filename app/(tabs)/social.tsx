@@ -87,67 +87,68 @@ const social = () => {
     <ScrollView
       contentContainerStyle={{
         flexGrow: 1,
-        alignItems: "center",
-        paddingBottom: 10,
+        paddingBottom: 20,
       }}
-      className="w-full flex-col"
+      className="w-full flex-col bg-gray-100"
     >
-      <SafeAreaView className="w-full bg-white h-24 px-5 mb-5">
-        <View className="flex-row justify-between items-center  bg-white w-full">
-          <View className="gap-2 flex-row  w-full pt-5 items-center">
-            <Heading size="lg" className="h-[30px]">
-              Social Hub
-            </Heading>
-          </View>
+      {/* Header Section */}
+      <SafeAreaView className="w-full bg-white shadow-sm pb-4">
+        <View className="flex-row items-center justify-start px-4 pt-4">
+          <Heading size="lg">Social Hub</Heading>
         </View>
       </SafeAreaView>
 
-      <View className="w-full px-4">
+      {/* Search Bar */}
+      <View className="w-[90vw] mx-auto mt-6">
         <Input
           variant="rounded"
           size="md"
           isDisabled={false}
           isInvalid={false}
           isReadOnly={false}
-          className="bg-white"
+          className="bg-white rounded-full shadow-md"
         >
-          <InputField placeholder="search groups and societies..." />
+          <InputField placeholder="Search groups and societies..." />
         </Input>
       </View>
 
-      <View className="mb-20">
+      {/* Sections */}
+      <View className="mt-6 w-[90vw] mx-auto mb-20 gap-4">
         {sections.map((section, index) => (
-          <View
-            key={index}
-            className="bg-white w-[90vw] mt-6 rounded-lg shadow-hard-1 p-5"
-          >
-            <Center className="gap-3">
+          <View key={index} className="bg-white rounded-xl shadow-lg p-6">
+            <View className="flex-col gap-4">
               <View className="flex-row justify-between items-center w-full">
-                <Text className="bg-blue-600 rounded-full px-3 py-1" size="xl">
-                  {section.emoji}
-                </Text>
-                <Heading>{section.title}</Heading>
+                <View className="flex-row items-center gap-3">
+                  <Text className="bg-blue-600 rounded-full p-2" size="xl">
+                    {section.emoji}
+                  </Text>
+                  <Heading size="md" className="font-bold">
+                    {section.title}
+                  </Heading>
+                </View>
                 <Button
                   variant="solid"
                   action="primary"
-                  className="bg-success-700"
+                  className="bg-success-700 rounded-full px-4 py-2"
                   onPress={() => handleJoinPress(section.telegram)}
                 >
-                  <ButtonText>Join</ButtonText>
+                  <ButtonText className="text-white font-bold">Join</ButtonText>
                 </Button>
               </View>
-              <Text className="text-base">{section.description}</Text>
-              <View className="flex-row justify-between items-center gap-3">
+              <Text className="text-gray-500 text-sm leading-snug">
+                {section.description}
+              </Text>
+              <View className="flex-row items-center flex-wrap gap-2 mt-2">
                 {section.infos.map((info, infoIndex) => (
                   <Text
                     key={infoIndex}
-                    className={`bg-success-50 text-base rounded-lg text-center ${info.width}`}
+                    className={`bg-success-50 text-base rounded-lg text-center px-3 py-1 font-bold text-success-700`}
                   >
                     {info.label}
                   </Text>
                 ))}
               </View>
-            </Center>
+            </View>
           </View>
         ))}
       </View>

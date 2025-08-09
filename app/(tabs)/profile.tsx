@@ -1,15 +1,44 @@
-
 import { ScrollView, View } from "react-native";
 import React from "react";
 import { Image } from "@/components/ui/image";
-import { Avatar, AvatarFallbackText } from "@/components/ui/avatar";
+import {
+  Avatar,
+  AvatarFallbackText,
+  AvatarImage,
+} from "@/components/ui/avatar";
 import { Heading } from "@/components/ui/heading";
 import { Text } from "@/components/ui/text";
-import { Button, ButtonText } from "@/components/ui/button";
-import { Card } from "@/components/ui/card";
-import { EditIcon, Icon } from "@/components/ui/icon";
+import { useUser } from "@clerk/clerk-expo";
+import { Center } from "@/components/ui/center";
 
 const Profile = () => {
+  // Use the Clerk useUser hook to get the logged-in user's data
+  const { user, isLoaded } = useUser();
+
+  // Show a loading indicator while the user data is being fetched
+  if (!isLoaded) {
+    return (
+      <View className="flex-1 justify-center items-center">
+        <Text className="text-xl">Loading...</Text>
+      </View>
+    );
+  }
+
+  // If user data is loaded but the user is null (e.g., signed out),
+  // we can also handle that gracefully here.
+  if (!user) {
+    return (
+      <View className="flex-1 justify-center items-center">
+        <Text className="text-xl">User not found.</Text>
+      </View>
+    );
+  }
+
+  // Extract first letter of first name and last name for avatar fallback
+  const fallbackText = `${user.firstName?.[0] || ""}${
+    user.lastName?.[0] || ""
+  }`;
+
   return (
     <ScrollView
       contentContainerStyle={{
@@ -19,11 +48,15 @@ const Profile = () => {
       className="w-full bg-gray-100"
     >
       {/* Profile Header */}
-      <View>
+      <View className="mb-8">
         <View className="absolute z-10 bottom-0 w-full flex-row justify-center">
           <Avatar className="bg-blue-600 border-4 border-white rounded-full h-28 w-28">
+            <AvatarImage
+              source={{ uri: user.imageUrl }}
+              alt="User profile picture"
+            />
             <AvatarFallbackText className="text-white font-extrabold text-3xl">
-              Alex Thomson
+              {fallbackText}
             </AvatarFallbackText>
           </Avatar>
         </View>
@@ -37,117 +70,16 @@ const Profile = () => {
         />
       </View>
 
-      {/* Profile Info */}
-      <View className="mt-5 bg-white flex-row justify-between items-center px-5 py-5 shadow-md">
-        <Heading>Profile</Heading>
-        <Button className="bg-success-700">
-          <ButtonText>Edit Profile</ButtonText>
-        </Button>
-      </View>
-
-      <Text className="w-full text-center mb-1" size="sm">
-        alex@thomson.com
-      </Text>
-
-      {/* Navigation Buttons */}
-      <View className="flex-row justify-start items-center gap-x-5 p-3 py-1 border-b border-gray-300">
-        <Button variant="link">
-          <ButtonText>Overview</ButtonText>
-        </Button>
-        <Button variant="link">
-          <ButtonText>Academic</ButtonText>
-        </Button>
-        <Button variant="link">
-          <ButtonText>Settings</ButtonText>
-        </Button>
-      </View>
-
-      {/* Program and Student Info */}
-      <View className="mt-5">
-        <View className="flex-row justify-between items-center px-5 mb-5">
-          <Card
-            variant="filled"
-            className="bg-white shadow-md px-3 py-3 w-[43vw]"
-          >
-            <Text size="xs">Program</Text>
-            <Heading size="sm" className="w-full">
-              Computer Science
-            </Heading>
-          </Card>
-          <Card
-            variant="filled"
-            className="bg-white shadow-md px-3 py-3 w-[43vw]"
-          >
-            <Text size="xs">Student ID</Text>
-            <Heading size="sm" className="w-full">
-              2362/14
-            </Heading>
-          </Card>
-        </View>
-
-        <View className="flex-row justify-between items-center px-5 mb-5">
-          <Card
-            variant="filled"
-            className="bg-white shadow-md px-3 py-3 w-[43vw]"
-          >
-            <Text size="xs">GPA</Text>
-            <Heading size="sm" className="w-full">
-              3.85
-            </Heading>
-          </Card>
-          <Card
-            variant="filled"
-            className="bg-white shadow-md px-3 py-3 w-[43vw]"
-          >
-            <Text size="xs">Credits</Text>
-            <Heading size="sm" className="w-full">
-              120
-            </Heading>
-          </Card>
-        </View>
-      </View>
-
-      {/* Recent Achievements */}
-      <View className="p-5 mb-20">
-        <View className="bg-white shadow p-5 rounded-md">
-          <View className="mb-5">
-            <Heading size="xl">Recent Achievements</Heading>
-          </View>
-
-          {/* Achievement 1 */}
-          <View className="flex-row gap-3 w-full items-center mb-4">
-            <View>
-              <Icon as={EditIcon} size="xl" />
-            </View>
-            <View className="gap-x-3">
-              <Heading size="sm">Academic Excellence</Heading>
-              <Text size="xs">Top 5% in computer science</Text>
-            </View>
-          </View>
-
-          {/* Achievement 2 */}
-          <View className="flex-row gap-3 w-full items-center mb-4">
-            <View>
-              <Icon as={EditIcon} size="xl" />
-            </View>
-            <View className="gap-x-3">
-              <Heading size="sm">Dean's List</Heading>
-              <Text size="xs">Recognized for outstanding performance</Text>
-            </View>
-          </View>
-
-          {/* Achievement 3 */}
-          <View className="flex-row gap-3 w-full items-center mb-4">
-            <View>
-              <Icon as={EditIcon} size="xl" />
-            </View>
-            <View className="gap-x-3">
-              <Heading size="sm">Hackathon Winner</Heading>
-              <Text size="xs">Won 1st place in university hackathon</Text>
-            </View>
-          </View>
-        </View>
-      </View>
+      {/* Coming Soon Section */}
+      <Center className="flex-1 justify-center items-center p-5">
+        <Heading size="2xl" className="text-gray-800 font-bold mb-4">
+          Coming Soon!
+        </Heading>
+        <Text size="md" className="text-gray-500 text-center px-4">
+          Academic and achievement details will be available in future updates.
+          Stay tuned!
+        </Text>
+      </Center>
     </ScrollView>
   );
 };

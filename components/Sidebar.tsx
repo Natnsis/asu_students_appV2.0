@@ -9,33 +9,33 @@ import {
 } from "@/components/ui/drawer";
 import { Heading } from "@/components/ui/heading";
 import { Text } from "@/components/ui/text";
-import { CloseIcon, Icon, MenuIcon, StarIcon } from "@/components/ui/icon";
-import React, { useEffect, useState } from "react";
+import { CloseIcon, Icon, MenuIcon } from "@/components/ui/icon";
+import React, { useState } from "react";
 import { Card } from "./ui/card";
-import { View } from "react-native";
+import { View, ScrollView } from "react-native";
 import { Divider } from "./ui/divider";
 import { router } from "expo-router";
 import AsyncStorage from "@react-native-async-storage/async-storage";
+import { useAuth, useUser } from "@clerk/clerk-expo";
+import { Avatar, AvatarFallbackText, AvatarImage } from "./ui/avatar";
 
 export function Sidebar() {
-  interface UserData {
-    fullName: string;
-    [key: string]: any;
-  }
-  const [userData, setUserData] = useState<UserData | null>(null);
   const [showDrawer, setShowDrawer] = useState(false);
+  const { user } = useUser();
 
-  useEffect(() => {
-    const fetchData = async () => {
-      const userInformation = await AsyncStorage.getItem("userData");
-      if (userInformation) {
-        setUserData(JSON.parse(userInformation));
-      } else {
-        console.log("No data found");
-      }
-    };
-    fetchData();
-  }, []);
+  // Guard clause to handle cases where user data is not yet available
+  if (!user) {
+    return (
+      <Button
+        size="xl"
+        className="rounded-full p-3.5 bg-gray-200"
+        variant="solid"
+        onPress={() => setShowDrawer(true)}
+      >
+        <ButtonIcon as={MenuIcon} size="lg" />
+      </Button>
+    );
+  }
 
   const handleNavigation = async (
     pathIfFilled: string,
@@ -50,36 +50,32 @@ export function Sidebar() {
     setShowDrawer(false);
   };
 
+  const fallbackText = `${user.firstName?.[0] || ""}${
+    user.lastName?.[0] || ""
+  }`;
+
   return (
     <>
       <Button
         size="xl"
-        className="rounded-full p-3.5"
-        variant="link"
-        onPress={() => {
-          setShowDrawer(true);
-        }}
+        className="rounded-full p-3.5 bg-gray-200"
+        variant="solid"
+        onPress={() => setShowDrawer(true)}
       >
-        <ButtonText>
-          <Icon as={MenuIcon} size="lg" />
-        </ButtonText>
+        <ButtonIcon as={MenuIcon} size="lg" />
       </Button>
       <Drawer
         isOpen={showDrawer}
-        onClose={() => {
-          setShowDrawer(false);
-        }}
+        onClose={() => setShowDrawer(false)}
         size="lg"
         anchor="left"
       >
         <DrawerBackdrop />
-        <DrawerContent>
-          <DrawerHeader className="flex-row justify-between items-center gap-2">
-            <Heading size="2xl">Asu Students</Heading>
+        <DrawerContent className="bg-gray-100">
+          <DrawerHeader className="flex-row justify-between items-center p-4">
+            <Heading size="2xl">ASU Students</Heading>
             <Button
-              onPress={() => {
-                setShowDrawer(false);
-              }}
+              onPress={() => setShowDrawer(false)}
               variant="link"
               action="secondary"
               size="xl"
@@ -88,21 +84,20 @@ export function Sidebar() {
               <ButtonIcon as={CloseIcon} />
             </Button>
           </DrawerHeader>
-          <DrawerBody>
-            <Card className="w-full" variant="filled">
-              <View className="flex-row items-center gap-2">
+          <DrawerBody className="p-4">
+            <Card className="w-full p-4 rounded-xl shadow-lg bg-white">
+              <View className="flex-row items-center gap-4">
+                <Avatar className="bg-blue-600 h-12 w-12 rounded-full">
+                  <AvatarImage
+                    source={{ uri: user.imageUrl }}
+                    alt="User profile picture"
+                  />
+                  <AvatarFallbackText>{fallbackText}</AvatarFallbackText>
+                </Avatar>
                 <View>
-                  <Button
-                    size="lg"
-                    className="rounded-full p-3.5 bg-success-700"
-                  >
-                    <ButtonIcon as={StarIcon} />
-                  </Button>
-                </View>
-                <View>
-                  <Heading size="lg">{userData?.fullName ?? "Guest"}</Heading>
-                  <Text size="sm">
-                    {userData?.department ?? "no-department"}
+                  <Heading size="lg">{user.fullName}</Heading>
+                  <Text size="sm" className="text-gray-500">
+                    {user.emailAddresses?.[0]?.emailAddress}
                   </Text>
                 </View>
               </View>
@@ -110,98 +105,100 @@ export function Sidebar() {
 
             <Divider className="my-5" />
 
-            <View className="gap-y-3">
-              <Button
-                className="w-full"
-                variant="link"
-                onPress={() =>
-                  handleNavigation(
-                    "/(otherScreens)/curriculum",
-                    "/(otherScreens)/studentStatus"
-                  )
-                }
-              >
-                <ButtonText className="w-full">
-                  <Heading>✅ Curriculum</Heading>
-                </ButtonText>
-              </Button>
-              <Button
-                className="w-full"
-                variant="link"
-                onPress={() =>
-                  handleNavigation(
-                    "/(otherScreens)/gpa-calculator",
-                    "/(otherScreens)/studentStatus"
-                  )
-                }
-              >
-                <ButtonText className="w-full">
-                  <Heading>🧮 GPA Calculator</Heading>
-                </ButtonText>
-              </Button>
-
-              <Button
-                className="w-full"
-                variant="link"
-                onPress={() => {
-                  router.push("/(otherScreens)/lounges");
-                  setShowDrawer(false);
-                }}
-              >
-                <ButtonText className="w-full">
-                  <Heading>🍴 Lounges</Heading>
-                </ButtonText>
-              </Button>
-              <Button
-                variant="link"
-                onPress={() => {
-                  router.push("/(otherScreens)/gallery");
-                  setShowDrawer(false);
-                }}
-              >
-                <ButtonText className="w-full">
-                  <Heading>📷 Gallery</Heading>
-                </ButtonText>
-              </Button>
-              <Button
-                className="w-full"
-                variant="link"
-                onPress={() => {
-                  router.push("/(otherScreens)/remainders");
-                  setShowDrawer(false);
-                }}
-              >
-                <ButtonText className="w-full">
-                  <Heading>📝 Remainder</Heading>
-                </ButtonText>
-              </Button>
-              <Button
-                className="w-full"
-                variant="link"
-                onPress={() => {
-                  router.push("/(otherScreens)/about");
-                  setShowDrawer(false);
-                }}
-              >
-                <ButtonText className="w-full">
-                  <Heading>🔔 About Asu</Heading>
-                </ButtonText>
-              </Button>
-              <Button
-                className="w-full"
-                variant="link"
-                onPress={() => {
-                  setShowDrawer(false);
-                }}
-              >
-                <ButtonText className="w-full">
-                  <Heading>📧 Contact Us</Heading>
-                </ButtonText>
-              </Button>
-            </View>
+            <ScrollView className="flex-1">
+              <View className="gap-y-3">
+                <Button
+                  className="w-full justify-start rounded-xl px-4 pb-3"
+                  variant="link"
+                  onPress={() =>
+                    handleNavigation(
+                      "/(otherScreens)/curriculum",
+                      "/(otherScreens)/studentStatus"
+                    )
+                  }
+                >
+                  <ButtonText className="text-gray-800 font-medium ">
+                    ✅ Curriculum
+                  </ButtonText>
+                </Button>
+                <Button
+                  className="w-full justify-start rounded-xl px-4 pb-3"
+                  variant="link"
+                  onPress={() =>
+                    handleNavigation(
+                      "/(otherScreens)/gpa-calculator",
+                      "/(otherScreens)/studentStatus"
+                    )
+                  }
+                >
+                  <ButtonText className="text-gray-800 font-medium">
+                    🧮 GPA Calculator
+                  </ButtonText>
+                </Button>
+                <Button
+                  className="w-full justify-start rounded-xl px-4 pb-3"
+                  variant="link"
+                  onPress={() => {
+                    router.push("/(otherScreens)/lounges");
+                    setShowDrawer(false);
+                  }}
+                >
+                  <ButtonText className="text-gray-800 font-medium">
+                    🍴 Lounges
+                  </ButtonText>
+                </Button>
+                <Button
+                  className="w-full justify-start rounded-xl px-4 pb-3"
+                  variant="link"
+                  onPress={() => {
+                    router.push("/(otherScreens)/gallery");
+                    setShowDrawer(false);
+                  }}
+                >
+                  <ButtonText className="text-gray-800 font-medium">
+                    📷 Gallery
+                  </ButtonText>
+                </Button>
+                <Button
+                  className="w-full justify-start rounded-xl px-4 pb-3"
+                  variant="link"
+                  onPress={() => {
+                    router.push("/(otherScreens)/remainders");
+                    setShowDrawer(false);
+                  }}
+                >
+                  <ButtonText className="text-gray-800 font-medium">
+                    📝 Remainder
+                  </ButtonText>
+                </Button>
+                <Button
+                  className="w-full justify-start rounded-xl px-4 pb-3"
+                  variant="link"
+                  onPress={() => {
+                    router.push("/(otherScreens)/about");
+                    setShowDrawer(false);
+                  }}
+                >
+                  <ButtonText className="text-gray-800 font-medium">
+                    🔔 About Asu
+                  </ButtonText>
+                </Button>
+                <Button
+                  className="w-full justify-start rounded-xl px-4 pb-3"
+                  variant="link"
+                  onPress={() => {
+                    setShowDrawer(false);
+                  }}
+                >
+                  <ButtonText className="text-gray-800 font-medium">
+                    📧 Contact Us
+                  </ButtonText>
+                </Button>
+              </View>
+            </ScrollView>
           </DrawerBody>
-          <DrawerFooter>
-            <Text size="sm" className="w-full text-center absolute bottom-10">
+          <DrawerFooter className="p-4 gap-4 items-center">
+            <Text size="sm" className="w-full text-center text-gray-500">
               Developed by Natnael Sisay with ❤️
             </Text>
           </DrawerFooter>
