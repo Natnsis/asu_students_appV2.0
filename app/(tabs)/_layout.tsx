@@ -58,6 +58,19 @@ const _layout = () => {
           }}
         />
         <Tabs.Screen
+          name="news"
+          options={{
+            title: "News",
+            tabBarIcon: ({ color, size, focused }) => (
+              <Ionicons
+                name={focused ? "newspaper" : "newspaper-outline"}
+                size={size}
+                color={color}
+              />
+            ),
+          }}
+        />
+        <Tabs.Screen
           name="chat"
           options={{
             title: "Chat",

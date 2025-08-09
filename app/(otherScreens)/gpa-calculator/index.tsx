@@ -4,7 +4,7 @@ import { useFocusEffect } from "@react-navigation/native";
 import { Heading } from "@/components/ui/heading";
 import { Text } from "@/components/ui/text";
 import { Button, ButtonIcon, ButtonText } from "@/components/ui/button";
-import { AddIcon } from "@/components/ui/icon";
+import { AddIcon, TrashIcon } from "@/components/ui/icon";
 import { Card } from "@/components/ui/card";
 import { Divider } from "@/components/ui/divider";
 import {
@@ -23,38 +23,48 @@ import { router } from "expo-router";
 import { SafeAreaView } from "react-native-safe-area-context";
 
 const GPA = () => {
-  const [courses, setCourses] = useState<
-    { name: string; credit: number; grade?: string }[]
-  >([]);
-  const [gpa, setGpa] = useState<string | number>("");
+  const [courses, setCourses] = useState([]);
+  const [gpa, setGpa] = useState("0.00");
 
-  // Fetch courses from AsyncStorage
-  const fetchCourses = async () => {
-    const storedCourses = await AsyncStorage.getItem("courses");
-    if (storedCourses) {
-      setCourses(JSON.parse(storedCourses));
-    }
-  };
-
-  // Use useFocusEffect to fetch courses when the screen is focused
+  // Fetch courses from AsyncStorage when the screen is focused
   useFocusEffect(
     React.useCallback(() => {
+      const fetchCourses = async () => {
+        try {
+          const storedCourses = await AsyncStorage.getItem("courses");
+          if (storedCourses) {
+            setCourses(JSON.parse(storedCourses));
+          }
+        } catch (e) {
+          console.error("Failed to fetch courses from storage", e);
+        }
+      };
       fetchCourses();
     }, [])
   );
 
-  const handleGradeChange = (id: number, newGrade: string) => {
+  const handleGradeChange = async (indexToUpdate, newGrade) => {
     const updatedCourses = courses.map((course, index) =>
-      index === id ? { ...course, grade: newGrade } : course
+      index === indexToUpdate ? { ...course, grade: newGrade } : course
     );
     setCourses(updatedCourses);
-    AsyncStorage.setItem("courses", JSON.stringify(updatedCourses));
+    try {
+      await AsyncStorage.setItem("courses", JSON.stringify(updatedCourses));
+    } catch (e) {
+      console.error("Failed to save updated courses to storage", e);
+    }
   };
 
-  const handleDeleteCourse = async (id: number) => {
-    const updatedCourses = courses.filter((_, index) => index !== id);
+  const handleDeleteCourse = async (indexToDelete) => {
+    const updatedCourses = courses.filter(
+      (_, index) => index !== indexToDelete
+    );
     setCourses(updatedCourses);
-    await AsyncStorage.setItem("courses", JSON.stringify(updatedCourses));
+    try {
+      await AsyncStorage.setItem("courses", JSON.stringify(updatedCourses));
+    } catch (e) {
+      console.error("Failed to delete course from storage", e);
+    }
   };
 
   const calculateGpa = () => {
@@ -77,149 +87,153 @@ const GPA = () => {
   };
 
   return (
-    <ScrollView
-      contentContainerStyle={{
-        flexGrow: 1,
-        alignItems: "center",
-        paddingBottom: 10,
-      }}
-      className="w-full flex-col"
-    >
+    <SafeAreaView className="flex-1 bg-gray-100">
       {/* Header Section */}
-      <SafeAreaView className="w-full bg-white">
-        <View className="flex-row items-center justify-between w-full px-4 py-2">
+      <View className="w-full bg-white shadow-sm pb-4">
+        <View className="flex-row items-center justify-between w-full px-4 pt-4">
           <Heading size="lg">GPA Calculator</Heading>
           <Button
             size="sm"
             variant="solid"
             action="primary"
-            className="rounded-full flex-row items-center h-auto min-h-0 py-1"
+            className="rounded-full flex-row items-center h-auto min-h-0 py-2 px-3 bg-blue-600"
             onPress={() => {
-              router.push("/(otherScreens)/add-course");
+              router.push("/(otherScreens)/curriculum");
             }}
           >
-            <ButtonIcon as={AddIcon} />
-            <ButtonText>Add Courses</ButtonText>
+            <ButtonIcon as={AddIcon} className="text-white" />
+            <ButtonText className="text-white">Add Courses</ButtonText>
           </Button>
         </View>
-      </SafeAreaView>
+      </View>
 
-      {/* Body Section */}
-      <View className="w-full mt-5">
-        <View className="flex-row justify-between items-center w-full px-5">
-          <Card className="flex-1 mx-1 bg-white h-[15vh] flex-col items-center justify-center shadow-md">
-            <Text size="xs" className="w-full text-center">
+      <ScrollView
+        contentContainerStyle={{
+          flexGrow: 1,
+          paddingBottom: 100, // Ensure content is above the tab bar
+        }}
+        className="w-full flex-col px-4 pt-4"
+      >
+        {/* GPA Status Cards */}
+        <View className="flex-row justify-between w-full gap-2 mb-6">
+          <Card className="flex-1 bg-white p-4 rounded-xl shadow-lg items-center">
+            <Text size="xs" className="text-gray-500">
               Current GPA
             </Text>
-            <Heading size="xl" className="w-full text-center">
+            <Heading size="xl" className="mt-1">
               3.77
             </Heading>
           </Card>
-          <Card className="flex-1 mx-1 bg-white h-[15vh] flex-col items-center justify-center shadow-md">
-            <Text size="xs" className="w-full text-center">
+          <Card className="flex-1 bg-white p-4 rounded-xl shadow-lg items-center">
+            <Text size="xs" className="text-gray-500">
               Target GPA
             </Text>
-            <Heading size="xl" className="w-full text-center">
+            <Heading size="xl" className="mt-1">
               3.80
             </Heading>
           </Card>
-          <Card className="flex-1 mx-1 bg-white h-[15vh] flex-col items-center justify-center shadow-md">
-            <Text size="xs" className="w-full text-center ">
+          <Card className="flex-1 bg-white p-4 rounded-xl shadow-lg items-center">
+            <Text size="xs" className="text-gray-500">
               Credits
             </Text>
-            <Text size="xs" className="w-full text-center">
-              remaining
-            </Text>
-            <Heading size="xl" className="w-full text-center">
+            <Heading size="xl" className="mt-1">
               45
             </Heading>
           </Card>
         </View>
-      </View>
 
-      {/* Table Section */}
-      <View className="w-full mt-5 px-5">
-        <View className="rounded-lg bg-white shadow-md p-5">
-          <Heading size="xl" className="mb-3">
+        {/* Table Section */}
+        <Card className="w-full p-6 bg-white rounded-xl shadow-lg">
+          <Heading size="md" className="font-bold text-blue-700 mb-4">
             Current Semester
           </Heading>
           <View className="flex-row items-center w-full mb-3">
-            <Text size="sm" className="font-medium">
+            <Text size="sm" className="font-medium text-gray-700">
               Projected GPA:{" "}
             </Text>
-            <Heading size="md" className="text-3xl text-green-600">
+            <Heading size="xl" className="text-green-600">
               {gpa}
             </Heading>
           </View>
-          <Divider className="my-5" />
+          <Divider className="my-3" />
 
           {/* Table Header */}
-          <View className="flex-row w-full bg-gray-100 p-3 rounded-t-lg justify-between">
-            <Text className="w-[50%] font-bold">Course</Text>
-            <Text className="w-[20%] text-center font-bold" size="xs">
+          <View className="flex-row w-full bg-gray-100 p-3 rounded-lg justify-between items-center mb-2">
+            <Text className="w-1/2 font-bold text-gray-800">Course</Text>
+            <Text className="w-1/4 text-center font-bold text-gray-800">
               Grade
             </Text>
-            <Text className="w-[15%] text-center font-bold" size="xs">
+            <Text className="w-1/4 text-center font-bold text-gray-800">
               Action
             </Text>
           </View>
 
           {/* Table Body */}
-          {courses.map((course, index) => (
-            <View
-              key={index}
-              className="flex-row w-full p-3 border-b border-gray-200 justify-between"
-            >
-              <Text className="w-[50%]" size="xs" numberOfLines={1}>
-                {course.name || "N/A"}
-              </Text>
-              <Select
-                className="w-14"
-                onValueChange={(value) => handleGradeChange(index, value)}
-                selectedValue={course.grade}
+          {courses.length > 0 ? (
+            courses.map((course, index) => (
+              <View
+                key={index}
+                className="flex-row w-full py-3 border-b border-gray-200 justify-between items-center"
               >
-                <SelectTrigger>
-                  <SelectInput className="flex-1 justify-center h-[30vw] text-sm w-[30vw]" />
-                </SelectTrigger>
-                <SelectPortal>
-                  <SelectBackdrop />
-                  <SelectContent>
-                    <SelectDragIndicatorWrapper>
-                      <SelectDragIndicator />
-                    </SelectDragIndicatorWrapper>
-                    <SelectItem label="A+" value="4" />
-                    <SelectItem label="A" value="4" />
-                    <SelectItem label="A-" value="3.75" />
-                    <SelectItem label="B+" value="3.5" />
-                    <SelectItem label="B" value="3" />
-                    <SelectItem label="B-" value="2.75" />
-                    <SelectItem label="C+" value="2.5" />
-                    <SelectItem label="C" value="2" />
-                    <SelectItem label="D" value="1" />
-                    <SelectItem label="F" value="0" />
-                  </SelectContent>
-                </SelectPortal>
-              </Select>
-
-              <View className="w-[16%] text-center">
-                <Button
-                  size="xs"
-                  variant="link"
-                  action="negative"
-                  onPress={() => handleDeleteCourse(index)}
+                <Text className="flex-1 text-gray-700 pr-2" numberOfLines={1}>
+                  {course.name || "N/A"}
+                </Text>
+                <Select
+                  className="w-1/4 min-w-[70px]"
+                  onValueChange={(value) => handleGradeChange(index, value)}
+                  selectedValue={course.grade}
                 >
-                  <ButtonText>Remove</ButtonText>
-                </Button>
+                  <SelectTrigger className="w-full bg-gray-100 rounded-lg h-10 px-2">
+                    <SelectInput className="text-sm" />
+                  </SelectTrigger>
+                  <SelectPortal>
+                    <SelectBackdrop />
+                    <SelectContent>
+                      <SelectDragIndicatorWrapper>
+                        <SelectDragIndicator />
+                      </SelectDragIndicatorWrapper>
+                      <SelectItem label="A" value="4" />
+                      <SelectItem label="A-" value="3.75" />
+                      <SelectItem label="B+" value="3.5" />
+                      <SelectItem label="B" value="3" />
+                      <SelectItem label="B-" value="2.75" />
+                      <SelectItem label="C+" value="2.5" />
+                      <SelectItem label="C" value="2" />
+                      <SelectItem label="D" value="1" />
+                      <SelectItem label="F" value="0" />
+                    </SelectContent>
+                  </SelectPortal>
+                </Select>
+
+                <View className="w-1/4 items-center">
+                  <Button
+                    size="xs"
+                    variant="link"
+                    action="negative"
+                    onPress={() => handleDeleteCourse(index)}
+                  >
+                    <ButtonIcon as={TrashIcon} size="md" />
+                  </Button>
+                </View>
               </View>
-            </View>
-          ))}
-          <Divider className="my-5" />
-          <Button onPress={calculateGpa}>
-            <ButtonText>Calculate GPA</ButtonText>
+            ))
+          ) : (
+            <Text className="text-center text-gray-500 mt-4">
+              No courses added yet.
+            </Text>
+          )}
+
+          <Button
+            onPress={calculateGpa}
+            className="mt-6 bg-blue-600 rounded-lg"
+          >
+            <ButtonText className="text-white font-bold">
+              Calculate GPA
+            </ButtonText>
           </Button>
-        </View>
-      </View>
-    </ScrollView>
+        </Card>
+      </ScrollView>
+    </SafeAreaView>
   );
 };
 

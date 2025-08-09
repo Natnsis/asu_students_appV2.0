@@ -1,52 +1,73 @@
 import { View, ScrollView } from "react-native";
 import React, { useState } from "react";
-import { useFocusEffect } from "@react-navigation/native"; // Import useFocusEffect
+import { useFocusEffect } from "@react-navigation/native";
 import { Heading } from "@/components/ui/heading";
 import { Text } from "@/components/ui/text";
 import { Button, ButtonIcon, ButtonText } from "@/components/ui/button";
-import { AddIcon, StarIcon } from "@/components/ui/icon";
+import { AddIcon, TrashIcon } from "@/components/ui/icon";
 import { Input, InputField } from "@/components/ui/input";
 import { router } from "expo-router";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { SafeAreaView } from "react-native-safe-area-context";
+import { Card } from "@/components/ui/card";
+import { Divider } from "@/components/ui/divider";
+import { Badge, BadgeText } from "@/components/ui/badge";
 
 const Reminders = () => {
-  const [reminders, setReminders] = useState<
-    {
-      id: number;
-      title: string;
-      description: string;
-      endDate: string; // Use endDate as the due date
-      status: string; // Status will show days left
-    }[]
-  >([]);
+  const [reminders, setReminders] = useState([]);
 
-  // Fetch reminders from AsyncStorage
+  // Helper function to get the correct badge for the reminder status
+  const getStatusBadge = (status) => {
+    if (status.includes("Overdue")) {
+      return (
+        <Badge action="error" variant="solid" className="bg-red-500">
+          <BadgeText>{status}</BadgeText>
+        </Badge>
+      );
+    } else if (status.includes("Due today")) {
+      return (
+        <Badge action="warning" variant="solid" className="bg-yellow-500">
+          <BadgeText>{status}</BadgeText>
+        </Badge>
+      );
+    } else {
+      return (
+        <Badge action="success" variant="solid" className="bg-green-500">
+          <BadgeText>{status}</BadgeText>
+        </Badge>
+      );
+    }
+  };
+
+  // Fetch reminders from AsyncStorage and calculate status
   const fetchReminders = async () => {
-    const storedReminders = await AsyncStorage.getItem("reminders");
-    if (storedReminders) {
-      const parsedReminders = JSON.parse(storedReminders);
+    try {
+      const storedReminders = await AsyncStorage.getItem("reminders");
+      if (storedReminders) {
+        const parsedReminders = JSON.parse(storedReminders);
 
-      // Calculate status for each reminder
-      const updatedReminders = parsedReminders.map((reminder: any) => {
-        const currentDate = new Date();
-        const dueDate = new Date(reminder.endDate); // Parse the ISO string into a Date object
-        const timeDifference = dueDate.getTime() - currentDate.getTime();
-        const daysLeft = Math.ceil(timeDifference / (1000 * 60 * 60 * 24)); // Convert to days
+        const updatedReminders = parsedReminders.map((reminder) => {
+          const currentDate = new Date();
+          const dueDate = new Date(reminder.endDate);
+          const timeDifference = dueDate.getTime() - currentDate.getTime();
+          const daysLeft = Math.ceil(timeDifference / (1000 * 60 * 60 * 24));
 
-        let status = "";
-        if (daysLeft > 0) {
-          status = `${daysLeft} day(s) left`;
-        } else if (daysLeft === 0) {
-          status = "Due today";
-        } else {
-          status = "Overdue";
-        }
+          let status = "";
+          if (daysLeft > 0) {
+            status = `${daysLeft} day(s) left`;
+          } else if (daysLeft === 0) {
+            status = "Due today";
+          } else {
+            status = "Overdue";
+          }
 
-        return { ...reminder, status }; // Add status to the reminder
-      });
+          return { ...reminder, status };
+        });
 
-      setReminders(updatedReminders);
+        setReminders(updatedReminders);
+      }
+    } catch (e) {
+      console.error("Failed to fetch reminders from storage", e);
     }
   };
 
@@ -58,109 +79,103 @@ const Reminders = () => {
   );
 
   // Handle deleting a reminder
-  const handleDeleteReminder = async (id: number) => {
+  const handleDeleteReminder = async (id) => {
     const updatedReminders = reminders.filter((reminder) => reminder.id !== id);
     setReminders(updatedReminders);
-    await AsyncStorage.setItem("reminders", JSON.stringify(updatedReminders));
+    try {
+      await AsyncStorage.setItem("reminders", JSON.stringify(updatedReminders));
+    } catch (e) {
+      console.error("Failed to delete reminder from storage", e);
+    }
   };
 
   return (
-    <ScrollView
-      contentContainerStyle={{
-        flexGrow: 1,
-        alignItems: "center",
-        paddingBottom: 10,
-      }}
-      className="w-full flex-col"
-    >
+    <SafeAreaView className="flex-1 bg-gray-100">
       {/* Header Section */}
+      <View className="w-full bg-white shadow-sm pb-4">
+        <View className="flex-row items-center justify-start px-4 pt-4">
+          <Heading size="lg">Reminders</Heading>
+        </View>
+      </View>
 
-      {/* Sticky Add Reminder Button at Bottom */}
-      <View
-        style={{
-          position: "absolute",
-          bottom: 20,
-          right: 20,
-          zIndex: 10,
-        }}
-      >
+      {/* Floating Add Reminder Button */}
+      <View className="absolute bottom-20 right-5 z-10">
         <Button
           size="lg"
           variant="solid"
           action="primary"
-          className="rounded-full flex-row items-center mb-10"
+          className="rounded-full flex-row items-center h-16 w-16 p-0 justify-center bg-blue-600 shadow-lg"
           onPress={() => router.push("/(otherScreens)/add-reminder")}
         >
-          <ButtonIcon as={AddIcon} />
-          <ButtonText>Add Reminder</ButtonText>
+          <ButtonIcon as={AddIcon} size="xl" className="text-white" />
         </Button>
       </View>
 
-      {/* Header */}
-      <SafeAreaView className="w-full bg-white h-24 px-5 mb-5">
-        <View className="flex-row justify-between items-center w-full h-full">
-          <View className="gap-2 flex-row pt-5 items-center">
-            <Heading size="lg" className="h-[30px]">
-              Reminders
-            </Heading>
-          </View>
+      <ScrollView
+        contentContainerStyle={{
+          flexGrow: 1,
+          paddingBottom: 100, // Ensure content is above the tab bar
+        }}
+        className="w-full flex-col px-4 pt-4"
+      >
+        {/* Search Section */}
+        <View className="w-full mb-6">
+          <Input
+            variant="rounded"
+            size="md"
+            className="bg-white rounded-full shadow-md"
+          >
+            <InputField placeholder="Search reminders..." />
+          </Input>
         </View>
-      </SafeAreaView>
 
-      {/* Search Section */}
-      <View className="w-full px-5 mb-5">
-        <Input
-          variant="outline"
-          size="md"
-          className="bg-white mt-5 rounded-full"
-        >
-          <InputField placeholder="Search reminders..." />
-        </Input>
-      </View>
+        {/* Reminders Section */}
+        <View className="w-full gap-4">
+          {reminders.length > 0 ? (
+            reminders.map((reminder) => (
+              <Card
+                key={reminder.id}
+                className="w-full p-5 bg-white rounded-xl shadow-lg"
+              >
+                <View className="flex-row justify-between items-start mb-3">
+                  <Heading
+                    size="md"
+                    className="font-bold text-blue-700 flex-1 pr-4"
+                  >
+                    {reminder.title}
+                  </Heading>
+                  {getStatusBadge(reminder.status)}
+                </View>
 
-      {/* Reminders Section */}
-      <View className="w-full px-5 mb-5">
-        {reminders.length > 0 ? (
-          reminders.map((reminder) => (
-            <View
-              key={reminder.id}
-              className="w-full p-5 flex-row bg-white rounded-lg shadow-sm gap-5 mb-5"
-            >
-              <View className="flex items-center justify-center bg-blue-100 p-3 rounded-full">
-                <StarIcon width={24} height={24} color="#2563eb" />
-              </View>
-
-              {/* Reminder Content */}
-              <View className="w-[90%]">
-                <Heading>{reminder.title}</Heading>
-                <Text size="sm" className="mt-3 text-gray-600">
+                <Text size="sm" className="mt-1 text-gray-700">
                   {reminder.description}
                 </Text>
-                <View className="flex-col gap-5 my-5">
-                  <Text>
+
+                <Divider className="my-4" />
+
+                <View className="flex-row items-center justify-between">
+                  <Text className="text-sm text-gray-500">
                     ⏰ Due: {new Date(reminder.endDate).toLocaleString()}
                   </Text>
-                  <Text>⌛ {reminder.status}</Text>
-                </View>
-                <View>
                   <Button
-                    size="sm"
-                    variant="solid"
+                    size="xs"
+                    variant="link"
                     action="negative"
-                    className="w-[40%]"
                     onPress={() => handleDeleteReminder(reminder.id)}
                   >
-                    <ButtonText>Delete</ButtonText>
+                    <ButtonIcon as={TrashIcon} size="md" />
                   </Button>
                 </View>
-              </View>
-            </View>
-          ))
-        ) : (
-          <Text className="text-center text-gray-500">No reminders found.</Text>
-        )}
-      </View>
-    </ScrollView>
+              </Card>
+            ))
+          ) : (
+            <Text className="text-center text-gray-500 mt-4">
+              No reminders found.
+            </Text>
+          )}
+        </View>
+      </ScrollView>
+    </SafeAreaView>
   );
 };
 

@@ -22,6 +22,7 @@ import { Avatar, AvatarFallbackText, AvatarImage } from "./ui/avatar";
 export function Sidebar() {
   const [showDrawer, setShowDrawer] = useState(false);
   const { user } = useUser();
+  const { signOut } = useAuth();
 
   // Guard clause to handle cases where user data is not yet available
   if (!user) {
@@ -117,7 +118,7 @@ export function Sidebar() {
                     )
                   }
                 >
-                  <ButtonText className="text-gray-800 font-medium ">
+                  <ButtonText className="text-gray-800 font-medium">
                     ✅ Curriculum
                   </ButtonText>
                 </Button>
@@ -187,6 +188,9 @@ export function Sidebar() {
                   className="w-full justify-start rounded-xl px-4 pb-3"
                   variant="link"
                   onPress={() => {
+                    router.push(
+                      "https://www.linkedin.com/in/natnael-sisay-orcadev/"
+                    );
                     setShowDrawer(false);
                   }}
                 >
@@ -199,7 +203,7 @@ export function Sidebar() {
           </DrawerBody>
           <DrawerFooter className="p-4 gap-4 items-center">
             <Text size="sm" className="w-full text-center text-gray-500">
-              Developed by Natnael Sisay with ❤️
+              Designed & Developed by Natnael Sisay with ❤️
             </Text>
           </DrawerFooter>
         </DrawerContent>

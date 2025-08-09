@@ -4,7 +4,6 @@ import { Heading } from "@/components/ui/heading";
 import { Text } from "@/components/ui/text";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { Input, InputField } from "@/components/ui/input";
-import { Button, ButtonText } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { useRouter } from "expo-router";
@@ -14,6 +13,7 @@ const Curriculum = () => {
   const [semester, setSemester] = useState("-");
   const [gpa, setGpa] = useState(0);
   const [department, setDepartment] = useState("");
+  const [searchTerm, setSearchTerm] = useState("");
   const router = useRouter();
 
   useEffect(() => {
@@ -45,105 +45,114 @@ const Curriculum = () => {
   }, []);
 
   const courses = [
-    { id: 1, name: "💻 Computer Science" },
-    { id: 2, name: "📡 Information Technology" },
-    { id: 3, name: "📝 Information Science" },
-    { id: 4, name: "💊 Pharmacy" },
-    { id: 5, name: "⚖ Law" },
-    { id: 6, name: "💹 Economics" },
-    { id: 7, name: "🧮 Accounting" },
-    { id: 8, name: "🌱 Agro Economics" },
-    { id: 9, name: "💉 Nurse" },
-    { id: 10, name: "🔬 Medical Laboratory" },
-    { id: 11, name: "📰 Journalism" },
+    { id: 1, name: "Computer Science", emoji: "💻" },
+    { id: 2, name: "Information Technology", emoji: "📡" },
+    { id: 3, name: "Information Science", emoji: "📝" },
+    { id: 4, name: "Pharmacy", emoji: "💊" },
+    { id: 5, name: "Law", emoji: "⚖" },
+    { id: 6, name: "Economics", emoji: "💹" },
+    { id: 7, name: "Accounting", emoji: "🧮" },
+    { id: 8, name: "Agro Economics", emoji: "🌱" },
+    { id: 9, name: "Nursing", emoji: "💉" },
+    { id: 10, name: "Medical Laboratory", emoji: "🔬" },
+    { id: 11, name: "Journalism", emoji: "📰" },
   ];
+
+  const filteredCourses = courses.filter((course) =>
+    course.name.toLowerCase().includes(searchTerm.toLowerCase())
+  );
 
   const handleDepartmentPress = (id: number) => {
     router.push(`/curriculum-info/${id}`);
   };
 
   return (
-    <ScrollView
-      contentContainerStyle={{
-        flexGrow: 1,
-        alignItems: "center",
-        paddingBottom: 10,
-      }}
-      className="w-full flex-col"
-    >
+    <SafeAreaView className="flex-1 bg-gray-100">
       {/* Header Section */}
-      <SafeAreaView className="w-full bg-white h-24 px-5 mb-5">
-        <View className="flex-row justify-between items-center w-full">
-          <View className="gap-2 flex-row w-full pt-5 items-center">
-            <Heading size="lg" className="h-[30px] pl-10">
-              Curriculum
-            </Heading>
-          </View>
+      <View className="w-full bg-white shadow-sm pb-4">
+        <View className="flex-row items-center justify-start px-4 pt-4">
+          <Heading size="lg">My Curriculum</Heading>
         </View>
-      </SafeAreaView>
+      </View>
 
-      {/* Body Section */}
-      <View className="w-full mt-5">
-        <View className="flex-row justify-between items-center w-full px-5">
-          <Card className="w-fit bg-white">
-            <Text size="xs">CGPA</Text>
-            <Heading size="xl" className="w-full text-center">
+      <ScrollView
+        contentContainerStyle={{
+          flexGrow: 1,
+          paddingBottom: 100,
+        }}
+        className="w-full flex-col px-4 pt-4"
+      >
+        {/* Student Status Cards */}
+        <View className="flex-row justify-between w-full gap-2 mb-6">
+          <Card className="flex-1 bg-white p-4 rounded-xl shadow-lg items-center">
+            <Text size="xs" className="text-gray-500">
+              CGPA
+            </Text>
+            <Heading size="xl" className="mt-1">
               {cgpa}
             </Heading>
           </Card>
-          <Card className="w-fit bg-white">
-            <Text size="xs">Semester</Text>
-            <Heading size="xl" className="w-full text-center">
+          <Card className="flex-1 bg-white p-4 rounded-xl shadow-lg items-center">
+            <Text size="xs" className="text-gray-500">
+              Semester
+            </Text>
+            <Heading size="xl" className="mt-1">
               {semester}
             </Heading>
           </Card>
-          <Card className="w-fit bg-white">
-            <Text size="xs">Dep't</Text>
-            <Heading size="xl" className="w-full text-center">
-              {department}
-            </Heading>
-          </Card>
-          <Card className="w-[20%] bg-white">
-            <Text size="xs" className="w-full text-center">
+          <Card className="flex-1 bg-white p-4 rounded-xl shadow-lg items-center">
+            <Text size="xs" className="text-gray-500">
               GPA
             </Text>
-            <Heading size="xl" className="w-full text-center">
+            <Heading size="xl" className="mt-1">
               {gpa}
             </Heading>
           </Card>
         </View>
-      </View>
 
-      {/* Search Section */}
-      <View className="w-full px-5">
-        <Input
-          variant="outline"
-          size="md"
-          className="bg-white mt-5 rounded-full"
-        >
-          <InputField placeholder="Search Department..." />
-        </Input>
-      </View>
-
-      {/* Departments Section */}
-      <View className="px-5 w-full mt-10 mb-10">
-        <View className="p-5 bg-white ">
-          <Text className="mb-3">Departments:</Text>
-          {courses.map((course) => (
-            <Button
-              key={course.id}
-              variant="link"
-              className="mb-5 bg-success-50"
-              onPress={() => handleDepartmentPress(course.id)}
-            >
-              <ButtonText className="w-full gap-1 py-1 px-2">
-                <Heading> {course.name}</Heading>
-              </ButtonText>
-            </Button>
-          ))}
+        {/* Search Section */}
+        <View className="w-full mb-6">
+          <Input
+            variant="rounded"
+            size="md"
+            className="bg-white rounded-full shadow-md"
+          >
+            <InputField
+              placeholder="Search departments..."
+              value={searchTerm}
+              onChangeText={setSearchTerm}
+            />
+          </Input>
         </View>
-      </View>
-    </ScrollView>
+
+        {/* Departments Section */}
+        <View className="w-full gap-4">
+          <Heading size="md" className="font-bold text-gray-700">
+            Departments:
+          </Heading>
+          {filteredCourses.length > 0 ? (
+            filteredCourses.map((course) => (
+              <TouchableOpacity
+                key={course.id}
+                onPress={() => handleDepartmentPress(course.id)}
+                activeOpacity={0.7}
+              >
+                <Card className="bg-white p-5 rounded-xl shadow-lg flex-row items-center gap-3">
+                  <Text className="text-xl">{course.emoji}</Text>
+                  <Heading size="md" className="font-bold text-blue-700">
+                    {course.name}
+                  </Heading>
+                </Card>
+              </TouchableOpacity>
+            ))
+          ) : (
+            <Text className="text-center text-gray-500 mt-4">
+              No departments found.
+            </Text>
+          )}
+        </View>
+      </ScrollView>
+    </SafeAreaView>
   );
 };
 

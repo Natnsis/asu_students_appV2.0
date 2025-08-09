@@ -2,10 +2,11 @@ import { View, ScrollView } from "react-native";
 import React from "react";
 import { Heading } from "@/components/ui/heading";
 import { Text } from "@/components/ui/text";
-import { Avatar, AvatarFallbackText } from "@/components/ui/avatar";
 import { Input, InputField } from "@/components/ui/input";
 import { Badge, BadgeText } from "@/components/ui/badge";
 import { SafeAreaView } from "react-native-safe-area-context";
+import { Card } from "@/components/ui/card";
+import { Divider } from "@/components/ui/divider";
 
 const Gallery = () => {
   // Array of gallery items
@@ -40,64 +41,69 @@ const Gallery = () => {
   ];
 
   return (
-    <ScrollView
-      contentContainerStyle={{
-        flexGrow: 1,
-        alignItems: "center",
-        paddingBottom: 10,
-      }}
-      className="w-full flex-col"
-    >
+    <SafeAreaView className="flex-1 bg-gray-100">
       {/* Header Section */}
-      <SafeAreaView className="w-full bg-white h-24 px-5 mb-5">
-        <View className="flex-row justify-between items-center w-full">
-          <View className="gap-2 flex-row  w-full pt-5 items-center">
-            <Heading size="lg" className="h-[30px] ">
-              University Gallery
-            </Heading>
-          </View>
+      <View className="w-full bg-white shadow-sm pb-4">
+        <View className="flex-row items-center justify-start px-4 pt-4">
+          <Heading size="lg">University Gallery</Heading>
         </View>
-      </SafeAreaView>
-
-      {/* Search Section */}
-      <View className="w-full px-5">
-        <Input
-          variant="outline"
-          size="md"
-          className="bg-white mt-5 rounded-full"
-        >
-          <InputField placeholder="Search events and activities..." />
-        </Input>
       </View>
 
-      {/* Gallery Section */}
-      <View className="w-full px-5 mt-5">
-        {galleryItems.map((item) => (
-          <View
-            key={item.id}
-            className="bg-white rounded-lg shadow-md p-5 mb-5"
+      <ScrollView
+        contentContainerStyle={{
+          flexGrow: 1,
+          paddingBottom: 100, // Ensure content is above the tab bar
+        }}
+        className="w-full flex-col px-4 pt-4"
+      >
+        {/* Search Section */}
+        <View className="w-full mb-6">
+          <Input
+            variant="rounded"
+            size="md"
+            className="bg-white rounded-full shadow-md"
           >
-            <Heading>{item.title}</Heading>
-            <View className="w-full my-5 h-[20vh] bg-primary-100 flex-row justify-center items-center">
-              <Text className="w-full text-white text-center">
-                {item.image}
+            <InputField placeholder="Search events and activities..." />
+          </Input>
+        </View>
+
+        {/* Gallery Items */}
+        <View className="w-full gap-4">
+          {galleryItems.map((item, index) => (
+            <Card key={item.id} className="bg-white rounded-xl shadow-lg p-5">
+              <Heading size="md" className="font-bold text-blue-700">
+                {item.title}
+              </Heading>
+              <Text className="text-gray-500 mt-1 mb-3">{item.subtitle}</Text>
+
+              <View className="w-full h-48 bg-gray-200 flex items-center justify-center rounded-lg shadow-inner my-3">
+                {/* This is a placeholder for an image. Replace with a real Image component later. */}
+                <Text className="text-gray-600 font-bold">{item.image}</Text>
+              </View>
+
+              <Text size="sm" className="text-gray-700">
+                {item.description}
               </Text>
-            </View>
-            <Heading>{item.subtitle}</Heading>
-            <Text className="w-full my-3" size="sm">
-              {item.description}
-            </Text>
-            <View className="flex-row gap-5 mt-5">
-              {item.tags.map((tag, index) => (
-                <Badge key={index} size="md" variant="solid" action="muted">
-                  <BadgeText>{tag}</BadgeText>
-                </Badge>
-              ))}
-            </View>
-          </View>
-        ))}
-      </View>
-    </ScrollView>
+
+              <View className="flex-row flex-wrap gap-2 mt-4">
+                {item.tags.map((tag, tagIndex) => (
+                  <Badge
+                    key={tagIndex}
+                    size="md"
+                    variant="solid"
+                    action="muted"
+                    className="bg-gray-200"
+                  >
+                    <BadgeText className="text-gray-700">{tag}</BadgeText>
+                  </Badge>
+                ))}
+              </View>
+              {index < galleryItems.length - 1 && <Divider className="my-3" />}
+            </Card>
+          ))}
+        </View>
+      </ScrollView>
+    </SafeAreaView>
   );
 };
 

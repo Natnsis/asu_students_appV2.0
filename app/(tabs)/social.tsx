@@ -3,83 +3,81 @@ import React from "react";
 import { Heading } from "@/components/ui/heading";
 import { Text } from "@/components/ui/text";
 import { Input, InputField } from "@/components/ui/input";
-import { Button, ButtonText } from "@/components/ui/button";
-import { Center } from "@/components/ui/center";
+import { Button, ButtonText, ButtonIcon } from "@/components/ui/button";
 import { SafeAreaView } from "react-native-safe-area-context";
 
+import { Send, Gamepad, Facebook, Twitter } from "lucide-react-native";
+import { Icon } from "@/components/ui/icon";
+
 const social = () => {
-  const sections = [
+  const socialGroups = [
     {
       emoji: "📚",
-      title: "Curriculum",
-      media: "telegram",
-      description: "Track your courses and credits",
-      telegram: "https://t.me/css_study",
-      infos: [
-        { label: "4.0 GPA", width: "w-20" },
-        { label: "t.me/css.study", width: "w-32" },
-      ],
+      title: "CSS Study Group",
+      description:
+        "Join the official study group for Computer Science students.",
+      link: "https://t.me/css_study",
+      platform: "telegram",
     },
     {
-      emoji: "🗺",
-      title: "Campus Map",
-      media: "telegram",
-      description: "Navigate your campus with ease",
-      telegram: "https://t.me/campus_map",
-      infos: [
-        { label: "Building A", width: "w-24" },
-        { label: "Library", width: "w-24" },
-      ],
+      emoji: "📣",
+      title: "ASU Official News",
+      description:
+        "Follow the university's official updates and announcements.",
+      link: "https://twitter.com/asu_official",
+      platform: "twitter",
     },
     {
-      emoji: "🪑",
-      title: "Lounges",
-      media: "telegram",
-      description: "find study and relaxation spaces",
-      telegram: "https://t.me/lounges_group",
-      infos: [
-        { label: "120 credits", width: "w-28" },
-        { label: "3 semesters left", width: "w-36" },
-      ],
+      emoji: "🎨",
+      title: "Art & Culture Society",
+      description:
+        "Connect with students passionate about art and cultural events.",
+      link: "https://facebook.com/asu_art_culture",
+      platform: "facebook",
     },
     {
-      emoji: "🧮",
-      title: "Gpa Calculator",
-      media: "telegram",
-      description: "Calculate your grades",
-      telegram: "https://t.me/gpa_calculator",
-      infos: [
-        { label: "120 credits", width: "w-28" },
-        { label: "3 semesters left", width: "w-36" },
-      ],
+      emoji: "🎮",
+      title: "Gaming Guild",
+      description: "Join the official university Discord server for gamers.",
+      link: "https://discord.gg/ASU-Gaming-Guild",
+      platform: "discord",
     },
     {
-      emoji: "📸",
-      title: "Gallery",
-      media: "telegram",
-      description: "University photo galleries",
-      telegram: "https://t.me/university_gallery",
-      infos: [
-        { label: "120 credits", width: "w-28" },
-        { label: "3 semesters left", width: "w-36" },
-      ],
+      emoji: "⚽",
+      title: "ASU Football Fans",
+      description:
+        "A chat for all things related to the inter-faculty football league.",
+      link: "https://t.me/asu_football",
+      platform: "telegram",
     },
     {
-      emoji: "⏰",
-      title: "Remainders",
-      media: "telegram",
-      description: "Stay on top of your tasks",
-      telegram: "https://t.me/remainders_channel",
-      infos: [
-        { label: "120 credits", width: "w-28" },
-        { label: "3 semesters left", width: "w-36" },
-      ],
+      emoji: "✍️",
+      title: "Creative Writers' Forum",
+      description:
+        "Share your poems, stories, and scripts with fellow writers.",
+      link: "https://facebook.com/asu_writers_forum",
+      platform: "facebook",
     },
   ];
 
-  const handleJoinPress = (telegramLink: string) => {
-    if (telegramLink) {
-      Linking.openURL(telegramLink);
+  const handleJoinPress = (link: string) => {
+    if (link) {
+      Linking.openURL(link);
+    }
+  };
+
+  const getButtonIcon = (platform) => {
+    switch (platform) {
+      case "telegram":
+        return <Icon as={Send} size="lg" color="white" />;
+      case "facebook":
+        return <Icon as={Facebook} size="lg" color="white" />;
+      case "twitter":
+        return <Icon as={Twitter} size="lg" color="white" />;
+      case "discord":
+        return <Icon as={Gamepad} size="lg" color="white" />;
+      default:
+        return null;
     }
   };
 
@@ -87,7 +85,7 @@ const social = () => {
     <ScrollView
       contentContainerStyle={{
         flexGrow: 1,
-        paddingBottom: 20,
+        paddingBottom: 100,
       }}
       className="w-full flex-col bg-gray-100"
     >
@@ -113,41 +111,35 @@ const social = () => {
       </View>
 
       {/* Sections */}
-      <View className="mt-6 w-[90vw] mx-auto mb-20 gap-4">
-        {sections.map((section, index) => (
+      <View className="mt-6 w-[90vw] mx-auto gap-4">
+        {socialGroups.map((group, index) => (
           <View key={index} className="bg-white rounded-xl shadow-lg p-6">
             <View className="flex-col gap-4">
               <View className="flex-row justify-between items-center w-full">
-                <View className="flex-row items-center gap-3">
-                  <Text className="bg-blue-600 rounded-full p-2" size="xl">
-                    {section.emoji}
+                <View className="flex-row items-center gap-3 flex-1">
+                  <Text className="bg-gray-200 rounded-full p-2" size="xl">
+                    {group.emoji}
                   </Text>
-                  <Heading size="md" className="font-bold">
-                    {section.title}
+                  <Heading
+                    size="md"
+                    className="font-bold text-blue-700 flex-shrink"
+                  >
+                    {group.title}
                   </Heading>
                 </View>
                 <Button
                   variant="solid"
                   action="primary"
-                  className="bg-success-700 rounded-full px-4 py-2"
-                  onPress={() => handleJoinPress(section.telegram)}
+                  className="bg-blue-500 rounded-full px-4 py-2 flex-row gap-1"
+                  onPress={() => handleJoinPress(group.link)}
                 >
+                  <ButtonIcon as={() => getButtonIcon(group.platform)} />
                   <ButtonText className="text-white font-bold">Join</ButtonText>
                 </Button>
               </View>
               <Text className="text-gray-500 text-sm leading-snug">
-                {section.description}
+                {group.description}
               </Text>
-              <View className="flex-row items-center flex-wrap gap-2 mt-2">
-                {section.infos.map((info, infoIndex) => (
-                  <Text
-                    key={infoIndex}
-                    className={`bg-success-50 text-base rounded-lg text-center px-3 py-1 font-bold text-success-700`}
-                  >
-                    {info.label}
-                  </Text>
-                ))}
-              </View>
             </View>
           </View>
         ))}

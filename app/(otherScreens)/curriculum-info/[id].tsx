@@ -2,8 +2,11 @@ import { useLocalSearchParams } from "expo-router";
 import { View, ScrollView } from "react-native";
 import { Heading } from "@/components/ui/heading";
 import { Text } from "@/components/ui/text";
+import { SafeAreaView } from "react-native-safe-area-context";
+import { Card } from "@/components/ui/card";
+import { Divider } from "@/components/ui/divider";
 
-const departmentNames: Record<number, string> = {
+const departmentNames = {
   1: "Computer Science",
   2: "Information Technology",
   3: "Information Science",
@@ -12,15 +15,14 @@ const departmentNames: Record<number, string> = {
   6: "Economics",
   7: "Accounting",
   8: "Agro Economics",
-  9: "Nurse",
+  9: "Nursing",
   10: "Medical Laboratory",
   11: "Journalism",
 };
 
-const departmentCourses: Record<number, string[]> = {
-  // Courses for Computer Science (based on Assosa University's College of Computing and Informatics mentions and common CS curricula)
+const departmentCourses = {
   1: [
-    "Introduction to Programming", // General introductory course
+    "Introduction to Programming",
     "Data Structures",
     "Algorithms",
     "Fundamentals of Software Engineering I",
@@ -239,24 +241,44 @@ const departmentCourses: Record<number, string[]> = {
 export default function CurriculumInfo() {
   const { id } = useLocalSearchParams();
   const deptId = Number(id);
+  const departmentName = departmentNames[deptId] || "Department";
+  const courses = departmentCourses[deptId] || [];
 
   return (
-    <ScrollView
-      contentContainerStyle={{ flexGrow: 1, alignItems: "center", padding: 20 }}
-      className="mt-10"
-    >
-      <Heading size="xl" className="mb-5">
-        {departmentNames[deptId] || "Department"}
-      </Heading>
-      <Text className="mb-3">Courses:</Text>
-      {departmentCourses[deptId]?.map((course, idx) => (
-        <View key={idx} className="mb-2 p-3 bg-white rounded-lg w-full">
-          <Text>{course}</Text>
+    <SafeAreaView className="flex-1 bg-gray-100">
+      <View className="w-full bg-white shadow-sm pb-4">
+        <View className="flex-row items-center justify-start px-4 pt-4">
+          <Heading size="lg">{departmentName}</Heading>
         </View>
-      ))}
-      {!departmentCourses[deptId] && (
-        <Text>No courses found for this department.</Text>
-      )}
-    </ScrollView>
+      </View>
+
+      <ScrollView
+        contentContainerStyle={{
+          flexGrow: 1,
+          paddingBottom: 100, // Ensure content is above the tab bar
+        }}
+        className="w-full flex-col px-4 pt-4"
+      >
+        <Heading size="md" className="font-bold text-gray-700 mb-4">
+          Courses:
+        </Heading>
+        {courses.length > 0 ? (
+          <View className="gap-y-3">
+            {courses.map((course, idx) => (
+              <View key={idx}>
+                <Card className="p-5 rounded-xl bg-white shadow-lg">
+                  <Text className="text-gray-800">{course}</Text>
+                </Card>
+                {idx < courses.length - 1 && <Divider className="my-1" />}
+              </View>
+            ))}
+          </View>
+        ) : (
+          <Text className="text-center text-gray-500 mt-4">
+            No courses found for this department.
+          </Text>
+        )}
+      </ScrollView>
+    </SafeAreaView>
   );
 }

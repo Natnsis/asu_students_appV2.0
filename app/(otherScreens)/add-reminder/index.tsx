@@ -11,13 +11,14 @@ import CustomDatePicker from "@/components/CustomDatePicker";
 import { SafeAreaView } from "react-native-safe-area-context";
 
 const AddReminder = () => {
-  const [title, setTitle] = useState<string>("");
-  const [description, setDescription] = useState<string>("");
-  const [endDate, setEndDate] = useState<Date | null>(null);
+  const [title, setTitle] = useState("");
+  const [description, setDescription] = useState("");
+  const [endDate, setEndDate] = useState(null);
+  const [error, setError] = useState("");
 
   const handleAddReminder = async () => {
     if (!title || !description || !endDate) {
-      alert("Please fill in all fields.");
+      setError("Please fill in all fields.");
       return;
     }
 
@@ -39,37 +40,58 @@ const AddReminder = () => {
       // Save the updated reminders back to AsyncStorage
       await AsyncStorage.setItem("reminders", JSON.stringify(reminders));
 
-      // Reset the form fields
+      // Reset the form fields and clear any errors
       setTitle("");
       setDescription("");
       setEndDate(null);
+      setError("");
 
-      alert("Reminder added successfully!");
+      // You could add a success message here, e.g., a toast notification
+      console.log("Reminder added successfully!");
     } catch (error) {
       console.error("Error saving reminder:", error);
-      alert("Failed to save the reminder. Please try again.");
+      setError("Failed to save the reminder. Please try again.");
     }
   };
 
   return (
-    <SafeAreaView>
-      <View className="p-5 flex-row justify-between w-full">
-        <Heading size="xl">Add Reminder</Heading>
+    <SafeAreaView className="flex-1 bg-gray-100">
+      <View className="w-full bg-white shadow-sm pb-4">
+        <View className="flex-row items-center justify-start px-4 pt-4">
+          <Heading size="lg">Add Reminder</Heading>
+        </View>
       </View>
 
-      <View className="w-full px-8 gap-5">
-        <Card className="bg-white p-5 rounded-lg shadow-md">
-          <Text size="sm">Reminder Title</Text>
-          <Input className="bg-white mb-5">
+      <ScrollView
+        contentContainerStyle={{
+          flexGrow: 1,
+          paddingBottom: 100,
+        }}
+        className="w-full flex-col px-4 pt-4"
+      >
+        <Card className="bg-white p-6 rounded-xl shadow-lg">
+          <Heading size="md" className="font-bold text-blue-700 mb-2">
+            Create a New Reminder
+          </Heading>
+          <Text size="sm" className="text-gray-500 mb-4">
+            Enter the details for your new reminder.
+          </Text>
+
+          <Text size="sm" className="font-medium text-gray-700">
+            Reminder Title
+          </Text>
+          <Input className="bg-white my-2 rounded-lg">
             <InputField
-              placeholder="Enter title"
+              placeholder="e.g., Project Deadline"
               value={title}
               onChangeText={(text) => setTitle(text)}
             />
           </Input>
 
-          <Text>Description</Text>
-          <Textarea size="md" className="w-full mb-5">
+          <Text size="sm" className="font-medium text-gray-700 mt-4">
+            Description
+          </Text>
+          <Textarea size="md" className="w-full my-2 rounded-lg">
             <TextareaInput
               placeholder="Write information about the reminder..."
               value={description}
@@ -77,14 +99,27 @@ const AddReminder = () => {
             />
           </Textarea>
 
-          <Text size="sm">End Date</Text>
+          <Text size="sm" className="font-medium text-gray-700 mt-4">
+            End Date
+          </Text>
           <CustomDatePicker date={endDate} setDate={setEndDate} />
 
-          <Button onPress={handleAddReminder} className="mt-5">
-            <ButtonText>Add Reminder</ButtonText>
+          {error ? (
+            <Text size="sm" className="text-red-500 text-center mt-4">
+              {error}
+            </Text>
+          ) : null}
+
+          <Button
+            onPress={handleAddReminder}
+            className="mt-6 bg-blue-600 rounded-lg"
+          >
+            <ButtonText className="text-white font-bold">
+              Add Reminder
+            </ButtonText>
           </Button>
         </Card>
-      </View>
+      </ScrollView>
     </SafeAreaView>
   );
 };
