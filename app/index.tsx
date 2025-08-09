@@ -1,82 +1,114 @@
 import { router } from "expo-router";
 import { useRef, useState } from "react";
-import { TouchableOpacity, View } from "react-native";
+import { TouchableOpacity, View, Dimensions } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import Swiper from "react-native-swiper";
-import { home } from "./constants";
 import { Text } from "@/components/ui/text";
 import { Image } from "@/components/ui/image";
 import { Button, ButtonText } from "@/components/ui/button";
+import { ChevronLast } from "lucide-react-native";
+import { LinearGradient } from "expo-linear-gradient";
+
+const { width, height } = Dimensions.get("window");
 
 export default function Index() {
   const swiperRef = useRef<Swiper>(null);
   const [activeIndex, setActiveIndex] = useState(0);
+
+  const home = [
+    {
+      image: require("@/assets/images/Grades-cuate.png"),
+      title: "Welcome to the ASU Students App!",
+      description:
+        "Your all-in-one companion for a comfortable and successful campus life at Arizona State University.",
+    },
+    {
+      image: require("@/assets/images/college students-bro.png"),
+      title: "Stay on Top of Your Academics",
+      description:
+        "Easily calculate your GPA, manage your class schedules, and track your progress to stay ahead in your studies.",
+    },
+    {
+      image: require("@/assets/images/Student stress-bro.png"),
+      title: "Connect with Your Campus",
+      description:
+        "Get the latest campus news, discover events, and stay updated with feeds from various student organizations.",
+    },
+  ];
+
   const ButtonName = activeIndex === home.length - 1 ? "Get Started" : "Next";
   const isLastSlide = activeIndex === home.length - 1;
 
   return (
-    <SafeAreaView className="flex h-full items-center justify-between bg-white">
-      <TouchableOpacity
-        onPress={() => {
-          router.replace("/firstForm");
-        }}
-        className="w-full flex justify-end items-end p-5 "
-      >
-        <Text className="text-black text-md font-extrabold">Skip</Text>
-      </TouchableOpacity>
+    <SafeAreaView className="flex-1">
+      <LinearGradient colors={["#4ade80", "#22c55e"]} style={{ flex: 1 }}>
+        {/* Skip Button */}
+        <TouchableOpacity
+          onPress={() => router.replace("/sign-in")}
+          className="absolute top-3 right-5 z-10 flex-row items-center"
+        >
+          <Text className="text-white text-md font-extrabold mr-1">Skip</Text>
+          <ChevronLast color="white" />
+        </TouchableOpacity>
 
-      <Swiper
-        ref={swiperRef}
-        loop={false}
-        dot={
-          <View className="w-[32px] h-[4px] mx-1 bg-[#E2E8F0] rounded-full" />
-        }
-        activeDot={
-          <View className="w-[32px] h-[4px] mx-1 bg-[#0286FF] rounded-full" />
-        }
-        onIndexChanged={(index) => setActiveIndex(index)}
-      >
-        {home.map((item, title) => (
-          <View key={title} className="flex-1 items-center justify-center ">
-            <Text
-              size="xl"
-              className="text-center font-extrabold text-success-700 px-5"
+        {/* Swiper */}
+        <Swiper
+          ref={swiperRef}
+          loop={false}
+          onIndexChanged={(index) => setActiveIndex(index)}
+          dot={
+            <View className="w-[10px] h-[10px] mx-1 bg-white/40 rounded-full" />
+          }
+          activeDot={
+            <View className="w-[20px] h-[10px] mx-1 bg-white rounded-full" />
+          }
+        >
+          {home.map((item, index) => (
+            <View
+              key={index}
+              className="flex-1 justify-start items-center px-6 pt-8"
             >
-              {item.title}
-            </Text>
+              <Image
+                source={item.image}
+                alt="missing image"
+                className="w-full h-1/2"
+              />
+              <Text
+                size="3xl"
+                className="text-center font-extrabold text-white mt-4"
+              >
+                {item.title}
+              </Text>
+              <Text
+                size="sm"
+                className="text-center text-white/90 mt-3 leading-6 px-4"
+              >
+                {item.description}
+              </Text>
+            </View>
+          ))}
+        </Swiper>
 
-            <Text
-              size="4xl"
-              className="text-center my-5 font-extrabold text-black  "
-            >
-              {item.description}
-            </Text>
-
-            <Image
-              size="2xl"
-              source={item.image}
-              alt="missing image"
-              className="w-full my-5 rounded-lg"
-            />
-
-            <Button
-              size="xl"
-              variant="solid"
-              action="primary"
-              className="w-full rounded-full flex-row justify-center items-center shadow-md shadow-neutral-400/70 bg-success-700 "
-              onPress={() => {
-                if (isLastSlide) {
-                  router.replace("/firstForm");
-                } else if (swiperRef.current) {
-                  swiperRef.current.scrollBy(1);
-                }
-              }}
-            >
-              <ButtonText>{ButtonName}</ButtonText>
-            </Button>
-          </View>
-        ))}
-      </Swiper>
+        <View className="absolute bottom-16 w-full flex-row justify-center">
+          <Button
+            size="xl"
+            variant="solid"
+            action="primary"
+            className="w-3/4 rounded-full bg-white"
+            onPress={() => {
+              if (isLastSlide) {
+                router.replace("/(auth)/sign-in");
+              } else if (swiperRef.current) {
+                swiperRef.current.scrollBy(1);
+              }
+            }}
+          >
+            <ButtonText className="text-main font-extrabold">
+              {ButtonName}
+            </ButtonText>
+          </Button>
+        </View>
+      </LinearGradient>
     </SafeAreaView>
   );
 }
