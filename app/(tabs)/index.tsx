@@ -1,11 +1,12 @@
+import { SignedIn, SignedOut, useUser } from "@clerk/clerk-expo";
 import { ScrollView, View } from "react-native";
-import React, { useEffect, useState } from "react";
-import { Link, router } from "expo-router";
+import { Link } from "expo-router";
 import { Sidebar } from "@/components/Sidebar";
 import { Heading } from "@/components/ui/heading";
 import { Text } from "@/components/ui/text";
 import { Center } from "@/components/ui/center";
 import { SafeAreaView } from "react-native-safe-area-context";
+import { SignOutButton } from "@/components/SignOutButton";
 
 const Index = () => {
   const ministyle = "bg-success-50 px-2 text-base rounded-lg text-center w-fit";
@@ -29,6 +30,7 @@ const Index = () => {
                 beta
               </Text>{" "}
             </Heading>
+            <SignOutButton />
           </View>
         </View>
       </SafeAreaView>

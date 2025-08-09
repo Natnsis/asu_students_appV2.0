@@ -97,7 +97,7 @@ export default function Index() {
             className="w-3/4 rounded-full bg-white"
             onPress={() => {
               if (isLastSlide) {
-                router.replace("/sign-in");
+                router.replace("/(auth)/sign-in");
               } else if (swiperRef.current) {
                 swiperRef.current.scrollBy(1);
               }
