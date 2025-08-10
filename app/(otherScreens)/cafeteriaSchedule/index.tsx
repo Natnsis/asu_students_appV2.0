@@ -1,52 +1,41 @@
-// CafeteriaSchedule.tsx
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useRef } from "react";
 import { View, Text, ActivityIndicator, ScrollView } from "react-native";
-
 import { SafeAreaView } from "react-native-safe-area-context";
 
 export default function CafeteriaSchedule() {
-  // Sunday
   const [sundayBreakfast, setSundayBreakfast] = useState("");
   const [sundayLunch, setSundayLunch] = useState("");
   const [sundayDinner, setSundayDinner] = useState("");
 
-  // Monday
   const [mondayBreakfast, setMondayBreakfast] = useState("");
   const [mondayLunch, setMondayLunch] = useState("");
   const [mondayDinner, setMondayDinner] = useState("");
 
-  // Tuesday
   const [tuesdayBreakfast, setTuesdayBreakfast] = useState("");
   const [tuesdayLunch, setTuesdayLunch] = useState("");
   const [tuesdayDinner, setTuesdayDinner] = useState("");
 
-  // Wednesday
   const [wednesdayBreakfast, setWednesdayBreakfast] = useState("");
   const [wednesdayLunch, setWednesdayLunch] = useState("");
   const [wednesdayDinner, setWednesdayDinner] = useState("");
 
-  // Thursday
   const [thursdayBreakfast, setThursdayBreakfast] = useState("");
   const [thursdayLunch, setThursdayLunch] = useState("");
   const [thursdayDinner, setThursdayDinner] = useState("");
 
-  // Friday
   const [fridayBreakfast, setFridayBreakfast] = useState("");
   const [fridayLunch, setFridayLunch] = useState("");
   const [fridayDinner, setFridayDinner] = useState("");
 
-  // Saturday
   const [saturdayBreakfast, setSaturdayBreakfast] = useState("");
   const [saturdayLunch, setSaturdayLunch] = useState("");
   const [saturdayDinner, setSaturdayDinner] = useState("");
 
   const [loading, setLoading] = useState(true);
+  const initialLoadDone = useRef(false);
 
-  useEffect(() => {
-    fetchData();
-  }, []);
-
-  const fetchData = async () => {
+  const fetchData = async (showLoading: boolean = false) => {
+    if (showLoading) setLoading(true);
     try {
       const res = await fetch("https://asu-api.onrender.com/schedules");
       const data = await res.json();
@@ -93,19 +82,38 @@ export default function CafeteriaSchedule() {
           if (day === "saturday" && time === "lunch") setSaturdayLunch(food);
           if (day === "saturday" && time === "dinner") setSaturdayDinner(food);
         });
+
+        initialLoadDone.current = true;
       }
     } catch (error) {
       console.error(error);
     } finally {
-      setLoading(false);
+      if (showLoading) setLoading(false);
     }
   };
 
+  useEffect(() => {
+    fetchData(true);
+
+    const intervalId = setInterval(() => {
+      fetchData(false);
+    }, 5000);
+
+    return () => clearInterval(intervalId);
+  }, []);
+
   if (loading) {
     return (
-      <SafeAreaView className="flex-1 justify-center items-center bg-white">
+      <SafeAreaView
+        style={{
+          flex: 1,
+          justifyContent: "center",
+          alignItems: "center",
+          backgroundColor: "white",
+        }}
+      >
         <ActivityIndicator size="large" color="#16a34a" />
-        <Text className="text-gray-800 mt-2 font-semibold">
+        <Text style={{ marginTop: 8, color: "#374151", fontWeight: "600" }}>
           Loading cafeteria schedule...
         </Text>
       </SafeAreaView>
@@ -113,67 +121,121 @@ export default function CafeteriaSchedule() {
   }
 
   return (
-    <SafeAreaView className="flex-1 bg-white">
-      <Text className="text-3xl font-extrabold text-green-700 text-center mt-4 mb-2">
+    <SafeAreaView style={{ flex: 1, backgroundColor: "white", padding: 16 }}>
+      <Text
+        style={{
+          fontSize: 28,
+          fontWeight: "800",
+          color: "#15803d",
+          textAlign: "center",
+          marginBottom: 16,
+        }}
+      >
         Cafeteria Schedule
       </Text>
 
-      <ScrollView
-        className="flex-1 px-3"
-        horizontal
-        contentContainerStyle={{ flexGrow: 1 }}
-      >
-        <ScrollView>
-          <View className="rounded-xl overflow-hidden border border-gray-300 shadow-md">
-            {/* Header */}
-            <View className="flex-row bg-gray-200">
-              <Text className="text-gray-900 font-bold px-4 py-3 min-w-[120px] text-center">
-                Day
-              </Text>
-              <Text className="text-gray-900 font-bold px-4 py-3 min-w-[150px] text-center">
-                Breakfast
-              </Text>
-              <Text className="text-gray-900 font-bold px-4 py-3 min-w-[150px] text-center">
-                Lunch
-              </Text>
-              <Text className="text-gray-900 font-bold px-4 py-3 min-w-[150px] text-center">
-                Dinner
-              </Text>
-            </View>
-
-            {/* Rows */}
-            {[
-              ["Sunday", sundayBreakfast, sundayLunch, sundayDinner],
-              ["Monday", mondayBreakfast, mondayLunch, mondayDinner],
-              ["Tuesday", tuesdayBreakfast, tuesdayLunch, tuesdayDinner],
-              [
-                "Wednesday",
-                wednesdayBreakfast,
-                wednesdayLunch,
-                wednesdayDinner,
-              ],
-              ["Thursday", thursdayBreakfast, thursdayLunch, thursdayDinner],
-              ["Friday", fridayBreakfast, fridayLunch, fridayDinner],
-              ["Saturday", saturdayBreakfast, saturdayLunch, saturdayDinner],
-            ].map((row, idx) => (
+      <ScrollView horizontal contentContainerStyle={{ flexGrow: 1 }}>
+        <View
+          style={{
+            minWidth: 700,
+            borderRadius: 12,
+            borderWidth: 1,
+            borderColor: "#d1d5db",
+            shadowColor: "#000",
+            shadowOffset: { width: 0, height: 1 },
+            shadowOpacity: 0.1,
+            shadowRadius: 3,
+            elevation: 2,
+            backgroundColor: "white",
+          }}
+        >
+          <View
+            style={{
+              flexDirection: "row",
+              backgroundColor: "#e5e7eb",
+              borderBottomWidth: 1,
+              borderBottomColor: "#d1d5db",
+              borderTopLeftRadius: 12,
+              borderTopRightRadius: 12,
+            }}
+          >
+            {["Day", "Breakfast", "Lunch", "Dinner"].map((header) => (
               <View
-                key={idx}
-                className={`flex-row ${
-                  idx % 2 === 0 ? "bg-gray-50" : "bg-white"
-                }`}
+                key={header}
+                style={{
+                  minWidth: header === "Day" ? 120 : 190,
+                  paddingVertical: 14,
+                  paddingHorizontal: 12,
+                  borderRightWidth: header !== "Dinner" ? 1 : 0,
+                  borderRightColor: "#d1d5db",
+                  justifyContent: "center",
+                  alignItems: "center",
+                }}
               >
-                {row.map((cell, i) => (
-                  <Text
-                    key={i}
-                    className="px-4 py-4 min-w-[120px] text-center text-gray-800"
-                  >
-                    {cell}
-                  </Text>
-                ))}
+                <Text
+                  style={{
+                    fontWeight: "700",
+                    color: "#111827",
+                    fontSize: 16,
+                    textAlign: "center",
+                  }}
+                >
+                  {header}
+                </Text>
               </View>
             ))}
           </View>
-        </ScrollView>
+
+          {[
+            ["Sunday", sundayBreakfast, sundayLunch, sundayDinner],
+            ["Monday", mondayBreakfast, mondayLunch, mondayDinner],
+            ["Tuesday", tuesdayBreakfast, tuesdayLunch, tuesdayDinner],
+            ["Wednesday", wednesdayBreakfast, wednesdayLunch, wednesdayDinner],
+            ["Thursday", thursdayBreakfast, thursdayLunch, thursdayDinner],
+            ["Friday", fridayBreakfast, fridayLunch, fridayDinner],
+            ["Saturday", saturdayBreakfast, saturdayLunch, saturdayDinner],
+          ].map((row, idx) => (
+            <View
+              key={idx}
+              style={{
+                flexDirection: "row",
+                backgroundColor: idx % 2 === 0 ? "#f9fafb" : "#ffffff",
+                borderBottomWidth: 1,
+                borderBottomColor: "#e5e7eb",
+                borderBottomLeftRadius: idx === 6 ? 12 : 0,
+                borderBottomRightRadius: idx === 6 ? 12 : 0,
+              }}
+            >
+              {row.map((cell, i) => (
+                <View
+                  key={i}
+                  style={{
+                    minWidth: i === 0 ? 120 : 190,
+                    paddingVertical: 14,
+                    paddingHorizontal: 12,
+                    borderRightWidth: i !== 3 ? 1 : 0,
+                    borderRightColor: "#e5e7eb",
+                    justifyContent: "center",
+                    alignItems: "center",
+                  }}
+                >
+                  <Text
+                    style={{
+                      textAlign: "center",
+                      color: "#1f2937",
+                      fontSize: 14,
+                      flexWrap: "wrap",
+                    }}
+                    numberOfLines={2}
+                    ellipsizeMode="tail"
+                  >
+                    {cell || "-"}
+                  </Text>
+                </View>
+              ))}
+            </View>
+          ))}
+        </View>
       </ScrollView>
     </SafeAreaView>
   );

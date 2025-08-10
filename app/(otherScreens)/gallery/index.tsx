@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import {
   View,
   ScrollView,
@@ -26,27 +26,42 @@ const Gallery = () => {
   const [isLoading, setIsLoading] = useState<boolean>(true);
   const [error, setError] = useState<string | null>(null);
 
+  // Ref to track if initial load is done
+  const initialLoadDone = useRef(false);
+
   // Function to fetch gallery items
-  const fetchGalleryItems = async () => {
-    setIsLoading(true);
+  const fetchGalleryItems = async (showLoading: boolean = false) => {
+    if (showLoading) setIsLoading(true);
     setError(null);
     try {
       const response = await axios.get("https://asu-api.onrender.com/gallery");
       if (response.data && response.data.response) {
         setGalleryItems(response.data.response);
+        initialLoadDone.current = true;
       } else {
         setError("Invalid data format received from the server.");
       }
     } catch (err) {
       console.error("Error fetching gallery items:", err);
-      setError("Failed to load gallery items. Please try again.");
+      if (!initialLoadDone.current) {
+        setError("Failed to load gallery items. Please try again.");
+      }
+      // If initial load done, keep previous data and don't update error to avoid flickering
     } finally {
-      setIsLoading(false);
+      if (showLoading) setIsLoading(false);
     }
   };
 
   useEffect(() => {
-    fetchGalleryItems();
+    // Initial fetch with loading spinner
+    fetchGalleryItems(true);
+
+    // Subsequent fetches without loading spinner
+    const intervalId = setInterval(() => {
+      fetchGalleryItems(false);
+    }, 5000);
+
+    return () => clearInterval(intervalId);
   }, []);
 
   const renderContent = () => {
@@ -67,7 +82,7 @@ const Gallery = () => {
           </Text>
           <TouchableOpacity
             className="mt-4 bg-blue-500 px-6 py-3 rounded-full shadow-lg"
-            onPress={fetchGalleryItems}
+            onPress={() => fetchGalleryItems(true)}
           >
             <Text className="text-white font-bold">Retry</Text>
           </TouchableOpacity>
@@ -92,7 +107,6 @@ const Gallery = () => {
                 {item?.caption}
               </Text>
 
-              {/* Only show a divider if it's not the last item */}
               {index < galleryItems.length - 1 && <Divider className="my-3" />}
             </Card>
           ))
@@ -120,7 +134,7 @@ const Gallery = () => {
       <ScrollView
         contentContainerStyle={{
           flexGrow: 1,
-          paddingBottom: 100, // Ensure content is above the tab bar
+          paddingBottom: 100,
         }}
         className="w-full flex-col px-4 pt-4"
       >

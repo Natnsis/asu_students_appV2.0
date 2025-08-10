@@ -1,5 +1,5 @@
 import { router } from "expo-router";
-import { useRef, useState } from "react";
+import { useRef, useState, useEffect } from "react";
 import { TouchableOpacity, View, Dimensions } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import Swiper from "react-native-swiper";
@@ -8,12 +8,22 @@ import { Image } from "@/components/ui/image";
 import { Button, ButtonText } from "@/components/ui/button";
 import { ChevronLast } from "lucide-react-native";
 import { LinearGradient } from "expo-linear-gradient";
+import { useAuth } from "@clerk/clerk-expo";
 
 const { width, height } = Dimensions.get("window");
 
 export default function Index() {
+  const { isSignedIn, isLoaded } = useAuth();
   const swiperRef = useRef<Swiper>(null);
   const [activeIndex, setActiveIndex] = useState(0);
+
+  useEffect(() => {
+    if (isLoaded && isSignedIn) {
+      router.replace("/(tabs)");
+    }
+  }, [isLoaded, isSignedIn]);
+
+  if (!isLoaded) return null;
 
   const home = [
     {
