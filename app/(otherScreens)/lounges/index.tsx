@@ -2,7 +2,6 @@ import { View, ScrollView, Image } from "react-native";
 import React from "react";
 import { Heading } from "@/components/ui/heading";
 import { Text } from "@/components/ui/text";
-import { Input, InputField } from "@/components/ui/input";
 import { Card } from "@/components/ui/card";
 import { Divider } from "@/components/ui/divider";
 import { Badge, BadgeText } from "@/components/ui/badge";
@@ -13,59 +12,46 @@ const Lounges = () => {
     {
       title: "Natural Science library",
       subtitle: "Main Library Study Hub",
-      image:
-        "https://placehold.co/600x400/FF5733/FFFFFF?text=Natural+Science+Library",
+      image: require("@/assets/images/asu_library.jpg"),
       location: "In front of male Dormitory",
       availability: "Available",
       noise: "Low",
-      temperature: "72°F",
+      temperature: "35°F",
       capacity: 450,
       hours: "24/7",
     },
     {
       title: "Social Library",
       subtitle: "Social Students Study Space",
-      image: "https://placehold.co/600x400/33C7FF/FFFFFF?text=Social+Library",
+      image: require("@/assets/images/social_library.jpg"),
       location: "near the cafeteria",
       availability: "Available",
       noise: "Moderate",
-      temperature: "70°F",
+      temperature: "35°F",
       capacity: 310,
       hours: "24/7",
     },
     {
       title: "University Head Office",
       subtitle: "office for campus employees",
-      image: "https://placehold.co/600x400/33FF57/FFFFFF?text=Head+Office",
+      image: require("@/assets/images/door_building.jpeg"),
       location: "front door",
       availability: "Full",
       noise: "High",
-      temperature: "75°F",
+      temperature: "24°F",
       capacity: "-",
       hours: "9:00am - 7:00pm",
     },
     {
-      title: "Natural Cafeteria",
-      subtitle: "cafeteria closest for natural Students",
-      image:
-        "https://placehold.co/600x400/E333FF/FFFFFF?text=Natural+Cafeteria",
-      location: "near Natural Library",
-      availability: "Full",
-      noise: "High",
-      temperature: "75°F",
-      capacity: 50,
+      title: "Stadium",
+      subtitle: "The Campus Football Stadium",
+      image: require("@/assets/images/asosa-stadium.jpg"),
+      location: "Near fresh students Class",
+      availability: "Available",
+      noise: "Moderate",
+      temperature: "70°F",
+      capacity: 120,
       hours: "9:00am - 1:00pm",
-    },
-    {
-      title: "Social Cafeteria",
-      subtitle: "cafeteria closest for natural Students",
-      image: "https://placehold.co/600x400/FFFF33/000000?text=Social+Cafeteria",
-      location: "near the Atm",
-      availability: "Full",
-      noise: "High",
-      temperature: "75°F",
-      capacity: 50,
-      hours: "9:00am - 9:00pm",
     },
   ];
 
@@ -128,7 +114,7 @@ const Lounges = () => {
           {lounges.map((lounge, index) => (
             <Card key={index} className="bg-white rounded-xl shadow-lg p-5">
               <Image
-                source={{ uri: lounge.image }}
+                source={lounge.image}
                 className="w-full h-48 rounded-lg mb-4"
                 resizeMode="cover"
               />
