@@ -1,17 +1,35 @@
-import { ScrollView, View } from "react-native";
-import { Link } from "expo-router";
+import { ScrollView, View, TouchableOpacity } from "react-native";
+import { Link, useRouter } from "expo-router";
 import { Sidebar } from "@/components/Sidebar";
 import { Heading } from "@/components/ui/heading";
 import { Text } from "@/components/ui/text";
 import { Center } from "@/components/ui/center";
 import { SafeAreaView } from "react-native-safe-area-context";
 import ProfileButton from "@/components/ProfileButton";
-import { Button, ButtonText } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import { Icon, BellIcon, ClockIcon, InfoIcon } from "@/components/ui/icon";
 import { MegaphoneIcon } from "lucide-react-native";
+import AsyncStorage from "@react-native-async-storage/async-storage";
+import React from "react";
 
 const Index = () => {
+  const router = useRouter();
+
+  // Function to check for student status before navigating
+  const checkStudentStatusAndNavigate = async (path) => {
+    try {
+      const studentStatus = await AsyncStorage.getItem("studentStatus");
+      if (studentStatus) {
+        router.push(path);
+      } else {
+        router.push("/(otherScreens)/studentStatus");
+      }
+    } catch (error) {
+      console.error("Failed to check student status", error);
+      router.push("/(otherScreens)/studentStatus");
+    }
+  };
+
   return (
     <SafeAreaView className="flex-1 bg-gray-100">
       <ScrollView
@@ -100,8 +118,11 @@ const Index = () => {
         {/* Sections */}
         <View className="mt-6 w-11/12 mx-auto mb-20 gap-4">
           {/* Curriculum */}
-          <Link
-            href="/(otherScreens)/curriculum"
+          <TouchableOpacity
+            onPress={() =>
+              checkStudentStatusAndNavigate("/(otherScreens)/curriculum")
+            }
+            activeOpacity={0.7}
             className="w-full bg-white rounded-xl shadow-lg p-6"
           >
             <Center className="gap-3 w-full">
@@ -112,18 +133,18 @@ const Index = () => {
                 Curriculum
               </Heading>
               <Text className="w-full text-center text-gray-500 text-sm">
-                Track your courses and credits
+                View your full course list and academic progress.
               </Text>
               <View className="flex-row items-center justify-center gap-3 w-full mt-2">
                 <Text className="bg-success-50 px-3 py-1 rounded-lg text-center font-bold text-success-700">
-                  4.0 GPA
+                  course list
                 </Text>
                 <Text className="bg-success-50 px-3 py-1 rounded-lg text-center font-bold text-success-700">
-                  96 credits
+                  academic progress
                 </Text>
               </View>
             </Center>
-          </Link>
+          </TouchableOpacity>
 
           {/* Lounges */}
           <Link
@@ -138,22 +159,25 @@ const Index = () => {
                 Lounges
               </Heading>
               <Text className="w-full text-center text-gray-500 text-sm">
-                Find study and relaxation spaces
+                Find study and relaxation spaces on campus.
               </Text>
               <View className="flex-row justify-center items-center gap-3 mt-2">
                 <Text className="bg-success-50 px-3 py-1 rounded-lg text-center font-bold text-success-700">
-                  120 credits
+                  study spots
                 </Text>
                 <Text className="bg-success-50 px-3 py-1 rounded-lg text-center font-bold text-success-700">
-                  3 semesters left
+                  Discover hangouts
                 </Text>
               </View>
             </Center>
           </Link>
 
           {/* GPA Calculator */}
-          <Link
-            href="/(otherScreens)/gpa-calculator"
+          <TouchableOpacity
+            onPress={() =>
+              checkStudentStatusAndNavigate("/(otherScreens)/gpa-calculator")
+            }
+            activeOpacity={0.7}
             className="w-full bg-white rounded-xl shadow-lg p-6"
           >
             <Center className="gap-3 w-full">
@@ -164,18 +188,18 @@ const Index = () => {
                 GPA Calculator
               </Heading>
               <Text className="w-full text-center text-gray-500 text-sm">
-                Calculate your grades
+                Estimate your grades and plan for academic success.
               </Text>
               <View className="flex-row justify-center items-center gap-3 mt-2">
                 <Text className="bg-success-50 px-3 py-1 rounded-lg text-center font-bold text-success-700">
-                  120 credits
+                  Simulate your grades
                 </Text>
                 <Text className="bg-success-50 px-3 py-1 rounded-lg text-center font-bold text-success-700">
-                  3 semesters left
+                  Plan your success
                 </Text>
               </View>
             </Center>
-          </Link>
+          </TouchableOpacity>
 
           {/* Gallery */}
           <Link
@@ -194,10 +218,10 @@ const Index = () => {
               </Text>
               <View className="flex-row justify-center items-center gap-3 mt-2">
                 <Text className="bg-success-50 px-3 py-1 rounded-lg text-center font-bold text-success-700">
-                  120 credits
+                  Browse photos
                 </Text>
                 <Text className="bg-success-50 px-3 py-1 rounded-lg text-center font-bold text-success-700">
-                  3 semesters left
+                  campus events
                 </Text>
               </View>
             </Center>
@@ -216,14 +240,14 @@ const Index = () => {
                 Reminders
               </Heading>
               <Text className="w-full text-center text-gray-500 text-sm">
-                Stay on top of your tasks
+                Stay organized with important deadlines and tasks.
               </Text>
               <View className="flex-row justify-center items-center gap-3 mt-2">
                 <Text className="bg-success-50 px-3 py-1 rounded-lg text-center font-bold text-success-700">
-                  120 credits
+                  Manage deadlines
                 </Text>
                 <Text className="bg-success-50 px-3 py-1 rounded-lg text-center font-bold text-success-700">
-                  3 semesters left
+                  Stay on top of tasks
                 </Text>
               </View>
             </Center>

@@ -98,7 +98,7 @@ const GPA = () => {
             action="primary"
             className="rounded-full flex-row items-center h-auto min-h-0 py-2 px-3 bg-blue-600"
             onPress={() => {
-              router.push("/(otherScreens)/curriculum");
+              router.push("/(otherScreens)/add-course");
             }}
           >
             <ButtonIcon as={AddIcon} className="text-white" />

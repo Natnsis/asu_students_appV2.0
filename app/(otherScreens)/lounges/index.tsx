@@ -1,4 +1,4 @@
-import { View, ScrollView } from "react-native";
+import { View, ScrollView, Image } from "react-native";
 import React from "react";
 import { Heading } from "@/components/ui/heading";
 import { Text } from "@/components/ui/text";
@@ -11,29 +11,56 @@ import { SafeAreaView } from "react-native-safe-area-context";
 const Lounges = () => {
   const lounges = [
     {
-      title: "Library Study Hub",
+      title: "Natural Science library",
       subtitle: "Main Library Study Hub",
-      location: "Library 2nd year",
+      image:
+        "https://placehold.co/600x400/FF5733/FFFFFF?text=Natural+Science+Library",
+      location: "In front of male Dormitory",
       availability: "Available",
       noise: "Low",
       temperature: "72°F",
-      capacity: 40,
-      hours: "7:00pm - 11:00pm",
+      capacity: 450,
+      hours: "24/7",
     },
     {
-      title: "Engineering Lounge",
-      subtitle: "Engineering Building Lounge",
-      location: "Engineering Block A",
+      title: "Social Library",
+      subtitle: "Social Students Study Space",
+      image: "https://placehold.co/600x400/33C7FF/FFFFFF?text=Social+Library",
+      location: "near the cafeteria",
       availability: "Available",
       noise: "Moderate",
       temperature: "70°F",
-      capacity: 30,
-      hours: "8:00am - 10:00pm",
+      capacity: 310,
+      hours: "24/7",
     },
     {
-      title: "Business Lounge",
-      subtitle: "Business School Lounge",
-      location: "Business Block C",
+      title: "University Head Office",
+      subtitle: "office for campus employees",
+      image: "https://placehold.co/600x400/33FF57/FFFFFF?text=Head+Office",
+      location: "front door",
+      availability: "Full",
+      noise: "High",
+      temperature: "75°F",
+      capacity: "-",
+      hours: "9:00am - 7:00pm",
+    },
+    {
+      title: "Natural Cafeteria",
+      subtitle: "cafeteria closest for natural Students",
+      image:
+        "https://placehold.co/600x400/E333FF/FFFFFF?text=Natural+Cafeteria",
+      location: "near Natural Library",
+      availability: "Full",
+      noise: "High",
+      temperature: "75°F",
+      capacity: 50,
+      hours: "9:00am - 1:00pm",
+    },
+    {
+      title: "Social Cafeteria",
+      subtitle: "cafeteria closest for natural Students",
+      image: "https://placehold.co/600x400/FFFF33/000000?text=Social+Cafeteria",
+      location: "near the Atm",
       availability: "Full",
       noise: "High",
       temperature: "75°F",
@@ -92,31 +119,19 @@ const Lounges = () => {
       <ScrollView
         contentContainerStyle={{
           flexGrow: 1,
-          paddingBottom: 100, // Ensure content is above the tab bar
+          paddingBottom: 100,
         }}
         className="w-full flex-col px-4 pt-4"
       >
-        {/* Search Section */}
-        <View className="w-full mb-6">
-          <Input
-            variant="rounded"
-            size="md"
-            className="bg-white rounded-full shadow-md"
-          >
-            <InputField placeholder="Search locations..." />
-          </Input>
-        </View>
-
         {/* Lounge Cards Section */}
         <View className="w-full gap-4">
           {lounges.map((lounge, index) => (
             <Card key={index} className="bg-white rounded-xl shadow-lg p-5">
-              <View className="w-full h-48 bg-gray-200 flex items-center justify-center rounded-lg shadow-inner mb-4">
-                {/* Placeholder for a lounge image. Replace with a real image later. */}
-                <Text className="text-gray-600 font-bold text-center">
-                  {lounge.title}
-                </Text>
-              </View>
+              <Image
+                source={{ uri: lounge.image }}
+                className="w-full h-48 rounded-lg mb-4"
+                resizeMode="cover"
+              />
 
               <Heading size="md" className="font-bold text-blue-700">
                 {lounge.subtitle}

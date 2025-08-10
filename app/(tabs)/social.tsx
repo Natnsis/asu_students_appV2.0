@@ -16,15 +16,15 @@ const social = () => {
       title: "CSS Study Group",
       description:
         "Join the official study group for Computer Science students.",
-      link: "https://t.me/css_study",
+      link: "https://t.me/assosa_cs",
       platform: "telegram",
     },
     {
       emoji: "📣",
-      title: "ASU Official News",
+      title: "ASU Official News Twitter",
       description:
         "Follow the university's official updates and announcements.",
-      link: "https://twitter.com/asu_official",
+      link: "https://x.com/AssosaU",
       platform: "twitter",
     },
     {
@@ -39,7 +39,7 @@ const social = () => {
       emoji: "🎮",
       title: "Gaming Guild",
       description: "Join the official university Discord server for gamers.",
-      link: "https://discord.gg/ASU-Gaming-Guild",
+      link: "https://discord.gg/bf4rKRkU",
       platform: "discord",
     },
     {
@@ -47,15 +47,15 @@ const social = () => {
       title: "ASU Football Fans",
       description:
         "A chat for all things related to the inter-faculty football league.",
-      link: "https://t.me/asu_football",
+      link: "https://t.me/Asu_StudentUnion",
       platform: "telegram",
     },
     {
       emoji: "✍️",
-      title: "Creative Writers' Forum",
+      title: "Official Assosa University facebook",
       description:
         "Share your poems, stories, and scripts with fellow writers.",
-      link: "https://facebook.com/asu_writers_forum",
+      link: "https://facebook.com/AssosaUniversityOfficial/",
       platform: "facebook",
     },
   ];
@@ -95,20 +95,6 @@ const social = () => {
           <Heading size="lg">Social Hub</Heading>
         </View>
       </SafeAreaView>
-
-      {/* Search Bar */}
-      <View className="w-[90vw] mx-auto mt-6">
-        <Input
-          variant="rounded"
-          size="md"
-          isDisabled={false}
-          isInvalid={false}
-          isReadOnly={false}
-          className="bg-white rounded-full shadow-md"
-        >
-          <InputField placeholder="Search groups and societies..." />
-        </Input>
-      </View>
 
       {/* Sections */}
       <View className="mt-6 w-[90vw] mx-auto gap-4">

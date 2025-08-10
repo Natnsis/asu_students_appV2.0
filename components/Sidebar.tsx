@@ -125,6 +125,18 @@ export function Sidebar() {
                 <Button
                   className="w-full justify-start rounded-xl px-4 pb-3"
                   variant="link"
+                  onPress={() => {
+                    router.push("/(otherScreens)/cafeteriaSchedule");
+                    setShowDrawer(false);
+                  }}
+                >
+                  <ButtonText className="text-gray-800 font-medium">
+                    🍓 Cafeteria Schedule
+                  </ButtonText>
+                </Button>
+                <Button
+                  className="w-full justify-start rounded-xl px-4 pb-3"
+                  variant="link"
                   onPress={() =>
                     handleNavigation(
                       "/(otherScreens)/gpa-calculator",

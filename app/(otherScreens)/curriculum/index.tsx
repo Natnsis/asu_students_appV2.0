@@ -71,7 +71,7 @@ const Curriculum = () => {
       {/* Header Section */}
       <View className="w-full bg-white shadow-sm pb-4">
         <View className="flex-row items-center justify-start px-4 pt-4">
-          <Heading size="lg">My Curriculum</Heading>
+          <Heading size="lg">Curriculums</Heading>
         </View>
       </View>
 
@@ -108,21 +108,6 @@ const Curriculum = () => {
               {gpa}
             </Heading>
           </Card>
-        </View>
-
-        {/* Search Section */}
-        <View className="w-full mb-6">
-          <Input
-            variant="rounded"
-            size="md"
-            className="bg-white rounded-full shadow-md"
-          >
-            <InputField
-              placeholder="Search departments..."
-              value={searchTerm}
-              onChangeText={setSearchTerm}
-            />
-          </Input>
         </View>
 
         {/* Departments Section */}

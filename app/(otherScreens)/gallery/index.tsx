@@ -1,44 +1,112 @@
-import { View, ScrollView } from "react-native";
-import React from "react";
+import React, { useState, useEffect } from "react";
+import {
+  View,
+  ScrollView,
+  ActivityIndicator,
+  TouchableOpacity,
+  Image,
+} from "react-native";
 import { Heading } from "@/components/ui/heading";
 import { Text } from "@/components/ui/text";
-import { Input, InputField } from "@/components/ui/input";
-import { Badge, BadgeText } from "@/components/ui/badge";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { Card } from "@/components/ui/card";
 import { Divider } from "@/components/ui/divider";
+import axios from "axios";
+import { Ionicons } from "@expo/vector-icons";
+
+interface GalleryItemTypes {
+  id: string;
+  imageUrl: string;
+  caption: string;
+  createdAt: string;
+}
 
 const Gallery = () => {
-  // Array of gallery items
-  const galleryItems = [
-    {
-      id: 1,
-      title: "Cultural Festival",
-      subtitle: "Spring Festival 2024",
-      description:
-        "Annual spring celebration featuring student performances and activities.",
-      image: "Spring Festival",
-      tags: ["Culture", "Student Life", "Performance"],
-    },
-    {
-      id: 2,
-      title: "Art Exhibition",
-      subtitle: "Modern Art Showcase",
-      description:
-        "A showcase of modern art created by students and local artists.",
-      image: "Art Showcase",
-      tags: ["Art", "Exhibition", "Creativity"],
-    },
-    {
-      id: 3,
-      title: "Sports Day",
-      subtitle: "Annual Sports Meet",
-      description:
-        "A day filled with sports competitions and activities for students.",
-      image: "Sports Meet",
-      tags: ["Sports", "Competition", "Teamwork"],
-    },
-  ];
+  const [galleryItems, setGalleryItems] = useState<GalleryItemTypes[]>([]);
+  const [isLoading, setIsLoading] = useState<boolean>(true);
+  const [error, setError] = useState<string | null>(null);
+
+  // Function to fetch gallery items
+  const fetchGalleryItems = async () => {
+    setIsLoading(true);
+    setError(null);
+    try {
+      const response = await axios.get("https://asu-api.onrender.com/gallery");
+      if (response.data && response.data.response) {
+        setGalleryItems(response.data.response);
+      } else {
+        setError("Invalid data format received from the server.");
+      }
+    } catch (err) {
+      console.error("Error fetching gallery items:", err);
+      setError("Failed to load gallery items. Please try again.");
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
+  useEffect(() => {
+    fetchGalleryItems();
+  }, []);
+
+  const renderContent = () => {
+    if (isLoading) {
+      return (
+        <View className="flex-1 justify-center items-center">
+          <ActivityIndicator size="large" color="#4299e1" />
+          <Text className="mt-4 text-gray-500">Loading gallery...</Text>
+        </View>
+      );
+    }
+
+    if (error) {
+      return (
+        <View className="flex-1 justify-center items-center p-4">
+          <Text className="text-red-500 text-lg font-bold text-center">
+            {error}
+          </Text>
+          <TouchableOpacity
+            className="mt-4 bg-blue-500 px-6 py-3 rounded-full shadow-lg"
+            onPress={fetchGalleryItems}
+          >
+            <Text className="text-white font-bold">Retry</Text>
+          </TouchableOpacity>
+        </View>
+      );
+    }
+
+    return (
+      <View className="w-full gap-4">
+        {galleryItems.length > 0 ? (
+          galleryItems.map((item, index) => (
+            <Card key={item?.id} className="bg-white rounded-xl shadow-lg p-5">
+              <Text className="text-gray-500 mt-1 mb-3">{item?.createdAt}</Text>
+
+              <Image
+                source={{ uri: item.imageUrl }}
+                className="w-full h-48 rounded-lg shadow-inner"
+                resizeMode="cover"
+              />
+
+              <Text size="sm" className="text-gray-700 mt-3">
+                {item?.caption}
+              </Text>
+
+              {/* Only show a divider if it's not the last item */}
+              {index < galleryItems.length - 1 && <Divider className="my-3" />}
+            </Card>
+          ))
+        ) : (
+          <View className="flex-1 justify-center items-center p-4">
+            <Ionicons name="images-outline" size={60} color="#cbd5e1" />
+            <Text className="text-gray-400 mt-4 text-center text-lg">
+              No gallery items found.
+            </Text>
+          </View>
+        )}
+      </View>
+    );
+  };
 
   return (
     <SafeAreaView className="flex-1 bg-gray-100">
@@ -56,52 +124,7 @@ const Gallery = () => {
         }}
         className="w-full flex-col px-4 pt-4"
       >
-        {/* Search Section */}
-        <View className="w-full mb-6">
-          <Input
-            variant="rounded"
-            size="md"
-            className="bg-white rounded-full shadow-md"
-          >
-            <InputField placeholder="Search events and activities..." />
-          </Input>
-        </View>
-
-        {/* Gallery Items */}
-        <View className="w-full gap-4">
-          {galleryItems.map((item, index) => (
-            <Card key={item.id} className="bg-white rounded-xl shadow-lg p-5">
-              <Heading size="md" className="font-bold text-blue-700">
-                {item.title}
-              </Heading>
-              <Text className="text-gray-500 mt-1 mb-3">{item.subtitle}</Text>
-
-              <View className="w-full h-48 bg-gray-200 flex items-center justify-center rounded-lg shadow-inner my-3">
-                {/* This is a placeholder for an image. Replace with a real Image component later. */}
-                <Text className="text-gray-600 font-bold">{item.image}</Text>
-              </View>
-
-              <Text size="sm" className="text-gray-700">
-                {item.description}
-              </Text>
-
-              <View className="flex-row flex-wrap gap-2 mt-4">
-                {item.tags.map((tag, tagIndex) => (
-                  <Badge
-                    key={tagIndex}
-                    size="md"
-                    variant="solid"
-                    action="muted"
-                    className="bg-gray-200"
-                  >
-                    <BadgeText className="text-gray-700">{tag}</BadgeText>
-                  </Badge>
-                ))}
-              </View>
-              {index < galleryItems.length - 1 && <Divider className="my-3" />}
-            </Card>
-          ))}
-        </View>
+        {renderContent()}
       </ScrollView>
     </SafeAreaView>
   );
