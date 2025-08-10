@@ -2,150 +2,119 @@ import { useSignIn } from "@clerk/clerk-expo";
 import { Link, useRouter } from "expo-router";
 import {
   SafeAreaView,
-  StyleSheet,
   Text,
   TextInput,
   TouchableOpacity,
   View,
+  ActivityIndicator,
 } from "react-native";
 import React from "react";
 
 /**
- * Renders the sign-in page component.
- *
- * @returns {JSX.Element} The sign-in page component.
+ * A styled and functional sign-in page component for a React Native app using Expo Router.
+ * This component handles user authentication via email and password using Clerk.
+ * It features a clean, centered layout with modern UI elements.
  */
 export default function Page() {
-  // Destructure properties from the Clerk `useSignIn` hook.
-  // `signIn`: The sign-in object with methods for the authentication flow.
-  // `setActive`: A function to set the active session after a successful sign-in.
-  // `isLoaded`: A boolean indicating if the Clerk SDK has finished loading.
+  // Use the Clerk `useSignIn` hook to manage the sign-in flow.
   const { signIn, setActive, isLoaded } = useSignIn();
 
-  // Get the router object for navigation.
+  // Get the router object for app navigation.
   const router = useRouter();
 
-  // State to hold the user's email address.
+  // State to hold the user's email and password.
   const [emailAddress, setEmailAddress] = React.useState("");
-
-  // State to hold the user's password.
   const [password, setPassword] = React.useState("");
+  const [loading, setLoading] = React.useState(false);
 
   /**
-   * Handles the sign-in form submission.
-   * This function attempts to sign in the user with the provided credentials.
+   * Handles the sign-in form submission by attempting to authenticate the user.
    */
   const onSignInPress = async () => {
-    // If the Clerk SDK isn't loaded yet, do nothing.
-    if (!isLoaded) return;
+    // Exit if the Clerk SDK is not loaded or an attempt is already in progress.
+    if (!isLoaded || loading) return;
+
+    setLoading(true);
 
     try {
-      // Attempt to create a sign-in session with the user's email and password.
       const signInAttempt = await signIn.create({
         identifier: emailAddress,
         password,
       });
 
-      // Check if the sign-in process is complete.
+      // Check if the sign-in was successful.
       if (signInAttempt.status === "complete") {
-        // If successful, set the newly created session as the active one.
         await setActive({ session: signInAttempt.createdSessionId });
-        // Navigate the user to the `(tabs)` folder, which is typically the main part of the app.
         router.replace("/(tabs)");
       } else {
-        // Log the sign-in attempt if it's not complete to debug further steps.
+        // Log the sign-in attempt if it's not complete for debugging.
         console.error(
           "Sign-in not complete:",
           JSON.stringify(signInAttempt, null, 2)
         );
+        // You might want to display a user-friendly error message here.
       }
     } catch (err) {
-      // Log any errors that occur during the sign-in process.
-      // This is crucial for debugging authentication issues.
+      // Log and handle authentication errors.
       console.error("Sign-in error:", JSON.stringify(err, null, 2));
+      // Display a user-friendly error message, e.g., "Invalid email or password."
+    } finally {
+      setLoading(false);
     }
   };
 
   return (
-    <SafeAreaView style={styles.container}>
-      <Text style={styles.title}>Sign in</Text>
-      {/* Input for the user's email address */}
-      <TextInput
-        style={styles.input}
-        autoCapitalize="none"
-        value={emailAddress}
-        placeholder="Enter email"
-        onChangeText={(emailAddress) => setEmailAddress(emailAddress)}
-      />
-      {/* Input for the user's password */}
-      <TextInput
-        style={styles.input}
-        value={password}
-        placeholder="Enter password"
-        secureTextEntry={true}
-        onChangeText={(password) => setPassword(password)}
-      />
-      {/* Touchable button to trigger the sign-in process */}
-      <TouchableOpacity style={styles.button} onPress={onSignInPress}>
-        <Text style={styles.buttonText}>Continue</Text>
-      </TouchableOpacity>
-      {/* Link to the sign-up page for new users */}
-      <View style={styles.linkContainer}>
-        <Text style={styles.linkText}>Don't have an account?</Text>
-        <Link href="/sign-up">
-          <Text style={styles.link}>Sign up</Text>
-        </Link>
+    <SafeAreaView className="flex-1 justify-center items-center p-6 bg-gray-100">
+      <View className="w-full max-w-sm p-8 bg-white rounded-2xl shadow-xl border border-gray-200">
+        <Text className="text-4xl font-extrabold text-center mb-2 text-gray-800">
+          Welcome Back
+        </Text>
+        <Text className="text-md text-center mb-8 text-gray-500">
+          Sign in to continue
+        </Text>
+
+        {/* Email Input Field */}
+        <TextInput
+          className="w-full p-4 mb-4 bg-gray-50 rounded-xl border border-gray-300 text-base"
+          autoCapitalize="none"
+          value={emailAddress}
+          placeholder="Email Address"
+          onChangeText={setEmailAddress}
+          keyboardType="email-address"
+        />
+
+        {/* Password Input Field */}
+        <TextInput
+          className="w-full p-4 mb-6 bg-gray-50 rounded-xl border border-gray-300 text-base"
+          value={password}
+          placeholder="Password"
+          secureTextEntry={true}
+          onChangeText={setPassword}
+        />
+
+        {/* Sign In Button */}
+        <TouchableOpacity
+          className="w-full p-4 bg-blue-600 rounded-xl items-center shadow-lg"
+          onPress={onSignInPress}
+          disabled={loading}
+        >
+          {loading ? (
+            <ActivityIndicator color="#FFFFFF" />
+          ) : (
+            <Text className="text-white font-bold text-lg">Continue</Text>
+          )}
+        </TouchableOpacity>
+
+        {/* Link to Sign-up Page */}
+        <View className="flex-row justify-center mt-6">
+          <Text className="text-gray-600">Don't have an account? </Text>
+          <Link href="/sign-up" asChild>
+            <TouchableOpacity>
+              <Text className="text-blue-600 font-bold">Sign up</Text>
+            </TouchableOpacity>
+          </Link>
+        </View>
       </View>
     </SafeAreaView>
   );
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    justifyContent: "center",
-    alignItems: "center",
-    padding: 20,
-    backgroundColor: "#f0f4f7",
-  },
-  title: {
-    fontSize: 28,
-    fontWeight: "bold",
-    marginBottom: 20,
-    color: "#1e293b",
-  },
-  input: {
-    width: "100%",
-    padding: 15,
-    marginBottom: 15,
-    backgroundColor: "#ffffff",
-    borderRadius: 10,
-    borderWidth: 1,
-    borderColor: "#e2e8f0",
-  },
-  button: {
-    width: "100%",
-    padding: 15,
-    backgroundColor: "#3b82f6",
-    borderRadius: 10,
-    alignItems: "center",
-    marginTop: 10,
-  },
-  buttonText: {
-    color: "#ffffff",
-    fontWeight: "bold",
-    fontSize: 16,
-  },
-  linkContainer: {
-    flexDirection: "row",
-    marginTop: 20,
-    gap: 3,
-  },
-  linkText: {
-    color: "#4a5568",
-  },
-  link: {
-    color: "#3b82f6",
-    fontWeight: "bold",
-  },
-});

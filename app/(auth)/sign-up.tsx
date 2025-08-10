@@ -1,58 +1,52 @@
 import * as React from "react";
-import { Text, TextInput, TouchableOpacity, View } from "react-native";
+import {
+  Text,
+  TextInput,
+  TouchableOpacity,
+  View,
+  ActivityIndicator,
+  SafeAreaView,
+} from "react-native";
 import { useSignUp } from "@clerk/clerk-expo";
 import { Link, useRouter } from "expo-router";
 
 /**
- * Renders the sign-up page component.
- * It handles both the initial sign-up form and the email verification form.
- *
- * @returns {JSX.Element} The sign-up page component.
+ * A styled and functional sign-up page component for a React Native app using Expo Router.
+ * This component handles both the initial sign-up form and the email verification form,
+ * featuring a clean and consistent modern UI.
  */
 export default function SignUpScreen() {
-  // Destructure properties from the Clerk `useSignUp` hook.
-  // `isLoaded`: A boolean indicating if the Clerk SDK has finished loading.
-  // `signUp`: The sign-up object with methods for the authentication flow.
-  // `setActive`: A function to set the active session after a successful sign-up.
   const { isLoaded, signUp, setActive } = useSignUp();
-
-  // Get the router object for navigation.
   const router = useRouter();
 
-  // State to hold the user's email address for sign-up.
   const [emailAddress, setEmailAddress] = React.useState("");
-  // State to hold the user's password for sign-up.
   const [password, setPassword] = React.useState("");
-  // State to control which form is displayed: the sign-up form or the verification form.
   const [pendingVerification, setPendingVerification] = React.useState(false);
-  // State to hold the verification code entered by the user.
   const [code, setCode] = React.useState("");
+  const [loading, setLoading] = React.useState(false);
 
   /**
    * Handles the submission of the initial sign-up form.
    * This function creates a new user and sends a verification email.
    */
   const onSignUpPress = async () => {
-    // If the Clerk SDK isn't loaded yet, do nothing.
-    if (!isLoaded) return;
+    if (!isLoaded || loading) return;
 
-    console.log(emailAddress, password);
+    setLoading(true);
 
     try {
-      // Create the sign-up attempt with the provided email and password.
       await signUp.create({
         emailAddress,
         password,
       });
 
-      // Prepare for email address verification by sending an email with a code.
       await signUp.prepareEmailAddressVerification({ strategy: "email_code" });
-
-      // Set 'pendingVerification' to true to switch the UI to the verification form.
       setPendingVerification(true);
     } catch (err) {
-      // Log any errors that occur during the sign-up process.
       console.error("Sign-up error:", JSON.stringify(err, null, 2));
+      // Display a user-friendly error message here.
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -61,76 +55,112 @@ export default function SignUpScreen() {
    * This function attempts to verify the user with the provided code.
    */
   const onVerifyPress = async () => {
-    // If the Clerk SDK isn't loaded yet, do nothing.
-    if (!isLoaded) return;
+    if (!isLoaded || loading) return;
+
+    setLoading(true);
 
     try {
-      // Use the code provided by the user to attempt email verification.
       const signUpAttempt = await signUp.attemptEmailAddressVerification({
         code,
       });
 
-      // Check if the verification was completed successfully.
       if (signUpAttempt.status === "complete") {
-        // If successful, set the newly created session as the active one.
         await setActive({ session: signUpAttempt.createdSessionId });
-        // Navigate the user to the `(tabs)` folder, which is typically the main part of the app.
         router.replace("/(tabs)");
       } else {
-        // Log the sign-up attempt if it's not complete to debug further steps.
         console.error(
           "Verification not complete:",
           JSON.stringify(signUpAttempt, null, 2)
         );
+        // Display a user-friendly error message here.
       }
     } catch (err) {
-      // Log any errors that occur during the verification process.
       console.error("Verification error:", JSON.stringify(err, null, 2));
+      // Display a user-friendly error message here.
+    } finally {
+      setLoading(false);
     }
   };
 
-  // Conditionally render the verification form if verification is pending.
   if (pendingVerification) {
     return (
-      <View>
-        <Text>Verify your email</Text>
-        <TextInput
-          value={code}
-          placeholder="Enter your verification code"
-          onChangeText={(code) => setCode(code)}
-        />
-        <TouchableOpacity onPress={onVerifyPress}>
-          <Text>Verify</Text>
-        </TouchableOpacity>
-      </View>
+      <SafeAreaView className="flex-1 justify-center items-center p-6 bg-gray-100">
+        <View className="w-full max-w-sm p-8 bg-white rounded-2xl shadow-xl border border-gray-200">
+          <Text className="text-2xl font-extrabold text-center mb-2 text-gray-800">
+            Verify Your Email
+          </Text>
+          <Text className="text-md text-center mb-8 text-gray-500">
+            A verification code has been sent to your email.
+          </Text>
+          <TextInput
+            className="w-full p-4 mb-6 bg-gray-50 rounded-xl border border-gray-300 text-base text-center tracking-widest font-mono"
+            value={code}
+            placeholder="Enter code"
+            onChangeText={setCode}
+            keyboardType="number-pad"
+          />
+          <TouchableOpacity
+            className="w-full p-4 bg-blue-600 rounded-xl items-center shadow-lg"
+            onPress={onVerifyPress}
+            disabled={loading}
+          >
+            {loading ? (
+              <ActivityIndicator color="#FFFFFF" />
+            ) : (
+              <Text className="text-white font-bold text-lg">Verify</Text>
+            )}
+          </TouchableOpacity>
+        </View>
+      </SafeAreaView>
     );
   }
 
-  // Render the initial sign-up form.
   return (
-    <View>
-      <Text>Sign up</Text>
-      <TextInput
-        autoCapitalize="none"
-        value={emailAddress}
-        placeholder="Enter email"
-        onChangeText={(email) => setEmailAddress(email)}
-      />
-      <TextInput
-        value={password}
-        placeholder="Enter password"
-        secureTextEntry={true}
-        onChangeText={(password) => setPassword(password)}
-      />
-      <TouchableOpacity onPress={onSignUpPress}>
-        <Text>Continue</Text>
-      </TouchableOpacity>
-      <View style={{ display: "flex", flexDirection: "row", gap: 3 }}>
-        <Text>Already have an account?</Text>
-        <Link href="/sign-in">
-          <Text>Sign in</Text>
-        </Link>
+    <SafeAreaView className="flex-1 justify-center items-center p-6 bg-gray-100">
+      <View className="w-full max-w-sm p-8 bg-white rounded-2xl shadow-xl border border-gray-200">
+        <Text className="text-4xl font-extrabold text-center mb-2 text-gray-800">
+          Create an Account
+        </Text>
+        <Text className="text-md text-center mb-8 text-gray-500">
+          Sign up to get started
+        </Text>
+
+        <TextInput
+          className="w-full p-4 mb-4 bg-gray-50 rounded-xl border border-gray-300 text-base"
+          autoCapitalize="none"
+          value={emailAddress}
+          placeholder="Email Address"
+          onChangeText={setEmailAddress}
+          keyboardType="email-address"
+        />
+        <TextInput
+          className="w-full p-4 mb-6 bg-gray-50 rounded-xl border border-gray-300 text-base"
+          value={password}
+          placeholder="Password"
+          secureTextEntry={true}
+          onChangeText={setPassword}
+        />
+        <TouchableOpacity
+          className="w-full p-4 bg-blue-600 rounded-xl items-center shadow-lg"
+          onPress={onSignUpPress}
+          disabled={loading}
+        >
+          {loading ? (
+            <ActivityIndicator color="#FFFFFF" />
+          ) : (
+            <Text className="text-white font-bold text-lg">Sign Up</Text>
+          )}
+        </TouchableOpacity>
+
+        <View className="flex-row justify-center mt-6">
+          <Text className="text-gray-600">Already have an account? </Text>
+          <Link href="/sign-in" asChild>
+            <TouchableOpacity>
+              <Text className="text-blue-600 font-bold">Sign in</Text>
+            </TouchableOpacity>
+          </Link>
+        </View>
       </View>
-    </View>
+    </SafeAreaView>
   );
 }
